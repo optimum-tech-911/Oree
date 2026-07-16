@@ -1,0 +1,33 @@
+import { useRef, useState } from "react";
+import { Check, Download, FilePlus2, FileText, History, Search, UploadCloud, X } from "lucide-react";
+import { Card } from "@/components/ui/Card";
+import { AppPageHero } from "@/components/app/AppPageHero";
+import { ActionNotice } from "@/components/feedback/ActionNotice";
+import { Button } from "@/components/ui/Button";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { mockDocuments } from "@/data/mock";
+import { usePageMeta } from "@/hooks/usePageMeta";
+import { analytics } from "@/services/analytics";
+
+export default function DocumentsPage() {
+  const [selected, setSelected] = useState(mockDocuments[1]!);
+  const [uploaded, setUploaded] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [notice, setNotice] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  usePageMeta("Documents", "Téléversez, suivez et versionnez les documents nécessaires au projet.");
+  function onFile(file?: File) {
+    if (!file) return;
+    setUploaded(file.name);
+    analytics.track("document_uploaded", { type: file.type || "unknown", size: file.size });
+  }
+  const filteredDocuments = mockDocuments.filter((document) => `${document.label} ${document.category} ${document.owner}`.toLocaleLowerCase("fr-FR").includes(query.toLocaleLowerCase("fr-FR")));
+  return <div className="mx-auto max-w-[1400px] space-y-5">
+    <AppPageHero icon={FileText} eyebrow="Centre documentaire" title={<>Chaque pièce garde <span className="gradient-text">son statut et son histoire.</span></>} description="En production, chaque version sera conservée dans un bucket Supabase privé avec accès contrôlé, historique et commentaires de vérification." stat={{ value: "4 / 6", label: "Pièces reçues" }} action={<><Button variant="dark" onClick={() => inputRef.current?.click()}><UploadCloud className="size-4" />Ajouter un document</Button><input ref={inputRef} type="file" hidden accept=".pdf,.png,.jpg,.jpeg,.webp" onChange={(event) => onFile(event.target.files?.[0])} /></>} />
+    {uploaded ? <Card className="border-[var(--mint)] bg-[var(--mint-soft)] p-4"><div className="flex items-center gap-3"><span className="grid size-9 place-items-center rounded-full bg-[var(--mint)] text-white"><Check className="size-4" /></span><div className="flex-1"><p className="text-sm font-semibold text-[color:var(--ink)]">{uploaded} ajouté en démonstration</p><p className="mt-1 text-xs text-[color:var(--ink)]/65">Aucun fichier n'a quitté votre navigateur.</p></div><button onClick={() => setUploaded(null)}><X className="size-4" /></button></div></Card> : null}
+    {notice ? <ActionNotice tone="info" title={notice} description="Cette action sera disponible dès que le stockage privé et les autorisations du projet seront connectés." onClose={() => setNotice(null)} /> : null}
+    <div className="grid gap-5 xl:grid-cols-[1.2fr_.8fr]"><Card className="overflow-hidden"><div className="flex flex-col gap-3 border-b border-[var(--line)] p-5 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-xs font-semibold uppercase tracking-[.13em] text-[color:var(--muted)]">Dossier Studio Horizon</p><h3 className="mt-2 text-xl font-semibold">6 exigences documentaires</h3></div><label className="flex h-11 items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--paper)] px-4 text-sm text-[color:var(--muted)]"><Search className="size-4" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Rechercher" className="w-32 bg-transparent outline-none" /></label></div><div className="divide-y divide-[var(--line)]">{filteredDocuments.length ? filteredDocuments.map((document) => <button key={document.id} onClick={() => setSelected(document)} className={`flex w-full items-center gap-4 p-4 text-left transition sm:p-5 ${selected.id === document.id ? "bg-blue-50/60" : "hover:bg-[var(--paper)]"}`}><span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-white shadow-sm"><FileText className="size-5" /></span><div className="min-w-0 flex-1"><p className="truncate text-sm font-semibold">{document.label}</p><p className="mt-1 text-xs text-[color:var(--muted)]">{document.category} · {document.owner}</p></div><StatusBadge status={document.status} /></button>) : <div className="p-8 text-center text-sm text-[color:var(--muted)]">Aucun document ne correspond à cette recherche.</div>}</div></Card>
+      <div className="space-y-5"><Card className="p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="text-xs font-semibold uppercase tracking-[.13em] text-[color:var(--muted)]">Document sélectionné</p><h3 className="mt-2 text-xl font-semibold">{selected.label}</h3></div><StatusBadge status={selected.status} /></div><div className="mt-6 rounded-[22px] bg-[var(--paper)] p-4"><div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-xl bg-white"><FileText className="size-4" /></span><div><p className="text-sm font-semibold">version-01.pdf</p><p className="mt-1 text-xs text-[color:var(--muted)]">PDF · 1,8 Mo · {selected.updatedAt ?? "Non transmis"}</p></div></div></div>{selected.comment ? <div className="mt-4 rounded-[22px] border border-[var(--blue)]/20 bg-[var(--blue)]/8 p-4"><p className="text-xs font-semibold uppercase tracking-[.12em] text-[color:var(--blue)]">Demande de correction</p><p className="mt-2 text-sm leading-6 text-[color:var(--ink)]/75">{selected.comment}</p></div> : null}<div className="mt-5 grid grid-cols-2 gap-2"><Button variant="secondary" onClick={() => inputRef.current?.click()}><FilePlus2 className="size-4" />Nouvelle version</Button><Button variant="ghost" onClick={() => setNotice("Téléchargement indisponible dans la démonstration")}><Download className="size-4" />Télécharger</Button></div></Card><Card className="p-5 sm:p-6"><div className="flex items-center gap-3"><History className="size-5 text-[color:var(--blue)]" /><h3 className="font-semibold">Historique des versions</h3></div><div className="mt-5 space-y-4">{[["Version 1", "15 juillet · Porteur de projet", "Version actuelle"], ["Exigence créée", "12 juillet · Système", "Initialisation du dossier"]].map(([title, meta, note], index) => <div key={title} className="flex gap-3"><span className={`mt-1 size-3 rounded-full ${index === 0 ? "bg-[var(--blue)]" : "bg-[var(--line)]"}`} /><div><p className="text-sm font-semibold">{title}</p><p className="mt-1 text-xs text-[color:var(--muted)]">{meta}</p><p className="mt-1 text-xs text-[color:var(--muted)]">{note}</p></div></div>)}</div></Card></div>
+    </div>
+  </div>;
+}

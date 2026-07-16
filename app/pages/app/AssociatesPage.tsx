@@ -1,0 +1,34 @@
+import { useState } from "react";
+import { Check, MailPlus, MoreHorizontal, Plus, ShieldCheck, UserRound, UsersRound } from "lucide-react";
+import { ActionNotice } from "@/components/feedback/ActionNotice";
+import { Card } from "@/components/ui/Card";
+import { AppPageHero } from "@/components/app/AppPageHero";
+import { Button } from "@/components/ui/Button";
+import { usePageMeta } from "@/hooks/usePageMeta";
+
+export default function AssociatesPage() {
+  const [inviteOpen, setInviteOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("Cofondateur");
+  const [invitedEmail, setInvitedEmail] = useState<string | null>(null);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  usePageMeta("Associés", "Gérez les fondateurs, les rôles, les participations et les accès au projet.");
+
+  function submitInvite(event: React.FormEvent) {
+    event.preventDefault();
+    if (!email.trim()) return;
+    setInvitedEmail(email.trim());
+    setEmail("");
+    setInviteOpen(false);
+  }
+
+  return <div className="mx-auto max-w-6xl space-y-5">
+    <AppPageHero icon={UsersRound} eyebrow="Fondateurs et accès" title={<>Une structure unipersonnelle, <span className="gradient-text">capable d'évoluer.</span></>} description="Le projet compte actuellement un associé. Les rôles et les droits d'accès permettent d'intégrer ultérieurement un cofondateur ou un intervenant autorisé." stat={{ value: "1", label: "Membre actif" }} action={<Button variant="dark" onClick={() => setInviteOpen((value) => !value)}><Plus className="size-4" />Inviter une personne</Button>} />
+    {inviteOpen ? <Card className="p-5 sm:p-6"><div className="flex items-center gap-3"><span className="grid size-11 place-items-center rounded-2xl bg-[var(--mint-soft)]"><MailPlus className="size-5" /></span><div><h2 className="font-semibold">Préparer une invitation</h2><p className="mt-1 text-xs text-[color:var(--muted)]">Aucun email externe n'est envoyé en mode démonstration.</p></div></div><form onSubmit={submitInvite} className="mt-5 grid gap-4 sm:grid-cols-[1fr_220px_auto] sm:items-end"><label className="text-sm font-semibold">Adresse email<input type="email" required value={email} onChange={(event) => setEmail(event.target.value)} placeholder="associe@exemple.fr" className="mt-2 h-12 w-full rounded-2xl border border-[var(--line)] px-4 font-normal outline-none focus:border-[var(--blue)]" /></label><label className="text-sm font-semibold">Rôle<select value={role} onChange={(event) => setRole(event.target.value)} className="mt-2 h-12 w-full rounded-2xl border border-[var(--line)] bg-white px-4 font-normal outline-none focus:border-[var(--blue)]"><option>Cofondateur</option><option>Collaborateur</option><option>Lecteur</option></select></label><Button type="submit">Enregistrer l'invitation</Button></form></Card> : null}
+    {invitedEmail ? <ActionNotice title={`Invitation préparée pour ${invitedEmail}`} description={`Rôle prévu : ${role}. En production, l'envoi sera effectué par une fonction sécurisée et l'accès ne sera accordé qu'après acceptation.`} onClose={() => setInvitedEmail(null)} /> : null}
+    <div className="grid gap-5 lg:grid-cols-[1fr_340px]">
+      <Card className="p-6 sm:p-8"><div className="flex items-center justify-between"><div><p className="text-xs font-semibold uppercase tracking-[.14em] text-[color:var(--muted)]">Membres du projet</p><h3 className="mt-2 text-xl font-semibold">Accès actuels</h3></div><span className="rounded-full bg-[var(--paper)] px-3 py-1.5 text-xs font-bold text-[color:var(--muted)]">1 membre</span></div><div className="mt-6 rounded-[24px] border border-[var(--line)] bg-white p-5"><div className="flex items-center gap-4"><span className="grid size-13 place-items-center rounded-[18px] bg-[var(--mint)] text-sm font-bold">PP</span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><h4 className="font-semibold">Porteur de projet</h4><span className="rounded-full bg-[var(--ink)] px-2.5 py-1 text-[10px] font-bold text-white">Propriétaire</span></div><p className="mt-1 text-sm text-[color:var(--muted)]">Associé unique · président envisagé · 100 %</p></div><button type="button" onClick={() => setDetailsOpen((value) => !value)} className="grid size-10 place-items-center rounded-full border border-[var(--line)]" aria-label="Afficher le détail du membre" aria-expanded={detailsOpen}><MoreHorizontal className="size-4" /></button></div>{detailsOpen ? <div className="mt-4 rounded-2xl bg-[var(--paper)] p-4 text-sm leading-6 text-[color:var(--muted)]">Ce membre peut modifier les informations du projet, déposer des pièces et gérer les invitations. Les validations opérationnelles restent réservées aux rôles autorisés.</div> : null}<div className="mt-5 grid gap-3 sm:grid-cols-3">{[["Identité", "Validée"], ["Participation", "100 %"], ["Documents", "2 / 3"]].map(([label, value]) => <div key={label} className="rounded-2xl bg-[var(--paper)] p-3"><p className="text-[10px] font-semibold uppercase tracking-[.12em] text-[color:var(--muted)]">{label}</p><p className="mt-2 text-sm font-semibold">{value}</p></div>)}</div></div><div className="mt-5 rounded-[24px] border border-dashed border-[var(--line)] p-6 text-center"><span className="mx-auto grid size-12 place-items-center rounded-2xl bg-[var(--paper)]"><UserRound className="size-5 text-[color:var(--muted)]" /></span><h4 className="mt-4 font-semibold">Aucun autre associé</h4><p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-[color:var(--muted)]">Un cofondateur, un collaborateur ou un lecteur peut être ajouté avec un périmètre d'accès distinct.</p><Button onClick={() => setInviteOpen(true)} variant="secondary" className="mt-5"><Plus className="size-4" />Ajouter un membre</Button></div></Card>
+      <div className="space-y-5"><Card className="p-5"><ShieldCheck className="size-5 text-[color:var(--blue)]" /><h3 className="mt-4 font-semibold">Droits par rôle</h3><div className="mt-4 space-y-3">{["Propriétaire : gestion du projet", "Cofondateur : informations et pièces", "Lecteur : consultation limitée", "Conseiller : actions opérationnelles autorisées"].map((item) => <div key={item} className="flex gap-2 text-sm leading-6 text-[color:var(--muted)]"><Check className="mt-1 size-4 shrink-0 text-[color:var(--ink)]" />{item}</div>)}</div></Card><Card className="p-5"><p className="text-xs font-semibold uppercase tracking-[.13em] text-[color:var(--muted)]">Répartition du capital</p><div className="mt-5 h-4 overflow-hidden rounded-full bg-[var(--paper)]"><div className="h-full w-full rounded-full bg-[var(--mint)]" /></div><div className="mt-4 flex items-center justify-between text-sm"><span>Porteur de projet</span><strong>100 %</strong></div><p className="mt-4 text-xs leading-5 text-[color:var(--muted)]">La somme des participations devra être validée côté serveur avant la finalisation.</p></Card></div>
+    </div>
+  </div>;
+}
