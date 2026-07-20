@@ -27,4 +27,17 @@ import { buildRecommendation } from "@/features/diagnostic/engine";
     expect(result.forms[0]).toBe("SASU");
     expect(result.reasons.join(" ")).toContain("investisseurs");
   });
+
+  it("qualifie un dossier bloqué avant de proposer une forme juridique", () => {
+    const result = buildRecommendation({ startingSituation: "blocked", blockedStage: "statuts" });
+    expect(result.forms).toEqual([]);
+    expect(result.complexity).toBe("complexe");
+    expect(result.action.href).toBe("/rendez-vous");
+  });
+
+  it("signale les vérifications nécessaires pour un demandeur d’emploi", () => {
+    const result = buildRecommendation({ startingSituation: "job-seeker", professionalStatus: "job-seeker", founderMode: "solo" });
+    expect(result.complexity).toBe("modéré");
+    expect(result.pointsToValidate.join(" ")).toContain("ARE");
+  });
 });

@@ -7,10 +7,11 @@ import { useAuth } from "@/features/auth/auth-context";
 import { isSupabaseConfigured } from "@/services/supabase/client";
 import { analytics } from "@/services/analytics";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { continuePendingLead, getPendingLeadEmail } from "@/services/leadContinuation";
 
 export default function AuthPage({ mode }: { mode: "login" | "register" | "forgot" | "reset" }) {
-  const [email, setEmail] = useState("sid@example.fr");
-  const [password, setPassword] = useState("demo-password");
+  const [email, setEmail] = useState(() => getPendingLeadEmail() ?? (isSupabaseConfigured ? "" : "sid@example.fr"));
+  const [password, setPassword] = useState(isSupabaseConfigured ? "" : "demo-password");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +34,8 @@ export default function AuthPage({ mode }: { mode: "login" | "register" | "forgo
         if (isSupabaseConfigured) setMagicSent(true); else navigate("/app");
       } else {
         if (register) await signUp(email, password); else await signIn(email, password);
-        analytics.track(register ? "account_created" : "assistant_search", { method: "password" });
+        analytics.track(register ? "registration_submitted" : isSupabaseConfigured ? "login_completed" : "demo_session_started", { method: "password" });
+        try { await continuePendingLead(); } catch { /* The pending link is retried after the next authenticated callback. */ }
         navigate("/app");
       }
     } catch (cause) {

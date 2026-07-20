@@ -115,17 +115,10 @@ img, svg, video { display: block; max-width: 100%; }
 }
 
 .hero-grid, .blueprint-grid { position: relative; isolation: isolate; overflow: hidden; }
-.hero-grid::before, .blueprint-grid::before {
-  position: absolute;
-  inset: 0;
-  z-index: -3;
-  content: "";
-  background-image:
-    linear-gradient(rgba(247,245,239, .045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(247,245,239, .045) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: linear-gradient(to bottom, black 3%, black 72%, transparent 100%);
-}
+/* The interface uses photography, product proof and whitespace as structure.
+   Keep the legacy classes for layout compatibility, but never render the old
+   square/grid texture. */
+.hero-grid::before, .blueprint-grid::before { display: none; }
 .hero-grid::after {
   position: absolute;
   z-index: -2;
@@ -142,11 +135,8 @@ img, svg, video { display: block; max-width: 100%; }
 }
 
 .grid-fade {
-  background-image:
-    linear-gradient(rgba(11, 18, 32, .035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(11, 18, 32, .035) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, transparent, black 16%, black 78%, transparent);
+  background-image: none;
+  mask-image: none;
 }
 
 .ambient-pointer {
@@ -209,6 +199,7 @@ img, svg, video { display: block; max-width: 100%; }
 .hero-primary-cta { color: var(--ink) !important; }
 .hero-secondary-cta, .assistant-launcher-label { color: var(--canvas) !important; }
 .hero-primary-cta:hover, .hero-secondary-cta:hover { transform: translateY(-4px) scale(1.01); }
+[data-primary-cta]:hover { transform: translateY(-4px); }
 .button-sheen { position: relative; overflow: hidden; isolation: isolate; }
 .button-sheen::after {
   position: absolute;
@@ -302,10 +293,7 @@ img, svg, video { display: block; max-width: 100%; }
 .route-map {
   background:
     radial-gradient(circle at 76% 16%, rgba(36, 87, 255, .12), transparent 28rem),
-    linear-gradient(rgba(11,18,32,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(11,18,32,.04) 1px, transparent 1px),
     var(--white);
-  background-size: auto, 38px 38px, 38px 38px, auto;
 }
 
 .ink-card {
@@ -422,7 +410,6 @@ img, svg, video { display: block; max-width: 100%; }
   .container-shell { width: min(100% - 1.25rem, 90rem); }
   .container-wide { width: min(100% - .75rem, 104rem); }
   .interactive-card:hover { transform: none; }
-  .hero-grid::before { background-size: 38px 38px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

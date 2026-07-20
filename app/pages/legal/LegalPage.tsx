@@ -10,7 +10,7 @@ const privacySections = [
   ["5. Conservation", "Les durées doivent être définies par finalité : diagnostic abandonné, prospect, client actif, dossier clôturé, obligations légales et demande de suppression. Elles ne doivent pas être codées comme une conservation illimitée."],
   ["6. Vos droits", "Selon les conditions applicables, vous pouvez demander l'accès, la rectification, l'effacement, la limitation, l'opposition ou la portabilité de vos données. Une page de paramètres et une procédure interne sont prévues pour traiter ces demandes."],
   ["7. Cookies et mesure d'audience", "Les traceurs non nécessaires restent désactivés avant le choix de l'utilisateur. Le consentement Google et les éventuels pixels publicitaires doivent être pilotés par une interface de consentement conforme."],
-  ["8. Sécurité", "Les documents doivent être conservés dans un espace privé, accessibles au moyen de liens temporaires et protégés par des règles tenant compte du rôle de chaque utilisateur. Les secrets techniques et les droits d'administration ne doivent jamais être exposés dans le navigateur."],
+  ["8. Sécurité", "Les documents doivent être conservés dans un espace privé, accessibles au moyen de liens temporaires et protégés par des règles tenant compte du rôle de chaque utilisateur. Le formulaire de demande prévoit Cloudflare Turnstile pour limiter les abus ; ce prestataire peut traiter les données techniques strictement nécessaires à cette vérification. Les secrets techniques et les droits d'administration ne doivent jamais être exposés dans le navigateur."],
 ] as const;
 
 const legalSections = [

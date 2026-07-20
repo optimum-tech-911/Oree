@@ -4,15 +4,16 @@ import { PublicHeader } from "@/components/layout/PublicHeader";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { AmbientPointer } from "@/components/layout/AmbientPointer";
-import { MobileConversionBar } from "@/components/layout/MobileConversionBar";
+import { MobileConversionBar, mobileConversionForPath } from "@/components/layout/MobileConversionBar";
 
-const darkHeroRoutes = new Set(["/", "/creation-sasu", "/creation-eurl", "/creation-sas", "/creation-sarl", "/creer-entreprise-en-etant-salarie", "/passer-micro-entreprise-en-societe", "/creer-entreprise-a-plusieurs", "/dossier-creation-entreprise-bloque"]);
+const darkHeroRoutes = new Set(["/", "/creation-sasu", "/creation-eurl", "/creation-sas", "/creation-sarl", "/creer-entreprise-seul", "/creer-entreprise-en-etant-salarie", "/creer-entreprise-demandeur-emploi", "/passer-micro-entreprise-en-societe", "/creer-entreprise-a-plusieurs", "/dossier-creation-entreprise-bloque"]);
 
 export function PublicLayout() {
   const location = useLocation();
   const reduce = useReducedMotion();
+  const hasMobileConversion = Boolean(mobileConversionForPath(location.pathname));
   return (
-    <div className="relative min-h-screen bg-[var(--paper)] text-[color:var(--ink)]">
+    <div className={`relative min-h-screen bg-[var(--paper)] text-[color:var(--ink)] ${hasMobileConversion ? "pb-[calc(5.75rem+env(safe-area-inset-bottom))] lg:pb-0" : ""}`}>
       <ScrollToTop />
       <AmbientPointer />
       <PublicHeader transparent={darkHeroRoutes.has(location.pathname)} />

@@ -166,7 +166,7 @@ export const imagery = {
     height: 992,
     alt: "Créateur prenant du recul avant de comparer les structures adaptées à son projet.",
     focalPosition: "76% center",
-    intendedRoutes: ["/choisir-statut"],
+    intendedRoutes: ["/choisir-statut", "/creer-entreprise-demandeur-emploi", "/#parcours"],
     hero: true,
   }),
   soloPathway: asset({
@@ -215,9 +215,10 @@ export const landingHeroBySlug: Record<string, ImageryAsset> = {
   "creation-eurl": imagery.eurlHero,
   "creation-sas": imagery.sasHero,
   "creation-sarl": imagery.sarlHero,
-  "creer-entreprise-seul": imagery.soloPathway,
+  "creer-entreprise-seul": imagery.sasuHero,
   "creer-entreprise-a-plusieurs": imagery.sasHero,
   "creer-entreprise-en-etant-salarie": imagery.employeeHero,
+  "creer-entreprise-demandeur-emploi": imagery.chooseStatusHero,
   "passer-micro-entreprise-en-societe": imagery.existingBusinessHero,
   "dossier-creation-entreprise-bloque": imagery.blockedDossierHero,
 };

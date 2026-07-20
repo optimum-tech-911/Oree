@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Navigate, Routes, Route, useLocation } from "react-router-dom";
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { OpsLayout } from "@/components/layout/OpsLayout";
@@ -35,6 +35,9 @@ const OpsDashboardPage = lazy(() => import("@/pages/ops/OpsDashboardPage"));
 const OpsSectionPage = lazy(() => import("@/pages/ops/OpsSectionPage"));
 const OpsHelpPage = lazy(() => import("@/pages/ops/OpsHelpPage"));
 const OpsProfilePage = lazy(() => import("@/pages/ops/OpsProfilePage"));
+const OpsInboxPage = lazy(() => import("@/pages/ops/OpsInboxPage"));
+const OpsAnalyticsPage = lazy(() => import("@/pages/ops/OpsAnalyticsPage"));
+const OpsAuditPage = lazy(() => import("@/pages/ops/OpsAuditPage"));
 
 function AssistantGate() {
   const { pathname } = useLocation();
@@ -49,7 +52,8 @@ export default function App() {
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
           <Route path="comment-ca-marche" element={<HowItWorksPage />} />
-          <Route path="offres" element={<OffersPage />} />
+          <Route path="offres" element={<Navigate to="/tarifs" replace />} />
+          <Route path="tarifs" element={<OffersPage />} />
           <Route path="accompagnement" element={<AccompanimentPage />} />
           <Route path="choisir-statut" element={<ChooseStatusPage />} />
           <Route path="diagnostic" element={<DiagnosticPage />} />
@@ -61,6 +65,7 @@ export default function App() {
           <Route path="creer-entreprise-seul" element={<AcquisitionLandingPage slug="creer-entreprise-seul" />} />
           <Route path="creer-entreprise-a-plusieurs" element={<AcquisitionLandingPage slug="creer-entreprise-a-plusieurs" />} />
           <Route path="creer-entreprise-en-etant-salarie" element={<AcquisitionLandingPage slug="creer-entreprise-en-etant-salarie" />} />
+          <Route path="creer-entreprise-demandeur-emploi" element={<AcquisitionLandingPage slug="creer-entreprise-demandeur-emploi" />} />
           <Route path="passer-micro-entreprise-en-societe" element={<AcquisitionLandingPage slug="passer-micro-entreprise-en-societe" />} />
           <Route path="dossier-creation-entreprise-bloque" element={<AcquisitionLandingPage slug="dossier-creation-entreprise-bloque" />} />
           <Route path="confidentialite" element={<LegalPage type="privacy" />} />
@@ -96,6 +101,9 @@ export default function App() {
           <Route path="documents" element={<OpsSectionPage section="documents" />} />
           <Route path="rendez-vous" element={<OpsSectionPage section="rendez-vous" />} />
           <Route path="equipe" element={<OpsSectionPage section="equipe" />} />
+          <Route path="messages" element={<OpsInboxPage />} />
+          <Route path="analytics" element={<OpsAnalyticsPage />} />
+          <Route path="audit" element={<OpsAuditPage />} />
           <Route path="aide" element={<OpsHelpPage />} />
           <Route path="profil" element={<OpsProfilePage />} />
         </Route>

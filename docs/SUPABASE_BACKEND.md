@@ -5,6 +5,7 @@
 ```env
 VITE_SUPABASE_URL=https://PROJECT.supabase.co
 VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
+VITE_TURNSTILE_SITE_KEY=
 ```
 
 Ces valeurs sont publiques. La sécurité repose sur RLS.
@@ -16,11 +17,16 @@ SUPABASE_URL=
 SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 TURNSTILE_SECRET_KEY=
+TURNSTILE_ALLOWED_HOSTNAMES=domaine.fr,staging.domaine.fr
+LEAD_CLAIM_SECRET=at-least-32-random-characters
+PRIVACY_POLICY_VERSION=version-publiee
 ALLOWED_ORIGINS=https://domaine.fr,https://staging.domaine.fr
 RESEND_API_KEY=
 CRM_WEBHOOK_URL=
 CRM_WEBHOOK_SECRET=
 ```
+
+Le formulaire de diagnostic utilise le rendu explicite Turnstile côté navigateur et vérifie le jeton, l’action `submit_lead` et, lorsque la liste est renseignée, le nom d’hôte dans `submit-lead`. En environnement connecté, les deux clés doivent être configurées ensemble. La fonction serveur refuse la soumission si le secret est absent ; utiliser les clés de test officielles pour le développement connecté, jamais un contournement conditionnel en production.
 
 ## Migrations
 
@@ -29,6 +35,12 @@ Appliquer dans l'ordre :
 1. `0001_initial_schema.sql`
 2. `0002_rls_policies.sql`
 3. `0003_storage_and_seed.sql`
+4. `0004_security_hardening.sql`
+5. `0005_optional_lead_phone.sql`
+6. `0006_appointment_permission_hardening.sql`
+7. `0007_portal_operations_and_intake.sql`
+8. `0008_portal_documents_and_read_state.sql`
+9. `0009_rls_advisor_cleanup.sql`
 
 Avec le CLI :
 
@@ -66,8 +78,25 @@ Les policies vérifient l'appartenance au projet. Les validations de document re
 
 ## Repositories frontend
 
-Les composants appellent les repositories de `app/services/supabase/repositories.ts`. Conserver cette couche même après branchement complet afin de centraliser mapping, erreurs, cache et mocks.
+Les composants appellent `app/services/supabase/portal.ts` pour l’espace client,
+`app/services/supabase/operations.ts` pour l’espace équipe, et les repositories
+génériques de `app/services/supabase/repositories.ts`. Conserver cette couche afin de
+centraliser mapping, erreurs, cache, contrôle du mode démonstration et mutations.
 
 ## Transactions
 
 Les opérations créant plusieurs objets doivent finir dans une fonction SQL transactionnelle ou une Edge Function : création de projet, création des tâches initiales, conversation, checklist et événement d'ouverture.
+
+## État distant au 20 juillet 2026
+
+- projet lié : `sksydcdkliuisaahysya` (`oree`) ;
+- migrations `0001` à `0009` appliquées ;
+- `submit-lead`, `claim-lead` et `create-project` actives ;
+- `db lint --linked --level warning` : aucune erreur de schéma ;
+- secret de revendication de lead généré et configuré côté Edge ;
+- origine locale autorisée pour le développement.
+
+Le jeton de gestion Supabase ne doit jamais être placé dans un fichier `.env`, dans le
+frontend ou dans Git. Il sert uniquement aux opérations CLI ponctuelles. Les clés
+Turnstile, l’origine de production et les URLs Auth doivent encore être configurées avec
+le domaine définitif.

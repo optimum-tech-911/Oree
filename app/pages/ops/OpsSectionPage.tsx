@@ -1,45 +1,78 @@
 import { useMemo, useState } from "react";
-import { ArrowRight, CalendarDays, Check, FileCheck2, FolderKanban, Search, ShieldCheck, UsersRound } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CalendarDays, Check, FileCheck2, FolderKanban, Search, ShieldCheck, UsersRound } from "lucide-react";
 import { Card } from "@/components/ui/Card";
-import { mockLeads } from "@/data/mock";
+import { Button } from "@/components/ui/Button";
+import { operationsRepository, type OpsAppointment, type OpsLead, type OpsProject, type OpsRequirement, type OpsTeamMember } from "@/services/supabase/operations";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const configs = {
-  leads: { title: "Demandes", description: "Qualifier, affecter et suivre les demandes entrantes.", icon: UsersRound },
-  projets: { title: "Projets", description: "Piloter les dossiers actifs et leurs prochaines actions.", icon: FolderKanban },
-  documents: { title: "Documents", description: "Contrôler les pièces en attente, les corrections et les validations.", icon: FileCheck2 },
-  "rendez-vous": { title: "Rendez-vous", description: "Organiser les disponibilités et consigner les résultats des échanges.", icon: CalendarDays },
-  equipe: { title: "Équipe", description: "Suivre les affectations et les capacités de traitement.", icon: ShieldCheck },
-};
+  leads: { title: "Demandes", description: "Qualifier, scorer et affecter les demandes entrantes.", icon: UsersRound },
+  projets: { title: "Projets", description: "Piloter les dossiers actifs et leurs prochaines étapes.", icon: FolderKanban },
+  documents: { title: "Documents", description: "Contrôler les pièces, corrections et validations.", icon: FileCheck2 },
+  "rendez-vous": { title: "Rendez-vous", description: "Confirmer les demandes et consigner les résultats.", icon: CalendarDays },
+  equipe: { title: "Équipe", description: "Observer les rôles et capacités autorisées.", icon: ShieldCheck },
+} as const;
 
-const teamRows = [
-  { id: "E-01", title: "Compte conseiller 01", meta: "4 projets affectés · capacité disponible", status: "Disponible", detail: "Accès conseiller actif. Les permissions sont administrées côté serveur." },
-  { id: "E-02", title: "Compte conseiller 02", meta: "6 projets affectés · charge normale", status: "En activité", detail: "Accès conseiller actif. Aucun droit administrateur n'est modifiable depuis le profil." },
-  { id: "E-03", title: "Compte administrateur", meta: "Supervision et contrôle des accès", status: "Actif", detail: "Compte de supervision présenté uniquement à titre démonstratif." },
-];
+type Section = keyof typeof configs;
+type RawRow = OpsLead | OpsProject | OpsRequirement | OpsAppointment | OpsTeamMember;
+type ViewRow = { id: string; title: string; meta: string; status: string; raw: RawRow };
 
-export default function OpsSectionPage({ section }: { section: keyof typeof configs }) {
+export default function OpsSectionPage({ section }: { section: Section }) {
   const config = configs[section];
   const Icon = config.icon;
+  const client = useQueryClient();
+  const { data, isLoading, error } = useQuery({ queryKey: ["ops", "dashboard"], queryFn: operationsRepository.getDashboard });
   const [query, setQuery] = useState("");
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [status, setStatus] = useState("");
+  const [score, setScore] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [comment, setComment] = useState("");
+  const [advisorId, setAdvisorId] = useState("");
+  const [active, setActive] = useState(true);
   usePageMeta(config.title, config.description);
 
-  const rows = useMemo(() => {
-    if (section === "equipe") return teamRows;
-    return mockLeads.map((lead) => ({
-      id: lead.id,
-      title: section === "leads" ? lead.name : section === "projets" ? lead.project : section === "documents" ? `${lead.project} — pièce à contrôler` : `${lead.name} — point de cadrage`,
-      meta: `${lead.source} · score ${lead.score} · ${lead.age}`,
-      status: lead.status,
-      detail: section === "leads" ? `Intention déclarée : ${lead.intent}. Vérifier la maturité et le calendrier avant affectation.` : section === "projets" ? `Projet orienté vers ${lead.intent}. La prochaine action doit être confirmée avec le porteur.` : section === "documents" ? "Contrôler la lisibilité, la date, le titulaire et la cohérence avec le projet avant toute validation." : "Préparer l'objectif de l'échange et consigner les décisions dans le dossier après le rendez-vous.",
-    }));
-  }, [section]);
-  const filteredRows = rows.filter((row) => `${row.title} ${row.meta} ${row.status}`.toLocaleLowerCase("fr-FR").includes(query.toLocaleLowerCase("fr-FR")));
+  const rows = useMemo<ViewRow[]>(() => {
+    if (!data) return [];
+    if (section === "leads") return data.leads.map((row) => ({ id: row.id, title: row.name, meta: `${row.source} · ${row.stage} · ${new Date(row.createdAt).toLocaleDateString("fr-FR")}`, status: row.status, raw: row }));
+    if (section === "projets") return data.projects.map((row) => ({ id: row.id, title: row.displayName, meta: `${row.legalForm} · ${row.department || "département à préciser"} · ${row.progress}%`, status: row.stage, raw: row }));
+    if (section === "documents") return data.requirements.map((row) => ({ id: row.id, title: row.label, meta: `${row.projectName} · ${row.category}`, status: row.status, raw: row }));
+    if (section === "rendez-vous") return data.appointments.map((row) => ({ id: row.id, title: row.projectName, meta: `${new Date(row.startsAt).toLocaleString("fr-FR")} · ${row.type}`, status: row.status, raw: row }));
+    return data.team.map((row) => ({ id: row.id, title: row.name, meta: `${row.role} · ${row.availability || "disponibilité non renseignée"}`, status: row.active ? "actif" : "inactif", raw: row }));
+  }, [data, section]);
+  const filtered = rows.filter((row) => `${row.title} ${row.meta} ${row.status}`.toLocaleLowerCase("fr-FR").includes(query.toLocaleLowerCase("fr-FR")));
+  const selected = rows.find((row) => row.id === selectedId) ?? null;
 
-  return <div className="mx-auto max-w-[1480px] space-y-5 sm:space-y-6">
-    <Card className="overflow-hidden"><div className="grid gap-5 p-5 sm:p-6 lg:grid-cols-[1fr_auto] lg:items-center"><div className="flex items-center gap-4"><span className="grid size-14 shrink-0 place-items-center rounded-[20px] bg-[var(--night)] text-white"><Icon className="size-5" /></span><div><p className="text-[10px] font-bold uppercase tracking-[.15em] text-[color:var(--muted)]">Orée Operations</p><h1 className="mt-1 text-2xl font-semibold tracking-[-.04em] sm:text-3xl">{config.title}</h1><p className="mt-1 text-sm text-[color:var(--muted)]">{config.description}</p></div></div><label className="flex h-12 items-center gap-3 rounded-[17px] border border-[var(--line)] bg-white/80 px-4 text-sm text-[color:var(--muted)] transition focus-within:border-[var(--accent)] focus-within:ring-4 focus-within:ring-[var(--accent)]/8"><Search className="size-4" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Rechercher dans ${config.title.toLocaleLowerCase("fr-FR")}`} className="w-full bg-transparent outline-none lg:w-64" /></label></div><div className="h-1 bg-[var(--mint)]" /></Card>
+  function open(row: ViewRow) {
+    setSelectedId(row.id); setStatus(row.status); setComment(""); setAdvisorId(""); setActive(row.status === "actif");
+    if (section === "leads") { const raw = row.raw as OpsLead; setScore(raw.score); setAdvisorId(raw.advisorId ?? ""); }
+    if (section === "projets") { const raw = row.raw as OpsProject; setProgress(raw.progress); setAdvisorId(raw.advisorId ?? ""); }
+    if (section === "documents") setComment((row.raw as OpsRequirement).comment);
+    if (section === "rendez-vous") { const raw = row.raw as OpsAppointment; setComment(raw.notes); setAdvisorId(raw.advisorId ?? ""); }
+    if (section === "equipe") { const raw = row.raw as OpsTeamMember; setStatus(raw.role); setActive(raw.active); }
+  }
 
-    <Card className="overflow-hidden"><div className="flex flex-col gap-2 border-b border-[var(--line)] bg-black/[.018] px-5 py-4 text-[10px] font-bold uppercase tracking-[.12em] text-[color:var(--muted)] sm:flex-row sm:items-center sm:justify-between"><span>Données de démonstration</span><span className="normal-case tracking-normal text-[color:var(--success)]">{filteredRows.length} élément{filteredRows.length > 1 ? "s" : ""} visible{filteredRows.length > 1 ? "s" : ""}</span></div><div className="divide-y divide-[var(--line)]">{filteredRows.map((row, index) => <div key={`${section}-${row.id}`} className="transition hover:bg-[var(--mint-soft)]/32"><div className="group flex flex-col gap-4 p-5 sm:flex-row sm:items-center"><span className="grid size-12 shrink-0 place-items-center rounded-[17px] bg-[var(--night)] text-xs font-extrabold text-white">{String(index + 1).padStart(2, "0")}</span><div className="min-w-0 flex-1"><p className="text-sm font-semibold sm:text-base">{row.title}</p><p className="mt-1 text-xs text-[color:var(--muted)]">{row.meta}</p></div><span className="w-fit rounded-full bg-[var(--accent)]/9 px-3 py-1.5 text-[11px] font-bold text-[color:var(--accent-deep)]">{row.status}</span><button type="button" onClick={() => setOpenId((current) => current === row.id ? null : row.id)} className="inline-flex items-center gap-2 text-sm font-bold text-[color:var(--ink)]" aria-expanded={openId === row.id}>Détails <ArrowRight className={`size-4 transition-transform ${openId === row.id ? "rotate-90" : "group-hover:translate-x-1"}`} /></button></div>{openId === row.id ? <div className="border-t border-[var(--line)] bg-white/60 px-5 py-4 text-sm leading-6 text-[color:var(--muted)] sm:pl-[84px]">{row.detail}</div> : null}</div>)}{filteredRows.length === 0 ? <div className="p-10 text-center text-sm text-[color:var(--muted)]">Aucun élément ne correspond à cette recherche.</div> : null}</div><div className="flex items-start gap-3 border-t border-[var(--line)] bg-black/[.015] p-5 text-xs leading-5 text-[color:var(--muted)]"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-[var(--mint-soft)] text-[color:var(--success)]"><Check className="size-3.5" /></span>Les actions sensibles, les affectations et les changements de statut devront être exécutés par des fonctions serveur autorisées et consignés dans un journal d'audit.</div></Card>
+  const mutation = useMutation({
+    mutationFn: async () => {
+      if (!selected) return;
+      if (section === "leads") await operationsRepository.updateLead(selected.id, status, score, advisorId || undefined);
+      else if (section === "projets") { await operationsRepository.updateProject(selected.id, status, progress); if (advisorId && advisorId !== (selected.raw as OpsProject).advisorId) await operationsRepository.assignProject(selected.id, advisorId); }
+      else if (section === "documents") await operationsRepository.reviewRequirement(selected.id, status, comment);
+      else if (section === "rendez-vous") await operationsRepository.manageAppointment(selected.id, status, advisorId || undefined, comment);
+      else await operationsRepository.setStaffRole(selected.id, status === "admin" ? "admin" : "advisor", active);
+    },
+    onSuccess: async () => { await client.invalidateQueries({ queryKey: ["ops", "dashboard"] }); setSelectedId(null); },
+  });
+
+  const statusOptions = section === "leads" ? ["new","contact_attempted","contacted","qualified","appointment_booked","proposal_sent","converted","lost","invalid"] : section === "projets" ? ["draft","orientation","information_collection","documents_requested","documents_review","awaiting_signature","formalities_preparation","submitted","correction_required","registered","cancelled"] : section === "documents" ? ["under_review","changes_requested","approved","rejected"] : section === "rendez-vous" ? ["booked","confirmed","completed","cancelled","no_show"] : ["advisor","admin"];
+
+  return <div className="mx-auto max-w-[1480px] space-y-5">
+    <Card className="overflow-hidden"><div className="grid gap-5 p-5 sm:p-6 lg:grid-cols-[1fr_auto] lg:items-center"><div className="flex items-center gap-4"><span className="grid size-14 shrink-0 place-items-center rounded-[20px] bg-[var(--night)] text-white"><Icon className="size-5" /></span><div><p className="text-[10px] font-bold uppercase tracking-[.15em] text-[color:var(--muted)]">Orée Operations · {data?.demo ? "démo" : "Supabase"}</p><h1 className="mt-1 text-2xl font-semibold tracking-[-.04em] sm:text-3xl">{config.title}</h1><p className="mt-1 text-sm text-[color:var(--muted)]">{config.description}</p></div></div><label className="flex h-12 items-center gap-3 rounded-[17px] border border-[var(--line)] bg-white/80 px-4 text-sm text-[color:var(--muted)]"><Search className="size-4" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Rechercher" className="w-full bg-transparent outline-none lg:w-72" /></label></div><div className="h-1 bg-[var(--mint)]" /></Card>
+    {error ? <Card className="p-5 text-sm text-[color:var(--blue)]">{error instanceof Error ? error.message : "Chargement impossible"}</Card> : null}
+    <div className="grid gap-5 xl:grid-cols-[1fr_390px]">
+      <Card className="overflow-hidden"><div className="flex items-center justify-between border-b border-[var(--line)] bg-[var(--paper)] px-5 py-4 text-xs text-[color:var(--muted)]"><span>{isLoading ? "Chargement…" : `${filtered.length} élément(s)`}</span><span>Les mutations sensibles sont auditées</span></div><div className="divide-y divide-[var(--line)]">{filtered.map((row, index) => <button key={row.id} type="button" onClick={() => open(row)} className={`flex w-full items-center gap-4 p-5 text-left transition hover:bg-[var(--mint-soft)]/35 ${selectedId === row.id ? "bg-[var(--mint-soft)]/55" : ""}`}><span className="grid size-11 shrink-0 place-items-center rounded-[15px] bg-[var(--night)] text-xs font-bold text-white">{String(index + 1).padStart(2, "0")}</span><div className="min-w-0 flex-1"><p className="truncate font-semibold">{row.title}</p><p className="mt-1 truncate text-xs text-[color:var(--muted)]">{row.meta}</p></div><span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold shadow-sm">{row.status}</span></button>)}{!isLoading && filtered.length === 0 ? <p className="p-12 text-center text-sm text-[color:var(--muted)]">Aucun élément accessible.</p> : null}</div></Card>
+      <Card className="h-fit p-5 sm:p-6">{selected ? <><p className="text-[10px] font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">Action contrôlée</p><h2 className="mt-2 text-2xl font-semibold">{selected.title}</h2><p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">{selected.meta}</p><div className="mt-6 space-y-4"><label className="block text-sm font-semibold">Statut ou rôle<select value={status} onChange={(event) => setStatus(event.target.value)} className="mt-2 h-12 w-full rounded-2xl border border-[var(--line)] bg-white px-4 font-normal">{statusOptions.map((option) => <option key={option}>{option}</option>)}</select></label>{section === "leads" ? <label className="block text-sm font-semibold">Score de qualification<input type="number" min={0} max={100} value={score} onChange={(event) => setScore(Number(event.target.value))} className="mt-2 h-12 w-full rounded-2xl border border-[var(--line)] px-4 font-normal" /></label> : null}{section === "projets" ? <label className="block text-sm font-semibold">Progression · {progress}%<input type="range" min={0} max={100} value={progress} onChange={(event) => setProgress(Number(event.target.value))} className="mt-3 w-full accent-[var(--blue)]" /></label> : null}{["documents","rendez-vous"].includes(section) ? <label className="block text-sm font-semibold">Commentaire<textarea rows={4} value={comment} onChange={(event) => setComment(event.target.value)} className="mt-2 w-full rounded-2xl border border-[var(--line)] p-4 font-normal" /></label> : null}{["leads","projets","rendez-vous"].includes(section) && data?.team.length ? <label className="block text-sm font-semibold">Affectation<select value={advisorId} onChange={(event) => setAdvisorId(event.target.value)} className="mt-2 h-12 w-full rounded-2xl border border-[var(--line)] bg-white px-4 font-normal"><option value="">Non affecté</option>{data.team.filter((member) => member.active).map((member) => <option key={member.id} value={member.id}>{member.name} · {member.role}</option>)}</select></label> : null}{section === "equipe" ? <label className="flex items-center gap-3 text-sm font-semibold"><input type="checkbox" checked={active} onChange={(event) => setActive(event.target.checked)} className="size-5 accent-[var(--blue)]" />Accès interne actif</label> : null}{mutation.error ? <p className="rounded-2xl bg-[var(--blue)]/8 p-3 text-sm text-[color:var(--blue)]">{mutation.error instanceof Error ? mutation.error.message : "Action impossible"}</p> : null}<Button onClick={() => mutation.mutate()} disabled={mutation.isPending || data?.demo} className="w-full"><Check className="size-4" />{mutation.isPending ? "Enregistrement…" : data?.demo ? "Indisponible en démo" : "Enregistrer et auditer"}</Button></div></> : <div className="py-12 text-center"><span className="mx-auto grid size-12 place-items-center rounded-[18px] bg-[var(--mint-soft)]"><Icon className="size-5" /></span><p className="mt-5 font-semibold">Sélectionnez un élément</p><p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">Son contexte et les seules actions autorisées apparaîtront ici.</p></div>}</Card>
+    </div>
   </div>;
 }

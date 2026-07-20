@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Check, FileText, MessageSquareText, ShieldCheck, Sparkles } from "lucide-react";
 
@@ -19,12 +19,6 @@ const insights = [
 export function HeroCockpit() {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(1);
-
-  useEffect(() => {
-    if (reduce) return;
-    const interval = window.setInterval(() => setActive((current) => (current + 1) % steps.length), 3400);
-    return () => window.clearInterval(interval);
-  }, [reduce]);
 
   return (
     <div className="relative mx-auto w-full max-w-[660px] lg:translate-x-3">
@@ -71,13 +65,13 @@ export function HeroCockpit() {
             </div>
 
             <div className="flex min-h-[278px] flex-col gap-3">
-              <div className="relative flex-1 overflow-hidden rounded-[24px] border border-white/8 bg-white/[.045] p-5">
+              <div className="relative flex-1 overflow-hidden rounded-[24px] border border-white/8 bg-white/[.045] p-5 pb-17">
                 <div className="absolute inset-x-5 top-0 h-px kinetic-line bg-white/8" />
                 <div className="flex items-center justify-between"><span className="text-[9px] font-extrabold uppercase tracking-[.16em] text-white/72">Lecture du projet</span><ShieldCheck className="size-4 text-[color:var(--mint)]" /></div>
                 <AnimatePresence mode="wait">
-                  <motion.div key={active} initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={reduce ? undefined : { opacity: 0, y: -8 }} transition={{ duration: .28 }} className="mt-7">
+                  <motion.div key={active} initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={reduce ? undefined : { opacity: 0, y: -8 }} transition={{ duration: .28 }} className="mt-5">
                     <span className="inline-flex rounded-full border border-[var(--blue)]/28 bg-[var(--blue)]/12 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[.12em] text-white/66">{insights[active]?.title}</span>
-                    <p className="mt-4 text-balance text-xl font-extrabold leading-[1.18] tracking-[-.045em] text-white sm:text-2xl">{insights[active]?.copy}</p>
+                    <p className="mt-4 text-balance text-lg font-extrabold leading-[1.18] tracking-[-.04em] text-white sm:text-xl">{insights[active]?.copy}</p>
                   </motion.div>
                 </AnimatePresence>
                 <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between border-t border-white/8 pt-4"><span className="text-[10px] text-white/72">Orientation indicative</span><ArrowUpRight className="size-4 text-white/72" /></div>
@@ -85,7 +79,7 @@ export function HeroCockpit() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-[20px] border border-white/8 bg-white/[.035] p-4"><FileText className="size-4 text-[color:var(--mint)]" /><p className="mt-4 text-xl font-extrabold tracking-[-.045em] text-white">3 / 6</p><p className="mt-1 text-[9px] uppercase tracking-[.12em] text-white/72">Pièces prévues</p></div>
-                <div className="rounded-[20px] border border-white/8 bg-white/[.035] p-4"><MessageSquareText className="size-4 text-[color:var(--blue)]" /><p className="mt-4 text-xl font-extrabold tracking-[-.045em] text-white">1 humain</p><p className="mt-1 text-[9px] uppercase tracking-[.12em] text-white/72">Conseiller identifié</p></div>
+                <div className="rounded-[20px] border border-white/8 bg-white/[.035] p-4"><MessageSquareText className="size-4 text-[color:var(--blue)]" /><p className="mt-4 text-xl font-extrabold tracking-[-.045em] text-white">Au besoin</p><p className="mt-1 text-[9px] uppercase tracking-[.12em] text-white/72">Relais humain demandé</p></div>
               </div>
             </div>
           </div>

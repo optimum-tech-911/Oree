@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import {
   BadgeHelp,
+  BarChart3,
   BriefcaseBusiness,
   Building2,
   CalendarDays,
@@ -12,6 +13,7 @@ import {
   Handshake,
   LayoutDashboard,
   MessageSquareText,
+  History,
   Settings,
   Sparkles,
   UsersRound,
@@ -27,7 +29,7 @@ export type NavigationItem = {
 export const publicNavigation: NavigationItem[] = [
   { label: "Choisir mon statut", href: "/choisir-statut" },
   { label: "Comment ça marche", href: "/comment-ca-marche" },
-  { label: "Tarifs", href: "/offres" },
+  { label: "Tarifs", href: "/tarifs" },
 ];
 
 export const clientNavigation: NavigationItem[] = [
@@ -49,6 +51,9 @@ export const opsNavigation: NavigationItem[] = [
   { label: "Projets", href: "/ops/projets", icon: Building2 },
   { label: "Documents", href: "/ops/documents", icon: FileCheck2 },
   { label: "Rendez-vous", href: "/ops/rendez-vous", icon: CalendarDays },
+  { label: "Messages", href: "/ops/messages", icon: MessageSquareText },
+  { label: "Analyse", href: "/ops/analytics", icon: BarChart3 },
+  { label: "Journal", href: "/ops/audit", icon: History },
   { label: "Équipe", href: "/ops/equipe", icon: Handshake },
   { label: "Aide", href: "/ops/aide", icon: BadgeHelp },
   { label: "Profil", href: "/ops/profil", icon: CircleUserRound },

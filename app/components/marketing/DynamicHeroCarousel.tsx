@@ -82,6 +82,7 @@ export function DynamicHeroCarousel() {
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [loadedSlides, setLoadedSlides] = useState<Set<string>>(() => new Set());
   const heroRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const reduce = useReducedMotion();
   const activeSlide = heroSlides[activeIndex]!;
@@ -98,7 +99,15 @@ export function DynamicHeroCarousel() {
   }, [activeIndex, interactionPaused, paused, reduce]);
 
   useEffect(() => {
-    tabRefs.current[activeIndex]?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest", inline: "center" });
+    const tabs = tabsRef.current;
+    const activeTab = tabRefs.current[activeIndex];
+    if (!tabs || !activeTab || tabs.scrollWidth <= tabs.clientWidth) return;
+
+    const targetLeft = activeTab.offsetLeft - (tabs.clientWidth - activeTab.offsetWidth) / 2;
+    tabs.scrollTo({
+      left: Math.max(0, Math.min(targetLeft, tabs.scrollWidth - tabs.clientWidth)),
+      behavior: reduce ? "auto" : "smooth",
+    });
   }, [activeIndex, reduce]);
 
   return (
@@ -178,7 +187,7 @@ export function DynamicHeroCarousel() {
             {paused ? <Play className="size-5 fill-current" /> : <Pause className="size-5 fill-current" />}
           </button>
 
-          <div className="hero-story-tabs absolute inset-x-0 bottom-0 z-20 flex gap-2 overflow-x-auto bg-[linear-gradient(0deg,rgba(11,18,32,.98),rgba(11,18,32,.7))] p-4 pt-6 sm:gap-3 sm:px-8 sm:pb-6 lg:grid lg:grid-cols-5 lg:overflow-visible" role="tablist" aria-label="Choisir un parcours présenté">
+          <div ref={tabsRef} className="hero-story-tabs absolute inset-x-0 bottom-0 z-20 flex gap-2 overflow-x-auto bg-[linear-gradient(0deg,rgba(11,18,32,.98),rgba(11,18,32,.7))] p-4 pt-6 sm:gap-3 sm:px-8 sm:pb-6 lg:grid lg:grid-cols-5 lg:overflow-visible" role="tablist" aria-label="Choisir un parcours présenté">
             {heroSlides.map((slide, index) => {
               const active = index === activeIndex;
               return (

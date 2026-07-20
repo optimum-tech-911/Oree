@@ -143,7 +143,7 @@ export function PublicHeader({ transparent = false }: { transparent?: boolean })
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
-          <ButtonLink to="/diagnostic" variant="accent" size="sm" className="h-11 px-3 text-[12px]">Démarrer</ButtonLink>
+          <Link to="/connexion" className={cn("grid size-11 place-items-center rounded-xl border transition", floating ? "border-white/18 bg-white/8 text-white" : "border-[var(--line)] bg-[var(--canvas)] text-[color:var(--ink)]")} aria-label="Se connecter"><UserRound className="size-4.5" /></Link>
           <button type="button" className={cn("grid size-11 place-items-center rounded-xl border shadow-sm transition hover:-translate-y-0.5", floating ? "border-white/18 bg-white/8 text-white hover:border-white/36" : "border-[var(--line)] bg-[var(--canvas)] text-[color:var(--ink)] hover:border-[var(--action)]/35")} aria-label={open ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={open} onClick={() => setOpen((value) => !value)}>
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>

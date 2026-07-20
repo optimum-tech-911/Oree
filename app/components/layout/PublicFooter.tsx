@@ -6,7 +6,7 @@ import { ButtonLink } from "@/components/ui/Button";
 const groups: Array<{ title: string; links: Array<readonly [string, string]> }> = [
   { title: "Créer", links: [["Création SASU", "/creation-sasu"], ["Création EURL", "/creation-eurl"], ["Création SAS", "/creation-sas"], ["Création SARL", "/creation-sarl"]] },
   { title: "Votre situation", links: [["Choisir son statut", "/choisir-statut"], ["Créer en étant salarié", "/creer-entreprise-en-etant-salarie"], ["Passer de micro en société", "/passer-micro-entreprise-en-societe"], ["Créer à plusieurs", "/creer-entreprise-a-plusieurs"]] },
-  { title: "Orée", links: [["Comment ça marche", "/comment-ca-marche"], ["Nos offres", "/offres"], ["Accompagnement", "/accompagnement"], ["Espace de démonstration", "/app"]] },
+  { title: "Orée", links: [["Comment ça marche", "/comment-ca-marche"], ["Tarifs", "/tarifs"], ["Accompagnement", "/accompagnement"], ["Espace de démonstration", "/app"]] },
 ];
 
 export function PublicFooter() {

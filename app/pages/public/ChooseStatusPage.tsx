@@ -52,7 +52,7 @@ export default function ChooseStatusPage() {
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <ButtonLink to="/diagnostic" variant="dark" size="lg" arrow>Faire le diagnostic complet</ButtonLink>
-              <ButtonLink to="/rendez-vous" variant="ghost" size="lg" className="border border-white/12 text-white hover:bg-white/[.08]">Valider avec un conseiller</ButtonLink>
+              <ButtonLink to="/rendez-vous" variant="ghost" size="lg" className="border border-white/12 text-white hover:bg-white/[.08]">Demander une revue</ButtonLink>
             </div>
             <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-xs font-semibold text-white/72">
               {["Résultat explicable", "Réponses modifiables", "Sans compte au départ"].map((item) => <span key={item} className="inline-flex items-center gap-2"><span className="size-1.5 rounded-full bg-[var(--mint)]" />{item}</span>)}

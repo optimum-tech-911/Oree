@@ -1,149 +1,93 @@
-# État d'implémentation — V3
+# État d’implémentation — V3 canonique
 
-## Fonctionnel immédiatement, sans backend
+Mise à jour : 20 juillet 2026.
 
-- toutes les routes publiques et pages Google Search ;
-- diagnostic adaptatif avec sauvegarde locale, résultat explicable et feuille de route en direct ;
-- espace client complet en données de démonstration ;
-- dashboard centre de pilotage ;
-- espace opérations en données de démonstration ;
-- Guide Orée global, visible, vocal et indexant automatiquement le dépôt ;
-- recherche approximative, contexte de route et redirections actionnables ;
-- consentement audience/publicité ;
-- attribution UTM/GCLID/GBRAID/WBRAID ;
-- palette stricte quatre couleurs et deux polices ;
-- responsive mobile, tablette et desktop ;
-- reduced motion, transitions, hover/tap et états d'interface ;
-- build Cloudflare Pages et redirections SPA.
+## État de livraison
 
-## Reconstruction V3 intégrée
+Le dépôt V3 est l’application canonique. Les apports utiles de V4 ont été intégrés
+fonction par fonction ; V4 n’est ni une seconde application ni une cible de déploiement.
 
-- homepage reconstruite en conservant la force de la première version ;
-- header éditorial sombre superposé au héros, transformation claire au défilement, mega-menu et navigation mobile ;
-- cockpit de projet interactif ;
-- sélecteur adaptatif des profils ;
-- processus vivant et comparaison juridique ;
-- assistant remis au premier plan sur le site et dans l'application ;
-- diagnostic à trois zones sur grand écran ;
-- dashboard transformé en centre de pilotage ;
-- suppression des anciennes couleurs non conformes ;
-- fallback d'identifiants lorsque `crypto.randomUUID` n'est pas disponible ;
-- direction d'images de production documentée.
+Le projet Supabase `sksydcdkliuisaahysya` (`oree`) est lié et actif. Les migrations `0001` à
+`0009` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`
+sont actives, et le lint distant ne remonte aucune erreur de schéma.
 
-## Identité de marque et mouvement
+## Parcours publics
 
-- lock-up horizontal « Orée Entreprises » intégré au header public, aux espaces client/opérations et aux écrans d'authentification ;
-- lock-up complet « Orée — Création & accompagnement d'entreprise » réservé au pied de page ;
-- favicon ICO/PNG, icône Apple Touch, icônes Android et manifeste PWA reliés au document HTML ;
-- optimisation reproductible des sources de marque via `npm run brand:optimize` ;
-- CTA mobile « Démarrer » directement accessible dans le header et connexion explicitement nommée sur desktop ;
-- Guide Orée retiré de la navigation principale et conservé comme aide flottante compacte ;
-- révélations au scroll renforcées sur les sections et composants, avec mouvements plus lisibles et arrêt intégral en `prefers-reduced-motion` ;
-- survols des CTA, cartes et liens renforcés avec élévation, sheen contrôlé et feedback d'appui ;
-- ruban de l'écosystème des formalités sous le héros : dix logos fournis, défilement lent sur desktop, pause au survol ou au clavier et grille statique sur mobile ;
-- organismes et acteurs présentés comme interlocuteurs possibles selon le dossier, avec une mention explicite indiquant que l'affichage des marques n'affirme aucun partenariat commercial ;
-- héros d'accueil recomposé en carrousel plein cadre : cinq scènes, fondu éditorial, zoom progressif léger, sélection par onglets et pause accessible ;
-- onglets du héros complétés par un numéro, une intention et un résumé utile, avec centrage automatique et défilement tactile sur mobile ;
-- écran de chargement Orée complet avec identité, indicateur de progression et variante sans mouvement ;
-- contenu du héros relié au défilement par une translation et une variation d'opacité légères, sans compromettre la lecture ni le mode reduced motion ;
-- identité et CTA du header agrandis, avec couleurs de texte forcées par variante pour éviter toute disparition sur un fond identique.
+- pages d’acquisition par intention, contenus SEO et sitemap cohérents ;
+- diagnostic adaptatif, déterministe, versionné et explicable ;
+- valeur fournie avant création de compte ;
+- reprise sécurisée du lead après authentification ;
+- téléphone facultatif sauf demande de rappel ;
+- consentement, attribution UTM/GCLID/GBRAID/WBRAID et analytics conditionnels ;
+- Turnstile rendu explicitement, vérifié côté serveur et fermé par défaut sans secret ;
+- Guide Orée local, vocal lorsque disponible, indexé depuis les contenus versionnés ;
+- mode démonstration complet lorsque Supabase n’est pas configuré.
 
-## Imagerie professionnelle intégrée
+## Espace client connecté
 
-- audit de 35 sources avec 13 sélections, 10 alternatives et 12 rejets ;
-- exclusion des faux écrans, faux certificats et documents officiels inventés ;
-- héros art-directed pour l'accueil, les formes juridiques et les intentions Google Ads ;
-- scène humaine derrière le cockpit React sans remplacer la preuve produit ;
-- sélecteur de parcours avec image active et navigation clavier ;
-- accompagnement et rendez-vous illustrés sans faux nom, avis ni témoignage ;
-- manifeste central `app/content/imagery.ts` ;
-- composants média réutilisables AVIF/WebP ;
-- optimisation locale reproductible via `npm run images:optimize` ;
-- images générées signalées comme scènes illustratives dans l'interface.
+- centre de pilotage, projet et progression réels ;
+- orientation issue du projet et du diagnostic lié ;
+- fondateurs et répartition du capital enregistrés dans le dossier ;
+- checklist documentaire, upload privé et téléchargement par URL signée courte ;
+- formalités dérivées du stade, des pièces et des tâches réelles ;
+- suivi chronologique ;
+- messagerie projet avec état de lecture par utilisateur ;
+- calendrier mensuel et demandes de rendez-vous ;
+- notifications calculées depuis les données du dossier ;
+- profil, disponibilités, préférences et demandes relatives aux données.
 
-Lire `docs/V3_REBUILD.md`, `docs/UI_UX_SYSTEM.md` et `docs/IMAGE_DIRECTION.md`.
+## Espace opérations connecté
 
-## Audit fonctionnel et éditorial
+- indicateurs, funnel, canaux d’acquisition et files prioritaires ;
+- qualification et affectation des leads ;
+- pilotage des projets et changements de stade contrôlés ;
+- contrôle documentaire ;
+- gestion des demandes de rendez-vous ;
+- messagerie client et notes internes ;
+- équipe et rôles administrés par RPC contrôlée ;
+- journal d’audit des actions sensibles ;
+- profil opérationnel réel, séparé du rôle interne.
 
-- route « créer seul » dotée d'un contenu propre au lieu de reprendre la page SASU ;
-- parcours « mot de passe oublié » et définition d'un nouveau mot de passe fonctionnels en démonstration et prêts pour Supabase Auth ;
-- pages dédiées pour les notifications client, l'aide opérations et le profil opérations ;
-- boutons de notification et de profil reliés à leurs destinations ;
-- recherches actives dans les documents, les messages et les vues opérations ;
-- filtres de chronologie, détails des éléments opérations et conversations système fonctionnels ;
-- formulaires projet et paramètres conservés localement en mode démonstration ;
-- ajout de pièces et de messages testable sans transmission externe ;
-- export local des préférences de démonstration et demandes relatives aux données explicitement signalés ;
-- suppression des boutons purement décoratifs présentés comme des actions ;
-- retrait des identités de conseillers, citations et délais de réponse inventés ;
-- réécriture des principaux contenus publics et applicatifs dans un français écrit, professionnel et juridiquement prudent ;
-- suppression des détails techniques internes dans les réponses destinées au public ;
-- sitemap complété avec l'ensemble des routes publiques indexables.
-- contrôle Chromium renforcé : chaque route doit désormais présenter un titre Orée, afin qu'un serveur local étranger au projet ne puisse plus être accepté par erreur.
+Toutes les lectures restent filtrées par RLS. Les changements opérationnels sensibles
+passent par des fonctions SQL contrôlées qui vérifient l’utilisateur, le rôle et/ou
+l’affectation. Un client ne peut pas se promouvoir, valider ses propres documents ou
+modifier directement le stade opérationnel de son projet.
 
-## Migration visuelle premium adviser
+## Design et accessibilité
 
-- palette maîtresse limitée à `#0B1220`, `#2457FF`, `#46D6A6` et `#F7F5EF`, y compris dans les utilitaires Tailwind et les valeurs RGBA dérivées ;
-- Onest Variable et Newsreader Variable livrées localement dans le build, sans dépendance Google Fonts au chargement ;
-- graisses typographiques normalisées, capitales espacées réduites et contrastes des textes sombres renforcés ;
-- CTA principal bleu sur les espaces publics, client et opérations ; menthe réservée à la progression, au succès, à la sécurité et au Guide Orée ;
-- navigation principale simplifiée, méga-menu opaque et contrasté, ouverture au clic, fermeture extérieure et touche Échap ;
-- héros d'accueil recomposé en expérience plein cadre inspirée des grands sites industriels éditoriaux, sans reproduire leur identité ;
-- images documentaires rendues visibles dans le processus et le choix d'accompagnement, avec libellés illustratifs et informations toujours portées par l'interface ;
-- contrôle statique confirmant que le code applicatif ne contient que les quatre couleurs maîtresses en valeurs hexadécimales.
+- palette limitée à l’encre, au blanc, au bleu électrique et à la menthe ;
+- Onest et Newsreader uniquement ;
+- interfaces mobile-first, navigation dédiée et barre de conversion sans chevauchement ;
+- états vide, chargement, erreur et succès sur les parcours connectés ;
+- mouvement utile avec prise en charge de `prefers-reduced-motion` ;
+- imagerie centralisée dans `app/content/imagery.ts`, optimisée AVIF/WebP et sans faux
+  document, faux écran produit, témoignage ou partenariat.
 
-## Déjà scaffoldé pour Supabase
+## Vérifications du 20 juillet 2026
 
-- Auth réelle et lecture sécurisée des rôles `staff_roles` ;
-- protection `/app` et `/ops` activée automatiquement dès que les clés Supabase sont présentes ;
-- schéma PostgreSQL, triggers de profil, horodatage et RLS ;
-- bucket privé et règles Storage ;
-- Edge Functions de soumission de lead, revendication et création de projet ;
-- repositories frontend et contrats de données ;
-- workflow GitHub manuel de migration staging/production.
+- ESLint : réussi ;
+- TypeScript strict : réussi ;
+- Vitest : 25 tests réussis sur 25 ;
+- index Guide Orée : 1 673 entrées issues de 84 fichiers ;
+- build Vite de production : réussi ;
+- Supabase DB lint distant : aucune erreur ;
+- historique distant : migrations `0001` à `0009` synchronisées ;
+- trois Edge Functions : état `ACTIVE`.
 
-## Connexions à terminer avec les comptes réels
+Le runtime de navigateur intégré n’était pas disponible pendant cette passe : aucune
+revue visuelle manuelle supplémentaire n’est revendiquée. Le test authentifié de bout en
+bout nécessite au moins un compte réel.
 
-- projet Supabase et variables d'environnement ;
-- service email transactionnel et adresse d'expédition ;
-- CRM ou Google Sheets ;
-- fournisseur de rendez-vous/calendrier ;
-- IDs GTM, GA4 et Google Ads ;
-- validation Turnstile côté production ;
-- validation juridique du nom commercial, coordonnées, tarifs et preuves sociales réelles ;
-- remplacement futur des scènes illustratives par des photographies réelles consenties de l'équipe et des clients ;
-- audit juridique des promesses et de l'orientation proposée ;
-- éventuel LLM serveur avec base de connaissance et filtrage par permissions.
+## Configuration externe restant à fournir
 
-## Vérifications exécutées pendant la V3
+- domaine de production et URLs de redirection Supabase Auth ;
+- clés Turnstile site/secret et hôtes autorisés ;
+- adresse d’envoi et fournisseur d’e-mail transactionnel ;
+- fournisseur de calendrier externe si synchronisation bidirectionnelle souhaitée ;
+- CRM/webhook éventuel ;
+- GTM, GA4, Google Ads et conventions d’import des conversions qualifiées ;
+- identité juridique, coordonnées, offres, tarifs et politique de confidentialité validés ;
+- premier compte équipe à promouvoir en administrateur.
 
-- ESLint ;
-- TypeScript strict ;
-- tests unitaires ;
-- build de production ;
-- build mono-fichier de contrôle ;
-- régénération de l'index du Guide ;
-- inspection visuelle Chromium par injection du build mono-fichier ;
-- ouverture réelle du Guide Orée ;
-- inspection des pages homepage et diagnostic en desktop.
-
-## Vérifications de l'intégration images
-
-- 176 chemins du manifeste résolus sans fichier manquant ;
-- exports AVIF/WebP inspectés sur desktop et mobile ;
-- lint, TypeScript strict, 6 tests unitaires et build de production réussis ;
-- 68 tests E2E Chromium réussis : chargement des 41 routes Orée, parcours fonctionnels, contrôle du méga-menu et du système visuel, absence de débordement horizontal à 390, 768, 1280, 1440 et 1728 px, identité, ruban de logos, carrousel, chargement de route, transformation du header, reduced motion, survol du CTA, audit automatisé du contraste des contrôles à fond plein sur toutes les routes et composition mobile sans chevauchement à 320, 360, 390 et 430 px ;
-- réponse HTTP 200 pour l'application locale et le principal asset AVIF ;
-- revue visuelle interactive multi-largeur à répéter lorsque le runtime de navigateur intégré est disponible ;
-- projet Playwright Mobile Safari en attente du binaire WebKit local.
-
-## Vérification locale recommandée
-
-```bash
-npm install
-npm run check
-npm run dev
-npm run test:e2e
-```
-
-Inspecter au minimum les largeurs 390, 768, 1024, 1440 et 1728 px avec les contenus et images définitifs. Les tests E2E nécessitent l'installation locale des navigateurs Playwright.
+Lire aussi `docs/SUPABASE_BACKEND.md`, `docs/FINAL_MERGE_REPORT.md`,
+`docs/UI_UX_SYSTEM.md` et `docs/IMAGE_DIRECTION.md`.

@@ -1,40 +1,29 @@
-import { useState } from "react";
-import { Building2, Check, MapPin, PencilLine, Save, Sparkles } from "lucide-react";
+import { useState, type SetStateAction } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Building2, Check, Save, ShieldCheck } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { AppPageHero } from "@/components/app/AppPageHero";
-import { ActionNotice } from "@/components/feedback/ActionNotice";
+import { portalRepository } from "@/services/supabase/portal";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { safeStorage } from "@/lib/storage";
 
-const PROJECT_FORM_KEY = "oree:project-form:v1";
-const defaultForm = {
-  name: "Studio Horizon",
-  legalForm: "SASU",
-  activity: "Conseil en stratégie digitale et accompagnement à la transformation numérique",
-  department: "34 — Hérault",
-  desiredDate: "2026-09-30",
-  capital: "2 000",
-  address: "Domiciliation en cours de validation",
-};
-
-function loadForm() {
-  const saved = safeStorage.get(PROJECT_FORM_KEY);
-  if (!saved) return defaultForm;
-  try { return { ...defaultForm, ...JSON.parse(saved) as Partial<typeof defaultForm> }; } catch { return defaultForm; }
-}
+type FormState = { displayName: string; legalForm: string; activity: string; department: string; desiredDate: string };
+const emptyForm: FormState = { displayName: "", legalForm: "", activity: "", department: "", desiredDate: "" };
 
 export default function ProjectPage() {
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState(loadForm);
-  usePageMeta("Mon projet", "Informations principales, activité, siège, capital et calendrier du projet.");
-  const field = (label: string, key: keyof typeof form, type = "text") => <label className="block text-sm font-semibold">{label}<input type={type} value={form[key]} onChange={(event) => { setSaved(false); setForm((current) => ({ ...current, [key]: event.target.value })); }} className="mt-2 h-13 w-full rounded-2xl border border-[var(--line)] bg-white px-4 font-normal outline-none transition focus:border-[var(--blue)] focus:ring-4 focus:ring-blue-50" /></label>;
-  return <div className="mx-auto max-w-6xl space-y-5">
-    <AppPageHero icon={Building2} eyebrow="Fiche projet" title={<>{form.name || "Votre projet"}, <span className="gradient-text">informations de référence.</span></>} description="Ces informations alimentent l'orientation, la liste documentaire et les prochaines actions. Les données déjà validées pourront être verrouillées selon l'état du dossier." stat={{ value: "78%", label: "Complétude" }} action={<Button variant="dark" onClick={() => { safeStorage.set(PROJECT_FORM_KEY, JSON.stringify(form)); setSaved(true); }}><Save className="size-4" />Enregistrer</Button>} />
-    {saved ? <ActionNotice title="Projet enregistré" description="Les modifications sont conservées dans ce navigateur pour la démonstration." onClose={() => setSaved(false)} /> : null}
-    <div className="grid gap-5 lg:grid-cols-[1fr_320px]">
-      <Card className="p-6 sm:p-8"><div className="flex items-center gap-3"><span className="grid size-11 place-items-center rounded-2xl bg-[var(--mint-soft)]"><PencilLine className="size-5" /></span><div><p className="font-semibold">Informations principales</p><p className="text-xs text-[color:var(--muted)]">Enregistrez vos modifications avant de quitter cette page.</p></div></div><div className="mt-7 grid gap-5 sm:grid-cols-2">{field("Nom du projet", "name")}<label className="block text-sm font-semibold">Forme envisagée<select value={form.legalForm} onChange={(event) => { setSaved(false); setForm((current) => ({ ...current, legalForm: event.target.value })); }} className="mt-2 h-13 w-full rounded-2xl border border-[var(--line)] bg-white px-4 font-normal outline-none focus:border-[var(--blue)]"><option>SASU</option><option>EURL</option><option>À confirmer</option></select></label><label className="block text-sm font-semibold sm:col-span-2">Description de l'activité<textarea value={form.activity} onChange={(event) => { setSaved(false); setForm((current) => ({ ...current, activity: event.target.value })); }} rows={4} className="mt-2 w-full rounded-2xl border border-[var(--line)] bg-white px-4 py-3 font-normal leading-6 outline-none focus:border-[var(--blue)] focus:ring-4 focus:ring-blue-50" /></label>{field("Département", "department")}{field("Date souhaitée", "desiredDate", "date")}{field("Capital envisagé (€)", "capital")}{field("Siège social", "address")}</div></Card>
-      <div className="space-y-5"><Card className="p-5"><p className="text-xs font-semibold uppercase tracking-[.13em] text-[color:var(--muted)]">Complétude</p><p className="mt-3 text-4xl font-semibold tracking-[-.05em]">78%</p><div className="mt-4 h-2 overflow-hidden rounded-full bg-[var(--ink)]/8"><div className="h-full w-[78%] rounded-full bg-[var(--mint)]" /></div><div className="mt-5 space-y-3">{["Activité définie", "Calendrier indiqué", "Capital renseigné"].map((item) => <div key={item} className="flex items-center gap-2 text-sm"><span className="grid size-6 place-items-center rounded-full bg-[var(--mint-soft)]"><Check className="size-3" /></span>{item}</div>)}<div className="flex items-center gap-2 text-sm text-[color:var(--muted)]"><span className="size-6 rounded-full border border-[var(--line)]" />Siège à confirmer</div></div></Card><Card className="p-5"><span className="grid size-11 place-items-center rounded-2xl bg-blue-50 text-[color:var(--blue)]"><MapPin className="size-5" /></span><h3 className="mt-5 font-semibold">Siège social</h3><p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">Le choix du siège détermine les justificatifs à fournir et peut affecter certaines formalités.</p><ButtonLink to="/choisir-statut" variant="ghost" className="mt-4 h-auto p-0 text-sm">Comparer les options</ButtonLink></Card><Card className="bg-[var(--ink)] p-5 text-white"><Sparkles className="size-5 text-[color:var(--mint)]" /><h3 className="mt-4 font-semibold">Repère de planification</h3><p className="mt-2 text-sm leading-6 text-white/72">Au regard des informations saisies, une préparation sur six à huit semaines constitue une hypothèse de travail à confirmer.</p></Card></div>
-    </div>
-  </div>;
+  usePageMeta("Mon projet", "Mettez à jour les informations descriptives autorisées de votre projet.");
+  const client = useQueryClient();
+  const { data, error } = useQuery({ queryKey: ["portal", "snapshot"], queryFn: portalRepository.getSnapshot });
+  const baseForm: FormState = data?.project ? { displayName: data.project.displayName, legalForm: data.project.legalForm ?? "", activity: data.project.activity, department: data.project.department, desiredDate: data.project.desiredDate } : emptyForm;
+  const [draft, setDraft] = useState<{ projectId: string; form: FormState } | null>(null);
+  const form = draft && draft.projectId === data?.project?.id ? draft.form : baseForm;
+  function setForm(action: SetStateAction<FormState>) {
+    const next = typeof action === "function" ? action(form) : action;
+    setDraft({ projectId: data?.project?.id ?? "pending", form: next });
+  }
+  const mutation = useMutation({ mutationFn: async () => { if (!data?.project) throw new Error("Aucun projet actif."); await portalRepository.updateProject(data.project.id, { displayName: form.displayName.trim(), legalForm: form.legalForm || null, activity: form.activity.trim(), department: form.department.trim(), desiredDate: form.desiredDate || null }); }, onSuccess: async () => client.invalidateQueries({ queryKey: ["portal", "snapshot"] }) });
+  const completion = [form.displayName, form.activity, form.department, form.desiredDate].filter((value) => value.trim()).length * 25;
+  const field = (label: string, key: keyof FormState, type = "text") => <label className="block text-sm font-semibold">{label}<input type={type} value={form[key]} onChange={(event) => setForm((current) => ({ ...current, [key]: event.target.value }))} className="mt-2 h-13 w-full rounded-2xl border border-[var(--line)] bg-white px-4 font-normal outline-none focus:border-[var(--blue)]" /></label>;
+  if (!data?.project) return <Card className="mx-auto max-w-3xl p-10 text-center"><Building2 className="mx-auto size-7 text-[color:var(--blue)]" /><h1 className="mt-5 text-3xl font-semibold">Aucun projet associé</h1><p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">Le projet apparaît après la continuité sécurisée d’un diagnostic ou une création autorisée.</p><ButtonLink to="/diagnostic" className="mt-6">Lancer le diagnostic</ButtonLink></Card>;
+  return <div className="mx-auto max-w-6xl space-y-5"><AppPageHero icon={Building2} eyebrow="Fiche projet" title={<>{form.displayName || "Votre projet"}, <span className="gradient-text">informations de référence.</span></>} description="Vous pouvez modifier les informations descriptives. Les statuts opérationnels, affectations et validations restent contrôlés côté serveur." stat={{ value: `${completion}%`, label: "Complétude" }} action={<Button variant="dark" onClick={() => mutation.mutate()} disabled={mutation.isPending || form.displayName.trim().length < 2}><Save className="size-4" />{mutation.isPending ? "Enregistrement…" : "Enregistrer"}</Button>} />{error || mutation.error ? <Card className="p-5 text-[color:var(--blue)]">{(error ?? mutation.error) instanceof Error ? (error ?? mutation.error as Error).message : "Action impossible"}</Card> : null}{mutation.isSuccess ? <Card className="border-[var(--mint)] bg-[var(--mint-soft)] p-4 text-sm font-semibold"><Check className="mr-2 inline size-4" />Projet enregistré dans votre espace.</Card> : null}<div className="grid gap-5 lg:grid-cols-[1fr_330px]"><Card className="p-6 sm:p-8"><div className="grid gap-5 sm:grid-cols-2">{field("Nom du projet", "displayName")}<label className="block text-sm font-semibold">Forme envisagée<select value={form.legalForm} onChange={(event) => setForm((current) => ({ ...current, legalForm: event.target.value }))} className="mt-2 h-13 w-full rounded-2xl border border-[var(--line)] bg-white px-4 font-normal"><option value="">À confirmer</option>{["SASU","EURL","SAS","SARL","EI","MICRO"].map((value) => <option key={value}>{value}</option>)}</select></label><label className="block text-sm font-semibold sm:col-span-2">Description de l’activité<textarea rows={5} value={form.activity} onChange={(event) => setForm((current) => ({ ...current, activity: event.target.value }))} className="mt-2 w-full rounded-2xl border border-[var(--line)] p-4 font-normal leading-6" /></label>{field("Département", "department")}{field("Date souhaitée", "desiredDate", "date")}</div></Card><div className="space-y-5"><Card className="p-6"><p className="text-xs font-semibold uppercase tracking-[.13em] text-[color:var(--muted)]">État opérationnel</p><p className="mt-3 text-2xl font-semibold capitalize">{data.project.status.replaceAll("_", " ")}</p><div className="mt-4 h-2 rounded-full bg-[var(--ink)]/8"><div className="h-full rounded-full bg-[var(--mint)]" style={{ width: `${data.project.progress}%` }} /></div><p className="mt-3 text-sm text-[color:var(--muted)]">Progression : {data.project.progress}%</p></Card><Card className="p-6"><ShieldCheck className="size-5 text-[color:var(--blue)]" /><h3 className="mt-4 font-semibold">Séparation des responsabilités</h3><p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">Un client ne peut pas modifier lui-même l’avancement commercial, l’affectation, ni valider ses documents.</p></Card></div></div></div>;
 }

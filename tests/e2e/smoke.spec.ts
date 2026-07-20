@@ -4,6 +4,7 @@ const routes = [
   "/",
   "/comment-ca-marche",
   "/offres",
+  "/tarifs",
   "/accompagnement",
   "/choisir-statut",
   "/diagnostic",
@@ -15,6 +16,7 @@ const routes = [
   "/creer-entreprise-seul",
   "/creer-entreprise-a-plusieurs",
   "/creer-entreprise-en-etant-salarie",
+  "/creer-entreprise-demandeur-emploi",
   "/passer-micro-entreprise-en-societe",
   "/dossier-creation-entreprise-bloque",
   "/confidentialite",
@@ -58,11 +60,25 @@ for (const route of routes) {
 
 test("le diagnostic produit une orientation", async ({ page }) => {
   await page.goto("/diagnostic");
-  await page.getByRole("button", { name: /je suis prêt à créer/i }).click();
+  await page.getByRole("button", { name: /je veux créer une société seul/i }).click();
   await page.getByRole("button", { name: /étape suivante/i }).click();
   await page.getByRole("button", { name: /seul/i }).click();
   await page.getByRole("button", { name: /étape suivante/i }).click();
   await expect(page.locator("body")).toContainText(/activité|situation/i);
+});
+
+test("le diagnostic dossier bloqué affiche une synthèse avant les coordonnées", async ({ page }) => {
+  await page.goto("/diagnostic?intent=blocked_dossier");
+  await page.getByRole("button", { name: /statuts ou décisions/i }).click();
+  await page.getByLabel(/décrivez le message/i).fill("Une correction des statuts est demandée avant le dépôt.");
+  await page.getByRole("button", { name: /étape suivante/i }).click();
+  await expect(page.getByText(/point de blocage doit d’abord être qualifié/i)).toBeVisible();
+});
+
+test("une intention SAS ouvre directement le bon embranchement du diagnostic", async ({ page }) => {
+  await page.goto("/diagnostic?intent=creation_sas");
+  await expect(page.getByRole("button", { name: /à plusieurs/i })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText(/qui porte le projet/i)).toBeVisible();
 });
 
 test("la récupération du mot de passe confirme la demande", async ({ page }) => {
@@ -130,9 +146,9 @@ test("la page d'accueil applique les polices, la couleur d'action et les images 
   await page.goto("/");
   await expect(page.locator("body")).toHaveCSS("font-family", /Onest/);
   await expect(page.locator(".editorial-mark").first()).toHaveCSS("font-family", /Newsreader/);
-  const heroCta = page.locator("main").getByRole("link", { name: /Démarrer mon diagnostic/ }).first();
-  await expect(heroCta).toHaveCSS("background-color", "rgb(247, 245, 239)");
-  await expect(heroCta).toHaveCSS("color", "rgb(11, 18, 32)");
+  const heroCta = page.locator("main").getByRole("link", { name: /Faire le diagnostic/ }).first();
+  await expect(heroCta).toHaveCSS("background-color", "rgb(36, 87, 255)");
+  await expect(heroCta).toHaveCSS("color", "rgb(247, 245, 239)");
   await expect(page.locator("header").getByRole("link", { name: /Démarrer mon diagnostic/ })).toHaveCSS("background-color", "rgb(36, 87, 255)");
   const loadedImages = await page.locator("img").evaluateAll((images) => images.filter((image) => {
     const img = image as HTMLImageElement;
@@ -168,7 +184,7 @@ test("le ruban de formalités défile, reste exact et se suspend au survol", asy
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   const rail = page.locator("[data-ecosystem-rail]");
-  await expect(rail.getByRole("heading", { name: /écosystème officiel de la création d'entreprise/i })).toBeVisible();
+  await expect(rail.getByRole("heading", { name: /organismes et prestataires qui peuvent jalonner une création/i })).toBeVisible();
   await expect(rail.getByRole("img", { name: "INPI et République française" })).toBeVisible();
   await expect(rail.getByRole("img", { name: "URSSAF" })).toBeVisible();
   await expect(rail.getByRole("img", { name: "INSEE" })).toBeVisible();
@@ -202,7 +218,7 @@ test("les mouvements respectent la préférence de réduction", async ({ page })
 test("le CTA principal réagit clairement au survol", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  const cta = page.locator("main").getByRole("link", { name: /Démarrer mon diagnostic/ }).first();
+  const cta = page.locator("main").getByRole("link", { name: /Faire le diagnostic/ }).first();
   await page.waitForTimeout(1100);
   await cta.hover();
   await page.waitForTimeout(220);
@@ -210,19 +226,24 @@ test("le CTA principal réagit clairement au survol", async ({ page }) => {
   await expect(cta).not.toHaveCSS("transform", "none");
 });
 
-test("le héros utilise plusieurs images, une navigation active et un zoom lent", async ({ page }) => {
+test("le héros d'accueil présente une proposition stable et un aperçu produit", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  const hero = page.locator("[data-hero-carousel]");
-  await expect(hero.getByRole("heading", { name: /Créez votre société avec une méthode claire/i })).toBeVisible();
-  await expect(hero.getByRole("tab")).toHaveCount(5);
-  await expect(hero.locator("[data-hero-zoom]")).not.toHaveCSS("transform", "none");
-  await hero.getByRole("tab", { name: /Créer seul/i }).click();
-  await expect(hero.getByRole("heading", { name: /Comparez les options avant de choisir votre structure/i })).toBeVisible();
-  await expect(hero.getByRole("img", { name: /Créateur seul/ })).toBeVisible();
-  const pause = hero.getByRole("button", { name: /Mettre en pause/ });
-  await pause.click();
-  await expect(hero.getByRole("button", { name: /Reprendre le défilement/ })).toBeVisible();
+  const hero = page.locator("[data-home-conversion-hero]");
+  await expect(hero.getByRole("heading", { name: /Créez votre société avec un parcours clair et piloté/i })).toBeVisible();
+  await expect(hero.getByRole("link", { name: /Faire le diagnostic/i })).toBeVisible();
+  await expect(hero.getByText("Studio Horizon", { exact: true })).toBeVisible();
+  await expect(hero.getByRole("tab")).toHaveCount(0);
+  await expect(hero.getByRole("button", { name: /Mettre en pause/i })).toHaveCount(0);
+});
+
+test("le héros d'accueil ne change pas automatiquement son message", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto("/");
+  const heading = page.locator("[data-home-conversion-hero]").getByRole("heading").first();
+  const copy = await heading.textContent();
+  await page.waitForTimeout(3800);
+  await expect(heading).toHaveText(copy ?? "");
 });
 
 test("la navigation d'accueil est sombre sur le héros puis claire au défilement", async ({ page }) => {
@@ -242,33 +263,30 @@ for (const width of [320, 360, 390, 430]) {
   test(`la composition mobile reste complète et sans chevauchement à ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
-    const hero = page.locator("[data-hero-carousel]");
+    const hero = page.locator("[data-home-conversion-hero]");
     const headerSurface = page.locator("header .container-wide");
     const heading = hero.getByRole("heading").first();
-    const primaryCta = hero.locator(".hero-primary-cta");
-    const storyTabs = hero.locator(".hero-story-tabs");
+    const primaryCta = hero.locator("[data-primary-cta]");
     const assistant = page.locator("button[aria-label='Ouvrir le Guide Orée']");
 
     await expect(headerSurface).toBeVisible();
-    await expect(page.locator("header").getByRole("link", { name: "Démarrer" })).toBeVisible();
+    await expect(page.locator("header").getByRole("link", { name: "Se connecter" })).toBeVisible();
     await expect(page.locator("header").getByRole("button", { name: "Ouvrir le menu" })).toBeVisible();
     await expect(heading).toBeVisible();
     await expect(primaryCta).toBeVisible();
-    await expect(storyTabs.locator(".hero-story-title").first()).toHaveCSS("color", "rgb(247, 245, 239)");
-    await expect(storyTabs.locator(".hero-story-summary").first()).toContainText("Diagnostic, orientation et dossier");
     await expect(page.getByText("Orientation offerte")).toHaveCount(0);
+    await page.getByRole("button", { name: "Tout refuser" }).click();
     await expect(assistant).toBeVisible();
 
-    const boxes = await Promise.all([headerSurface, heading, primaryCta, storyTabs, assistant].map((locator) => locator.boundingBox()));
-    const [headerBox, headingBox, ctaBox, tabsBox, assistantBox] = boxes;
-    expect(headerBox && headingBox && ctaBox && tabsBox && assistantBox).toBeTruthy();
+    const boxes = await Promise.all([headerSurface, heading, primaryCta, assistant].map((locator) => locator.boundingBox()));
+    const [headerBox, headingBox, ctaBox, assistantBox] = boxes;
+    expect(headerBox && headingBox && ctaBox && assistantBox).toBeTruthy();
     expect(headingBox!.y).toBeGreaterThanOrEqual(headerBox!.y + headerBox!.height + 20);
-    expect(ctaBox!.y + ctaBox!.height).toBeLessThanOrEqual(tabsBox!.y - 8);
-    expect(assistantBox!.y + assistantBox!.height).toBeLessThanOrEqual(tabsBox!.y - 8);
-    expect(tabsBox!.x).toBeGreaterThanOrEqual(0);
-    expect(tabsBox!.x + tabsBox!.width).toBeLessThanOrEqual(width);
+    expect(ctaBox!.x).toBeGreaterThanOrEqual(0);
+    expect(ctaBox!.x + ctaBox!.width).toBeLessThanOrEqual(width);
+    expect(assistantBox!.x + assistantBox!.width).toBeLessThanOrEqual(width);
 
-    for (const control of [page.locator("header").getByRole("link", { name: "Démarrer" }), page.locator("header").getByRole("button", { name: "Ouvrir le menu" }), hero.getByRole("button", { name: /Mettre en pause/ })]) {
+    for (const control of [page.locator("header").getByRole("link", { name: "Se connecter" }), page.locator("header").getByRole("button", { name: "Ouvrir le menu" }), primaryCta]) {
       const box = await control.boundingBox();
       expect(box!.height).toBeGreaterThanOrEqual(44);
       expect(box!.width).toBeGreaterThanOrEqual(44);
@@ -280,6 +298,36 @@ for (const width of [320, 360, 390, 430]) {
   });
 }
 
+test("le consentement initial ne masque pas le CTA d'une page d'acquisition mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/creer-entreprise-demandeur-emploi");
+  const primaryCta = page.locator("main").getByRole("link", { name: /Comprendre mes options/i }).first();
+  const consent = page.getByLabel("Préférences de confidentialité");
+  await expect(primaryCta).toBeVisible();
+  await expect(consent).toBeVisible();
+  await expect(page.locator(".sticky-mobile-cta")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Ouvrir le Guide Orée" })).toHaveCount(0);
+  const [ctaBox, consentBox] = await Promise.all([primaryCta.boundingBox(), consent.boundingBox()]);
+  expect(ctaBox && consentBox).toBeTruthy();
+  expect(consentBox!.y).toBeGreaterThanOrEqual(ctaBox!.y + ctaBox!.height + 8);
+
+  await page.getByRole("button", { name: "Tout refuser" }).click();
+  const sticky = page.locator(".sticky-mobile-cta");
+  const assistant = page.getByRole("button", { name: "Ouvrir le Guide Orée" });
+  await expect(sticky).toBeVisible();
+  await expect(assistant).toBeVisible();
+  const [stickyBox, assistantBox] = await Promise.all([sticky.boundingBox(), assistant.boundingBox()]);
+  expect(stickyBox && assistantBox).toBeTruthy();
+  expect(assistantBox!.y + assistantBox!.height).toBeLessThanOrEqual(stickyBox!.y - 8);
+});
+
+test("la page tarifs garde une action utile dans le premier écran mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/tarifs");
+  await expect(page.locator("main").getByRole("link", { name: /Préciser mon besoin/i }).first()).toBeInViewport();
+  await expect(page.locator(".sticky-mobile-cta")).toHaveCount(0);
+});
+
 test("le chargement de route affiche l'identité et une progression animée", async ({ page }) => {
   await page.route("**/assets/HomePage-*.js", async (route) => {
     await new Promise((resolve) => setTimeout(resolve, 850));
@@ -290,7 +338,7 @@ test("le chargement de route affiche l'identité et une progression animée", as
   await expect(loader).toBeVisible();
   await expect(loader.getByRole("link", { name: /Orée Entreprises, accueil/ })).toBeVisible();
   await expect(loader).toContainText("Préparation de votre espace");
-  await expect(page.locator("[data-hero-carousel]")).toBeVisible();
+  await expect(page.locator("[data-home-conversion-hero]")).toBeVisible();
 });
 
 test("les contrôles à fond plein conservent un contraste lisible sur toutes les routes", async ({ page }) => {

@@ -31,12 +31,15 @@ Deno.serve(async (request) => {
   if (!user?.email) return safeError(request, 401, "authentication_required");
 
   const admin = createClient(url, service, { auth: { persistSession: false } });
-  const { data: lead } = await admin.from("leads").select("id,email,claim_token_hash,linked_user_id").eq("id", parsed.data.leadId).maybeSingle();
-  if (!lead || lead.linked_user_id) return safeError(request, 409, "lead_unavailable");
+  const { data: lead } = await admin.from("leads").select("id,email,claim_token_hash,claim_token_expires_at,linked_user_id,linked_project_id").eq("id", parsed.data.leadId).maybeSingle();
+  if (!lead) return safeError(request, 409, "lead_unavailable");
   if (lead.email.toLowerCase() !== user.email.toLowerCase()) return safeError(request, 403, "email_mismatch");
+  if (lead.linked_user_id === user.id) return json(request, { claimed: true, projectId: lead.linked_project_id ?? null, alreadyClaimed: true });
+  if (lead.linked_user_id) return safeError(request, 409, "lead_unavailable");
+  if (!lead.claim_token_expires_at || Date.parse(lead.claim_token_expires_at) <= Date.now()) return safeError(request, 410, "claim_token_expired");
   if (lead.claim_token_hash !== await sha256(parsed.data.claimToken)) return safeError(request, 403, "invalid_claim_token");
 
-  const { error } = await admin.from("leads").update({ linked_user_id: user.id, claim_token_hash: null }).eq("id", lead.id).is("linked_user_id", null);
+  const { error } = await admin.from("leads").update({ linked_user_id: user.id, claim_token_hash: null, claim_token_expires_at: null }).eq("id", lead.id).is("linked_user_id", null);
   if (error) return safeError(request, 500, "claim_failed");
   return json(request, { claimed: true });
 });

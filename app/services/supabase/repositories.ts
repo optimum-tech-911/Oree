@@ -1,7 +1,7 @@
 import { isSupabaseConfigured, supabase } from "@/services/supabase/client";
 import { mockDocuments, mockProject, mockTimeline } from "@/data/mock";
-import type { DiagnosticAnswers, DocumentItem, Project, TimelineEvent } from "@/types";
-import { readAttribution } from "@/services/attribution";
+import type { DiagnosticAnswers, DiagnosticRecommendation, DocumentItem, Project, TimelineEvent } from "@/types";
+import { readAttribution, type Attribution } from "@/services/attribution";
 import { createId } from "@/lib/id";
 export interface ProjectRepository {
   getCurrent(): Promise<Project>;
@@ -10,7 +10,56 @@ export interface ProjectRepository {
 }
 
 export interface LeadRepository {
-  submit(input: DiagnosticAnswers): Promise<{ id: string; demo: boolean }>;
+  submit(input: DiagnosticAnswers, options?: LeadSubmissionOptions): Promise<LeadSubmissionResult>;
+}
+
+export type LeadSubmissionResult = { id: string; demo: boolean; claimToken?: string };
+
+export type LeadSubmissionBody = {
+  answers: DiagnosticAnswers;
+  attribution?: Attribution;
+  result?: DiagnosticRecommendation;
+  submissionId?: string;
+  anonymousSessionId?: string;
+  turnstileToken?: string;
+  honeypot?: string;
+};
+
+export type LeadSubmissionOptions = {
+  result?: DiagnosticRecommendation;
+  submissionId?: string;
+  anonymousSessionId?: string;
+  turnstileToken?: string;
+  honeypot?: string;
+};
+
+export function buildLeadSubmissionBody(
+  input: DiagnosticAnswers,
+  attribution: Attribution | null = readAttribution(),
+  options: LeadSubmissionOptions = {},
+): LeadSubmissionBody {
+  const body: LeadSubmissionBody = { answers: input };
+  if (attribution) body.attribution = attribution;
+  if (options.result) body.result = options.result;
+  if (options.submissionId) body.submissionId = options.submissionId;
+  if (options.anonymousSessionId) body.anonymousSessionId = options.anonymousSessionId;
+  if (options.turnstileToken) body.turnstileToken = options.turnstileToken;
+  if (options.honeypot) body.honeypot = options.honeypot;
+  return body;
+}
+
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+export function parseLeadSubmissionResponse(data: unknown): LeadSubmissionResult {
+  if (!data || typeof data !== "object") throw new Error("La transmission n’a pas été confirmée par le serveur.");
+  const record = data as Record<string, unknown>;
+  if (typeof record.id !== "string" || !UUID_PATTERN.test(record.id)) {
+    throw new Error("La transmission n’a pas été confirmée par le serveur.");
+  }
+  if (typeof record.claimToken !== "string" || record.claimToken.length < 40 || record.claimToken.length > 200) {
+    throw new Error("La continuité sécurisée du dossier n’a pas pu être préparée.");
+  }
+  return { id: record.id, claimToken: record.claimToken, demo: false };
 }
 
 export const projectRepository: ProjectRepository = {
@@ -63,15 +112,15 @@ export const projectRepository: ProjectRepository = {
 };
 
 export const leadRepository: LeadRepository = {
-  async submit(input) {
+  async submit(input, options) {
     if (!isSupabaseConfigured || !supabase) {
       await new Promise((resolve) => setTimeout(resolve, 650));
       return { id: `demo_${createId()}`, demo: true };
     }
     const { data, error } = await supabase.functions.invoke("submit-lead", {
-      body: { answers: input, attribution: readAttribution() },
+      body: buildLeadSubmissionBody(input, readAttribution(), options),
     });
     if (error) throw error;
-    return { id: data.id as string, demo: false };
+    return parseLeadSubmissionResponse(data);
   },
 };

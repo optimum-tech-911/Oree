@@ -42,17 +42,17 @@ export function EcosystemRail() {
       <div className="container-shell py-10 sm:py-12">
         <div className="grid gap-4 lg:grid-cols-[.72fr_1.28fr] lg:items-end lg:gap-12">
           <h2 id="ecosystem-title" className="max-w-2xl text-balance text-2xl font-semibold leading-tight tracking-[-.035em] sm:text-3xl">
-            Un parcours connecté à l'écosystème officiel de la création d'entreprise
+            Les organismes et prestataires qui peuvent jalonner une création
           </h2>
           <p className="max-w-3xl text-sm leading-7 text-[color:var(--muted)] sm:text-base">
-            Selon votre situation, les informations de votre dossier sont préparées pour les organismes compétents intervenant dans la création de votre société.
+            Leur rôle varie selon la structure, l'activité et les choix du projet. Cette vue situe les interlocuteurs possibles sans laisser entendre qu'ils sont tous obligatoires ou partenaires d'ORÉE.
           </p>
         </div>
 
         <div className="mt-8 hidden min-h-[82px] grid-cols-[215px_minmax(0,1fr)] items-stretch border-y border-[var(--line)] md:grid">
           <div className="relative z-10 flex items-center gap-3 border-r border-[var(--line)] bg-[var(--canvas)] pr-5">
             <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--ink)] text-[color:var(--mint)]"><Landmark className="size-4" /></span>
-            <span className="text-[10px] font-semibold uppercase leading-4 tracking-[.14em] text-[color:var(--ink)]">Écosystème<br />de formalités</span>
+            <span className="text-[10px] font-semibold uppercase leading-4 tracking-[.14em] text-[color:var(--ink)]">Interlocuteurs<br />possibles</span>
           </div>
           <div className="ecosystem-viewport mask-fade-x" tabIndex={0} aria-label="Organismes susceptibles d'intervenir dans le parcours. Survolez ou sélectionnez cette zone pour suspendre le défilement.">
             <div className="ecosystem-track">

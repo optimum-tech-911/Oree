@@ -8,6 +8,7 @@ export type LandingPageContent = {
   description: string;
   primaryCta: string;
   secondaryCta: string;
+  secondaryHref: string;
   searchIntent: string;
   legalForms?: LegalFormCode[];
   proofPoints: string[];
@@ -25,9 +26,10 @@ export const landingPages: Record<string, LandingPageContent> = {
     description: "Vérifiez que la SASU correspond à votre projet, centralisez vos informations et avancez étape par étape depuis un espace unique.",
     primaryCta: "Commencer mon projet SASU",
     secondaryCta: "Comparer avec l'EURL",
+    secondaryHref: "/creation-eurl",
     searchIntent: "creation_sasu",
     legalForms: ["SASU", "EURL"],
-    proofPoints: ["Orientation initiale en quelques minutes", "Dossier et documents centralisés", "Accompagnement jusqu'à la formalité"],
+    proofPoints: ["Orientation avant création de compte", "Comparaison explicite avec l'EURL", "Points à confirmer toujours visibles"],
     painPoints: [
       { title: "Choix à confirmer", description: "La SASU est souple, mais elle n'est pas automatiquement la meilleure réponse pour tous les projets solo." },
       { title: "Statuts à cadrer", description: "Les règles de fonctionnement doivent correspondre à votre projet, à votre rémunération et à vos perspectives." },
@@ -53,9 +55,10 @@ export const landingPages: Record<string, LandingPageContent> = {
     description: "Clarifiez le cadre de votre projet solo, préparez vos informations et faites suivre chaque pièce avant la formalité.",
     primaryCta: "Commencer mon projet EURL",
     secondaryCta: "Comparer avec la SASU",
+    secondaryHref: "/creation-sasu",
     searchIntent: "creation_eurl",
     legalForms: ["EURL", "SASU"],
-    proofPoints: ["Parcours adapté au gérant associé", "Comparaison claire avec la SASU", "Checklist documentaire dynamique"],
+    proofPoints: ["Situation du gérant prise en compte", "Comparaison explicite avec la SASU", "Pièces à anticiper présentées"],
     painPoints: [
       { title: "Régime du dirigeant", description: "Le statut social du gérant doit être compris avant de fixer la structure et la rémunération." },
       { title: "Cadre plus balisé", description: "L'EURL est encadrée par la loi : c'est rassurant, mais cela laisse moins de liberté que la SASU." },
@@ -70,7 +73,7 @@ export const landingPages: Record<string, LandingPageContent> = {
     faq: [
       { question: "Pourquoi comparer EURL et SASU ?", answer: "Les deux permettent de créer seul, mais leur gouvernance, le régime du dirigeant, la liberté statutaire et l'évolution vers plusieurs associés diffèrent." },
       { question: "L'EURL impose-t-elle un capital minimum élevé ?", answer: "Le capital doit être cohérent avec le projet. La plateforme distingue le montant envisagé, les apports et les justificatifs à préparer." },
-      { question: "Puis-je inviter mon expert-comptable ?", answer: "Un collaborateur externe pourra être invité avec un rôle et des droits d'accès limités aux informations nécessaires à son intervention." },
+      { question: "Puis-je inviter mon expert-comptable ?", answer: "La démonstration n'active pas encore les invitations externes. Dans le mode connecté, tout accès devra être limité aux informations nécessaires et confirmé avant ouverture." },
     ],
   },
   "creation-sas": {
@@ -81,16 +84,17 @@ export const landingPages: Record<string, LandingPageContent> = {
     description: "Rôles, capital, décisions, documents : organisez un projet à plusieurs dans un espace commun avant la formalité.",
     primaryCta: "Préparer notre SAS",
     secondaryCta: "Comparer avec la SARL",
+    secondaryHref: "/creation-sarl",
     searchIntent: "creation_sas",
     legalForms: ["SAS", "SARL"],
-    proofPoints: ["Parcours multi-associés", "Répartition du capital visualisée", "Validations individuelles suivies"],
+    proofPoints: ["Projet multi-associés pris en compte", "Capital et rôles à préciser", "Gouvernance à confirmer"],
     painPoints: [
       { title: "Gouvernance à écrire", description: "La souplesse de la SAS exige de préciser les règles de décision et les responsabilités." },
       { title: "Capital à répartir", description: "Les apports et pourcentages doivent être cohérents, acceptés et documentés." },
       { title: "Décisions partagées", description: "Chaque associé doit savoir ce qu'il doit compléter, fournir ou valider." },
     ],
     steps: [
-      { number: "01", title: "Invitez les associés", description: "Chaque personne complète ses informations dans un parcours coordonné." },
+      { number: "01", title: "Recensez les associés", description: "Identifiez chaque personne, son rôle envisagé et les informations à recueillir." },
       { number: "02", title: "Cadrez les rôles", description: "Présidence, pouvoirs, décisions et répartition du capital sont rendus visibles." },
       { number: "03", title: "Centralisez les pièces", description: "Suivez la complétude de chaque associé et de la future société." },
       { number: "04", title: "Validez ensemble", description: "Les étapes critiques sont confirmées avant la préparation finale." },
@@ -98,7 +102,7 @@ export const landingPages: Record<string, LandingPageContent> = {
     faq: [
       { question: "La SAS est-elle préférable à la SARL ?", answer: "Cela dépend du projet. La SAS offre une forte liberté statutaire, tandis que la SARL apporte un cadre légal plus balisé. Les objectifs des associés doivent guider l'analyse." },
       { question: "Comment répartir le capital ?", answer: "La plateforme permet de simuler une répartition et de signaler les incohérences, mais l'accord final appartient aux associés et peut nécessiter un conseil professionnel." },
-      { question: "Tous les associés doivent-ils créer un compte ?", answer: "Le parcours cible prévoit des invitations individuelles afin de collecter et valider les informations sans échange de documents par email." },
+      { question: "Tous les associés doivent-ils créer un compte ?", answer: "Le fonctionnement définitif des invitations doit encore être relié au mode connecté. Les droits de chaque associé devront rester limités à son rôle et aux informations nécessaires." },
     ],
   },
   "creation-sarl": {
@@ -109,9 +113,10 @@ export const landingPages: Record<string, LandingPageContent> = {
     description: "Organisez les associés, la gérance, les apports et le dossier dans un parcours collectif et lisible.",
     primaryCta: "Préparer notre SARL",
     secondaryCta: "Comparer avec la SAS",
+    secondaryHref: "/creation-sas",
     searchIntent: "creation_sarl",
     legalForms: ["SARL", "SAS"],
-    proofPoints: ["Cadre multi-associés guidé", "Suivi de la gérance", "Documents et validations réunis"],
+    proofPoints: ["Cadre multi-associés expliqué", "Situation de la gérance examinée", "Pièces à anticiper présentées"],
     painPoints: [
       { title: "Gérance à définir", description: "Le statut du ou des gérants dépend notamment de la détention du capital." },
       { title: "Parts à organiser", description: "La répartition des parts et les règles de cession doivent être comprises par tous." },
@@ -136,9 +141,10 @@ export const landingPages: Record<string, LandingPageContent> = {
     highlight: "un calendrier et des décisions explicites.",
     description: "Construisez votre feuille de route, sauvegardez votre progression et choisissez le bon moment pour lancer les formalités.",
     primaryCta: "Construire ma feuille de route",
-    secondaryCta: "Parler à un conseiller",
+    secondaryCta: "Demander un échange",
+    secondaryHref: "/rendez-vous",
     searchIntent: "employee_transition",
-    proofPoints: ["Parcours discret et sauvegardé", "Calendrier adapté à votre transition", "Rendez-vous en dehors des heures de bureau"],
+    proofPoints: ["Réponses non sensibles conservées localement", "Calendrier intégré à la synthèse", "Demande d'échange facultative"],
     painPoints: [
       { title: "Choisir le bon moment", description: "Votre projet peut être préparé avant la date réelle de création." },
       { title: "Conserver de la visibilité", description: "Une feuille de route distingue les décisions urgentes de celles qui peuvent attendre." },
@@ -153,7 +159,7 @@ export const landingPages: Record<string, LandingPageContent> = {
     faq: [
       { question: "Dois-je quitter mon emploi avant de préparer ma société ?", answer: "Non. Vous pouvez organiser le projet, comparer les structures et réunir des informations avant de déclencher les formalités." },
       { question: "Mon diagnostic reste-t-il confidentiel ?", answer: "Les réponses non sensibles sont sauvegardées localement pendant l'exploration. Les données personnelles enregistrées dans le service connecté devront être protégées par l'authentification et des droits d'accès stricts." },
-      { question: "Puis-je prendre rendez-vous le soir ?", answer: "L'interface prévoit des créneaux étendus afin de s'adapter aux personnes encore en activité." },
+      { question: "Puis-je demander un créneau adapté à mon emploi ?", answer: "Vous pouvez formuler une demande, mais les disponibilités et la durée de l'échange doivent être confirmées dans le calendrier réellement connecté." },
     ],
   },
   "passer-micro-entreprise-en-societe": {
@@ -164,9 +170,10 @@ export const landingPages: Record<string, LandingPageContent> = {
     description: "Analysez les raisons du changement, comparez les structures et préparez la transition en préservant la continuité de votre activité.",
     primaryCta: "Étudier mon passage en société",
     secondaryCta: "Comparer SASU et EURL",
+    secondaryHref: "/choisir-statut",
     searchIntent: "micro_to_company",
     legalForms: ["SASU", "EURL"],
-    proofPoints: ["Parcours dédié aux indépendants actifs", "Prise en compte des clients existants", "Plan de transition structuré"],
+    proofPoints: ["Activité existante prise en compte", "Continuité des contrats à vérifier", "Date de transition à préciser"],
     painPoints: [
       { title: "Activité déjà en cours", description: "La transition doit tenir compte des clients, contrats, factures et outils utilisés." },
       { title: "Charges réelles", description: "Une structure adaptée dépend aussi des dépenses et du mode de rémunération." },
@@ -192,19 +199,20 @@ export const landingPages: Record<string, LandingPageContent> = {
     description: "Réunissez les décisions, rôles, apports et documents des associés dans un espace commun.",
     primaryCta: "Configurer notre projet",
     secondaryCta: "Comparer SAS et SARL",
+    secondaryHref: "/choisir-statut",
     searchIntent: "multi_founder",
     legalForms: ["SAS", "SARL"],
-    proofPoints: ["Invitations individuelles", "Capital et rôles visualisés", "Progression commune"],
+    proofPoints: ["Situation des associés prise en compte", "Capital et rôles à préciser", "Gouvernance rendue visible"],
     painPoints: [
       { title: "Décisions implicites", description: "Les désaccords apparaissent souvent lorsque les rôles n'ont pas été explicités tôt." },
       { title: "Pièces dispersées", description: "Les documents transmis dans plusieurs conversations sont difficiles à suivre." },
       { title: "Responsabilité floue", description: "Chaque action doit avoir un responsable, une date et un statut." },
     ],
     steps: [
-      { number: "01", title: "Créez l'espace", description: "Un porteur de projet configure la base et invite les autres." },
+      { number: "01", title: "Cadrez le groupe", description: "Un porteur de projet recense les associés, leurs rôles et les décisions à prendre." },
       { number: "02", title: "Alignez les choix", description: "Rôles, apports, capital, décisions et calendrier." },
-      { number: "03", title: "Réunissez les pièces", description: "Chaque associé complète sa partie de manière sécurisée." },
-      { number: "04", title: "Validez le dossier", description: "La progression collective reste lisible jusqu'à la formalité." },
+      { number: "03", title: "Anticipez les pièces", description: "La synthèse distingue les informations attendues pour chaque associé." },
+      { number: "04", title: "Préparez la validation", description: "Les décisions communes et les points professionnels à confirmer restent visibles." },
     ],
     faq: [
       { question: "Pouvons-nous modifier la répartition du capital ?", answer: "Oui, tant que le projet n'est pas finalisé. Chaque modification importante doit être datée et conservée dans l'historique du dossier." },
@@ -220,9 +228,10 @@ export const landingPages: Record<string, LandingPageContent> = {
     description: "Comparez les formes unipersonnelles, précisez vos priorités et organisez les informations nécessaires avant d'engager les formalités.",
     primaryCta: "Étudier mon projet",
     secondaryCta: "Comparer les statuts",
+    secondaryHref: "/choisir-statut",
     searchIntent: "solo_founder",
     legalForms: ["SASU", "EURL"],
-    proofPoints: ["Comparaison des principales structures", "Orientation expliquée et modifiable", "Feuille de route adaptée au projet"],
+    proofPoints: ["Comparaison des structures principales", "Orientation expliquée et modifiable", "Points à valider identifiés"],
     painPoints: [
       { title: "Plusieurs structures possibles", description: "Créer seul ne conduit pas automatiquement à une SASU ou à une EURL. L'activité, la rémunération et les perspectives doivent être examinées ensemble." },
       { title: "Protection et rémunération", description: "Le régime du dirigeant, le mode de rémunération envisagé et la protection recherchée influencent la comparaison." },
@@ -240,6 +249,35 @@ export const landingPages: Record<string, LandingPageContent> = {
       { question: "Le régime micro est-il toujours le plus simple ?", answer: "Il peut convenir à certaines activités en phase de lancement, mais ses limites et son mode de calcul doivent être comparés aux besoins réels du projet." },
     ],
   },
+  "creer-entreprise-demandeur-emploi": {
+    slug: "creer-entreprise-demandeur-emploi",
+    eyebrow: "Création & demande d’emploi",
+    title: "Créez votre société en clarifiant d’abord",
+    highlight: "votre calendrier et vos options.",
+    description: "Structurez le projet avec une formulation prudente sur l’ARE, l’ARCE et l’ACRE, dont les conditions dépendent de votre situation personnelle.",
+    primaryCta: "Comprendre mes options",
+    secondaryCta: "Demander un échange",
+    secondaryHref: "/rendez-vous",
+    searchIntent: "job_seeker_creation",
+    legalForms: ["SASU", "EURL"],
+    proofPoints: ["Aucune promesse automatique sur les aides", "Calendrier pris en compte", "Éligibilité à confirmer officiellement"],
+    painPoints: [
+      { title: "Préserver ses droits", description: "Les conséquences dépendent du dispositif, de la rémunération et des démarches effectuées." },
+      { title: "Choisir le bon calendrier", description: "La date de création et les demandes d’aide doivent être organisées avec attention." },
+      { title: "Éviter les conclusions générales", description: "Une page d’information ne remplace pas la vérification de votre dossier auprès des organismes compétents." },
+    ],
+    steps: [
+      { number: "01", title: "Situez votre projet", description: "Niveau d’avancement, date souhaitée et activité envisagée." },
+      { number: "02", title: "Précisez votre situation", description: "Dispositifs envisagés, rémunération et accompagnement attendu." },
+      { number: "03", title: "Recevez une synthèse prudente", description: "Points à vérifier et formes juridiques à comparer." },
+      { number: "04", title: "Validez la prochaine étape", description: "Information officielle, rendez-vous ou espace projet." },
+    ],
+    faq: [
+      { question: "Orée peut-elle garantir le maintien de mes allocations ?", answer: "Non. L’éligibilité et le montant dépendent de votre dossier et des règles applicables. La plateforme met en évidence les points à vérifier." },
+      { question: "ARE, ARCE et ACRE sont-elles la même aide ?", answer: "Non. Elles répondent à des logiques différentes. Le parcours doit vous orienter vers les informations officielles et une validation adaptée." },
+      { question: "Quand faut-il prendre rendez-vous ?", answer: "Un échange devient utile lorsqu’une décision de calendrier, de rémunération ou de dispositif ne peut pas être clarifiée par le parcours indicatif." },
+    ],
+  },
   "dossier-creation-entreprise-bloque": {
     slug: "dossier-creation-entreprise-bloque",
     eyebrow: "Dossier bloqué",
@@ -248,8 +286,9 @@ export const landingPages: Record<string, LandingPageContent> = {
     description: "Décrivez l'étape, la demande reçue et les pièces concernées pour orienter rapidement la vérification.",
     primaryCta: "Faire vérifier mon blocage",
     secondaryCta: "Réserver un appel",
+    secondaryHref: "/rendez-vous",
     searchIntent: "blocked_dossier",
-    proofPoints: ["Diagnostic du point de blocage", "Documents reliés à la demande", "Historique centralisé"],
+    proofPoints: ["Qualification du point de blocage", "Aucun document sensible pour commencer", "Résolution non garantie"],
     painPoints: [
       { title: "Message difficile à comprendre", description: "Les demandes administratives utilisent parfois des termes qui ne permettent pas de savoir quoi corriger." },
       { title: "Mauvaise pièce renvoyée", description: "La plateforme associe chaque correction à la pièce et au commentaire correspondant." },

@@ -16,6 +16,9 @@ import {
   Utensils,
   WandSparkles,
   Wrench,
+  FileWarning,
+  UserRoundSearch,
+  RefreshCw,
 } from "lucide-react";
 import type { DiagnosticAnswers, ProjectStage } from "@/types";
 
@@ -25,6 +28,16 @@ export type Choice<T extends string = string> = {
   description?: string;
   icon?: typeof Lightbulb;
 };
+
+export const startingChoices: Choice<NonNullable<DiagnosticAnswers["startingSituation"]>>[] = [
+  { value: "solo", label: "Je veux créer une société seul", description: "Je compare principalement SASU et EURL.", icon: CircleUserRound },
+  { value: "multiple", label: "Je veux créer une société à plusieurs", description: "Le projet implique au moins un autre associé.", icon: UsersRound },
+  { value: "micro", label: "Je suis déjà en micro-entreprise", description: "Je veux vérifier si le passage en société est justifié.", icon: RefreshCw },
+  { value: "employee", label: "Je suis salarié et je prépare une transition", description: "Je souhaite avancer sans conclure trop vite sur mon contrat ou mes droits.", icon: BriefcaseBusiness },
+  { value: "job-seeker", label: "Je suis demandeur d’emploi", description: "Je veux clarifier mon calendrier et les dispositifs à vérifier.", icon: UserRoundSearch },
+  { value: "blocked", label: "Mon dossier de création est bloqué", description: "J’ai reçu une demande, un rejet ou un message difficile à interpréter.", icon: FileWarning },
+  { value: "unknown", label: "Je ne sais pas encore quelle forme choisir", description: "Je veux commencer par comprendre les options.", icon: Compass },
+];
 
 export const stageChoices: Choice<ProjectStage>[] = [
   { value: "exploration", label: "J'explore encore", description: "J'ai une idée, mais tout n'est pas encore défini.", icon: Lightbulb },
@@ -79,6 +92,18 @@ export const priorityChoices: Choice[] = [
   { value: "hire", label: "Recruter ou développer une équipe", icon: BriefcaseBusiness },
   { value: "credibility", label: "Renforcer la crédibilité commerciale", icon: PackageCheck },
   { value: "speed", label: "Avancer rapidement", icon: CalendarClock },
+];
+
+export const remunerationChoices: Choice<NonNullable<DiagnosticAnswers["remunerationTiming"]>>[] = [
+  { value: "immediate", label: "Oui, dès le démarrage", description: "Je prévois de me rémunérer rapidement." },
+  { value: "later", label: "Pas forcément au début", description: "Je peux différer une rémunération personnelle." },
+  { value: "unknown", label: "Je ne sais pas encore", description: "Je souhaite comprendre les conséquences avant de décider." },
+];
+
+export const supportChoices: Choice<NonNullable<DiagnosticAnswers["supportLevel"]>>[] = [
+  { value: "orientation", label: "Je veux surtout comprendre mes options", description: "Une synthèse et des comparaisons ciblées me suffisent pour l’instant." },
+  { value: "guided", label: "Je veux organiser mon dossier", description: "Je souhaite réunir les informations, pièces et étapes dans le même parcours." },
+  { value: "human-review", label: "Je souhaite demander une revue humaine", description: "La disponibilité et le périmètre de l'intervenant devront être confirmés avant l'échange." },
 ];
 
 export const timelineChoices: Choice<NonNullable<DiagnosticAnswers["timeline"]>>[] = [

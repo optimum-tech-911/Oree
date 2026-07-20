@@ -23,6 +23,7 @@ export type ProjectStage =
   | "blocked-dossier";
 
 export type DiagnosticAnswers = {
+  startingSituation?: "solo" | "multiple" | "micro" | "employee" | "job-seeker" | "blocked" | "unknown";
   stage?: ProjectStage;
   founderMode?: "solo" | "duo" | "multiple" | "unknown";
   professionalStatus?: "employee" | "job-seeker" | "student" | "independent" | "director" | "other";
@@ -31,11 +32,17 @@ export type DiagnosticAnswers = {
   existingClients?: boolean;
   priorities?: string[];
   timeline?: "under-30" | "30-90" | "over-90" | "unknown";
+  remunerationTiming?: "immediate" | "later" | "unknown";
+  supportLevel?: "orientation" | "guided" | "human-review";
+  blockedStage?: string;
+  blockedMessage?: string;
   department?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
   phone?: string;
+  privacyAccepted?: boolean;
+  wantsCallback?: boolean;
 };
 
 export type DiagnosticRecommendation = {

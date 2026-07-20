@@ -13,7 +13,7 @@ export const assistantKnowledge: AssistantKnowledge[] = [
     title: "Commencer le diagnostic",
     route: "/diagnostic",
     keywords: ["commencer", "diagnostic", "test", "questionnaire", "orientation", "je ne sais pas", "statut"],
-    answer: "Le diagnostic commence par votre niveau d'avancement, puis adapte les questions à votre situation : seul ou à plusieurs, activité actuelle, calendrier et priorités. Vous pouvez le lancer sans créer de compte.",
+    answer: "Le diagnostic commence par votre situation : seul, à plusieurs, micro-entreprise, salariat, demande d’emploi, dossier bloqué ou statut encore incertain. Vous pouvez le lancer sans créer de compte.",
     actions: [{ label: "Démarrer le diagnostic", href: "/diagnostic" }],
   },
   {
@@ -72,12 +72,20 @@ export const assistantKnowledge: AssistantKnowledge[] = [
     actions: [{ label: "Étudier mon passage en société", href: "/passer-micro-entreprise-en-societe" }],
   },
   {
+    id: "job-seeker",
+    title: "Créer une société en étant demandeur d’emploi",
+    route: "/creer-entreprise-demandeur-emploi",
+    keywords: ["demandeur d'emploi", "chômage", "chomage", "are", "arce", "acre", "allocation", "france travail"],
+    answer: "Le parcours aide à organiser le calendrier et les points à vérifier. Il ne garantit ni éligibilité, ni maintien des allocations : ces éléments dépendent du dossier et des règles applicables.",
+    actions: [{ label: "Comprendre les points à vérifier", href: "/creer-entreprise-demandeur-emploi" }],
+  },
+  {
     id: "pricing",
     title: "Offres et coûts",
-    route: "/offres",
+    route: "/tarifs",
     keywords: ["prix", "tarif", "coût", "cout", "combien", "frais", "offre", "paiement"],
     answer: "Les offres distinguent les honoraires du service, les frais légaux obligatoires et les éventuelles prestations tierces. Un devis détaillé doit préciser les montants applicables avant tout engagement.",
-    actions: [{ label: "Voir les offres", href: "/offres" }],
+    actions: [{ label: "Voir les tarifs", href: "/tarifs" }],
   },
   {
     id: "tracking",

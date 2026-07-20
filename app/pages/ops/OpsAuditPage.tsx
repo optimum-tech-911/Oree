@@ -1,0 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
+import { History, ShieldCheck } from "lucide-react";
+import { Card } from "@/components/ui/Card";
+import { operationsRepository } from "@/services/supabase/operations";
+import { usePageMeta } from "@/hooks/usePageMeta";
+
+export default function OpsAuditPage() {
+  usePageMeta("Journal d’audit", "Observez les actions sensibles consignées par la plateforme.");
+  const { data = [], isLoading, error } = useQuery({ queryKey: ["ops", "audit"], queryFn: operationsRepository.getAudit, refetchInterval: 30_000 });
+  return <div className="mx-auto max-w-[1300px] space-y-5"><section className="hero-grid surface-noise rounded-[32px] bg-[var(--night)] p-7 text-white sm:p-10"><span className="grid size-13 place-items-center rounded-[18px] bg-[var(--mint)] text-[color:var(--ink)]"><History className="size-5" /></span><h1 className="mt-6 text-4xl font-semibold tracking-[-.055em] sm:text-5xl">Journal des actions sensibles</h1><p className="mt-4 max-w-2xl text-sm leading-7 text-white/72">Affectations, qualifications, contrôles documentaires, rendez-vous et changements de rôle sont consignés côté serveur.</p></section>{error ? <Card className="p-5 text-[color:var(--blue)]">{error instanceof Error ? error.message : "Chargement impossible"}</Card> : null}<Card className="overflow-hidden"><div className="flex items-center gap-3 border-b border-[var(--line)] p-5"><ShieldCheck className="size-5" /><p className="font-semibold">{isLoading ? "Chargement…" : `${data.length} événement(s) accessible(s)`}</p></div><div className="divide-y divide-[var(--line)]">{data.map((event) => <div key={event.id} className="grid gap-2 p-5 sm:grid-cols-[180px_1fr_auto] sm:items-center"><p className="text-xs text-[color:var(--muted)]">{new Date(event.created_at).toLocaleString("fr-FR")}</p><div><p className="font-semibold">{event.action}</p><p className="mt-1 text-xs text-[color:var(--muted)]">{event.entity_type} · {event.entity_id ?? "sans identifiant"}</p></div><span className="rounded-full bg-[var(--paper)] px-3 py-1.5 text-xs">{event.project_id ? "Projet" : "Global"}</span></div>)}{!isLoading && data.length === 0 ? <p className="p-12 text-center text-sm text-[color:var(--muted)]">Aucun événement accessible.</p> : null}</div></Card></div>;
+}

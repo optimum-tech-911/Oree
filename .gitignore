@@ -10,3 +10,7 @@ test-results
 *.local
 
 visual-dist
+supabase/.temp/
+
+# Local comparison repository used only during the V3/V4 merge; never publish or commit it.
+oree-company-platform-v4/

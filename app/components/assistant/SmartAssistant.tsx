@@ -4,6 +4,8 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowRight, Bot, ChevronRight, Command, Compass, FileSearch, ListChecks, Mic, MicOff, Send, X } from "lucide-react";
 import { assistantKnowledge, type AssistantKnowledge } from "@/content/knowledge";
 import generatedIndex from "@/generated/search-index.json";
+import { mobileConversionForPath } from "@/components/layout/MobileConversionBar";
+import { readConsent } from "@/features/consent/consent";
 import { normalizeText } from "@/lib/format";
 import { analytics } from "@/services/analytics";
 import { cn } from "@/lib/cn";
@@ -82,6 +84,7 @@ export function SmartAssistant() {
   const [listening, setListening] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [homeHeroVisible, setHomeHeroVisible] = useState(false);
+  const [consentResolved, setConsentResolved] = useState(() => Boolean(readConsent()));
   const location = useLocation();
   const navigate = useNavigate();
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -91,12 +94,29 @@ export function SmartAssistant() {
   const records = generatedIndex as GeneratedRecord[];
 
   const currentKnowledge = useMemo(() => assistantKnowledge.filter((item) => location.pathname.startsWith(item.route)), [location.pathname]);
+  const hasMobileConversion = Boolean(mobileConversionForPath(location.pathname));
 
   function openAssistant() {
+    if (!consentResolved) return;
     if (messages.length === 0) setMessages([{ id: createId(), role: "assistant", text: contextualWelcome(location.pathname) }]);
     setOpen(true);
+    window.dispatchEvent(new CustomEvent("oree:assistant-visibility", { detail: { open: true } }));
     analytics.track("assistant_opened", { path: location.pathname });
   }
+
+  function closeAssistant() {
+    setOpen(false);
+    window.dispatchEvent(new CustomEvent("oree:assistant-visibility", { detail: { open: false } }));
+  }
+
+  useEffect(() => {
+    const updateConsent = () => setConsentResolved(Boolean(readConsent()));
+    window.addEventListener("oree:consent-updated", updateConsent);
+    return () => {
+      window.removeEventListener("oree:consent-updated", updateConsent);
+      window.dispatchEvent(new CustomEvent("oree:assistant-visibility", { detail: { open: false } }));
+    };
+  }, []);
 
   useEffect(() => {
     const onOpen = () => openAssistant();
@@ -105,7 +125,7 @@ export function SmartAssistant() {
         event.preventDefault();
         openAssistant();
       }
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") closeAssistant();
     };
     window.addEventListener("oree:assistant-open", onOpen);
     window.addEventListener("keydown", onKey);
@@ -201,13 +221,23 @@ export function SmartAssistant() {
     recognition.start();
   }
 
+  if (!consentResolved) return null;
+
   return (
     <>
       <motion.button
         type="button"
         onClick={openAssistant}
         whileHover={reduce ? undefined : { y: -4 }}
-        className={cn("fixed right-3 z-[70] flex h-12 items-center gap-2 rounded-full border border-white/10 bg-[var(--ink)] px-2.5 text-xs font-semibold text-white shadow-[0_18px_52px_rgba(11,18,32,.28)] transition-all duration-500 sm:right-6", location.pathname === "/" && homeHeroVisible ? "bottom-auto top-[7rem]" : "bottom-24 top-auto lg:bottom-6", open && "pointer-events-none scale-90 opacity-0")}
+        className={cn(
+          "fixed right-3 z-[70] flex h-12 items-center gap-2 rounded-full border border-white/10 bg-[var(--ink)] px-2.5 text-xs font-semibold text-white shadow-[0_18px_52px_rgba(11,18,32,.28)] transition-all duration-500 sm:right-6",
+          location.pathname === "/" && homeHeroVisible
+            ? "bottom-[max(1rem,env(safe-area-inset-bottom))] top-auto sm:bottom-auto sm:top-[7rem]"
+            : hasMobileConversion
+              ? "bottom-[calc(5.75rem+env(safe-area-inset-bottom))] top-auto lg:bottom-6"
+              : "bottom-[max(1rem,env(safe-area-inset-bottom))] top-auto lg:bottom-6",
+          open && "pointer-events-none scale-90 opacity-0",
+        )}
         aria-label="Ouvrir le Guide Orée"
       >
         <span className="relative grid size-8 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><Bot className="size-4" /><span className="assistant-pulse" /></span>
@@ -217,7 +247,7 @@ export function SmartAssistant() {
       <AnimatePresence>
         {open ? (
           <>
-            <motion.button type="button" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} className="fixed inset-0 z-[75] bg-[var(--ink)]/50 backdrop-blur-[6px]" aria-label="Fermer l'assistant" />
+            <motion.button type="button" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={closeAssistant} className="fixed inset-0 z-[75] bg-[var(--ink)]/50 backdrop-blur-[6px]" aria-label="Fermer l'assistant" />
             <motion.aside
               initial={{ opacity: 0, x: 36, scale: .985 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -228,7 +258,7 @@ export function SmartAssistant() {
             >
               <div className="relative overflow-hidden bg-[var(--ink)] p-5 text-white sm:p-6">
                 <div className="absolute -right-20 -top-28 size-64 rounded-full bg-[var(--blue)]/35 blur-[75px]" />
-                <div className="relative flex items-center justify-between"><div className="flex items-center gap-3"><span className="relative grid size-12 place-items-center rounded-[17px] bg-[var(--mint)] text-[color:var(--ink)]"><Bot className="size-5" /><span className="assistant-pulse" /></span><div><p className="text-lg font-extrabold tracking-[-.035em]">Guide Orée</p><p className="mt-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white/72"><span className="size-1.5 rounded-full bg-[var(--mint)]" />{records.length.toLocaleString("fr-FR")} éléments indexés</p></div></div><button type="button" onClick={() => setOpen(false)} className="grid size-10 place-items-center rounded-full border border-white/10 bg-white/6 text-white/72 transition hover:bg-white/12 hover:text-white"><X className="size-5" /></button></div>
+                <div className="relative flex items-center justify-between"><div className="flex items-center gap-3"><span className="relative grid size-12 place-items-center rounded-[17px] bg-[var(--mint)] text-[color:var(--ink)]"><Bot className="size-5" /><span className="assistant-pulse" /></span><div><p className="text-lg font-extrabold tracking-[-.035em]">Guide Orée</p><p className="mt-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white/72"><span className="size-1.5 rounded-full bg-[var(--mint)]" />{records.length.toLocaleString("fr-FR")} éléments indexés</p></div></div><button type="button" onClick={closeAssistant} className="grid size-10 place-items-center rounded-full border border-white/10 bg-white/6 text-white/72 transition hover:bg-white/12 hover:text-white"><X className="size-5" /></button></div>
                 <div className="relative mt-5 flex items-center gap-2 rounded-[16px] border border-white/8 bg-white/[.04] px-3 py-2.5 text-[10px] text-white/72"><FileSearch className="size-3.5 text-[color:var(--mint)]" />Contexte actuel : <span className="truncate font-extrabold text-white/66">{location.pathname}</span><span className="ml-auto hidden items-center gap-1 rounded-md border border-white/10 px-2 py-1 font-bold sm:flex"><Command className="size-3" />K</span></div>
               </div>
 
@@ -237,7 +267,7 @@ export function SmartAssistant() {
                   <div key={message.id} className={cn("flex", message.role === "user" ? "justify-end" : "justify-start")}>
                     <div className={cn("max-w-[90%] rounded-[22px] px-4 py-3 text-sm leading-6", message.role === "user" ? "rounded-br-md bg-[var(--blue)] text-white shadow-[0_12px_30px_rgba(36,87,255,.18)]" : "rounded-bl-md border border-[var(--line)] bg-white text-[color:var(--ink)] shadow-[0_10px_35px_rgba(11,18,32,.05)]")}>
                       <p>{message.text}</p>
-                      {message.actions?.length ? <div className="mt-3 grid gap-2">{message.actions.map((action) => <button key={`${message.id}-${action.href}`} type="button" onClick={() => { navigate(action.href); setOpen(false); }} className="group flex items-center justify-between gap-3 rounded-[15px] bg-[var(--ink)] px-3.5 py-3 text-left text-xs font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-[var(--blue)]"><span>{action.label}</span><ChevronRight className="size-3.5 transition group-hover:translate-x-1" /></button>)}</div> : null}
+                      {message.actions?.length ? <div className="mt-3 grid gap-2">{message.actions.map((action) => <button key={`${message.id}-${action.href}`} type="button" onClick={() => { navigate(action.href); closeAssistant(); }} className="group flex items-center justify-between gap-3 rounded-[15px] bg-[var(--ink)] px-3.5 py-3 text-left text-xs font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-[var(--blue)]"><span>{action.label}</span><ChevronRight className="size-3.5 transition group-hover:translate-x-1" /></button>)}</div> : null}
                       {message.source ? <p className="mt-2 text-[9px] font-bold uppercase tracking-[.1em] text-[color:var(--muted)]">Source interne · {message.source}</p> : null}
                     </div>
                   </div>

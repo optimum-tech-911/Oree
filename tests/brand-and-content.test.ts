@@ -19,4 +19,11 @@ import { landingPages } from "@/content/landingPages";
       expect(page.proofPoints.length).toBeGreaterThanOrEqual(3);
     }
   });
+
+  it("couvre les intentions demandeur d’emploi et dossier bloqué", () => {
+    for (const slug of ["creer-entreprise-demandeur-emploi", "dossier-creation-entreprise-bloque"]) {
+      expect(landingPages[slug], slug).toBeDefined();
+      expect(landingPages[slug]?.faq.length).toBeGreaterThanOrEqual(3);
+    }
+  });
 });
