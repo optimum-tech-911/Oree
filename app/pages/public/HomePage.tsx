@@ -24,6 +24,7 @@ import { DashboardPreview } from "@/components/marketing/DashboardPreview";
 import { Faq } from "@/components/marketing/Faq";
 import { EcosystemRail } from "@/components/marketing/EcosystemRail";
 import { HomeConversionHero } from "@/components/marketing/HomeConversionHero";
+import { ActivitySpotlight } from "@/components/marketing/ActivitySpotlight";
 import { CostClarity } from "@/components/marketing/CostClarity";
 import { ServiceScope } from "@/components/marketing/ServiceScope";
 import { PathwayMediaSwitcher } from "@/components/media/PathwayMediaSwitcher";
@@ -33,8 +34,8 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { analytics } from "@/services/analytics";
 
 const audiencePaths = [
-  { id: "solo", icon: Fingerprint, asset: imagery.soloPathway, title: "Je crée seul", short: "SASU · EURL · EI", description: "Comparez les structures unipersonnelles et organisez votre dossier avant de retenir une option.", href: "/creer-entreprise-seul", action: "Comparer les options", points: ["Situation actuelle", "Mode de rémunération", "Évolution future"] },
-  { id: "team", icon: UsersRound, asset: imagery.sasHero, title: "Nous créons à plusieurs", short: "SAS · SARL", description: "Alignez associés, capital, responsabilités et documents dans le même parcours.", href: "/creer-entreprise-a-plusieurs", action: "Préparer le projet", points: ["Répartition du capital", "Rôles des associés", "Pièces par personne"] },
+  { id: "solo", icon: Fingerprint, asset: imagery.homeFounderPathway, title: "Je crée seul", short: "SASU · EURL · EI", description: "Comparez les structures unipersonnelles et organisez votre dossier avant de retenir une option.", href: "/creer-entreprise-seul", action: "Comparer les options", points: ["Situation actuelle", "Mode de rémunération", "Évolution future"] },
+  { id: "team", icon: UsersRound, asset: imagery.foundersDiscussionPathway, title: "Nous créons à plusieurs", short: "SAS · SARL", description: "Alignez associés, capital, responsabilités et documents dans le même parcours.", href: "/creer-entreprise-a-plusieurs", action: "Préparer le projet", points: ["Répartition du capital", "Rôles des associés", "Pièces par personne"] },
   { id: "employee", icon: BriefcaseBusiness, asset: imagery.employeeHero, title: "Je suis encore salarié", short: "Transition", description: "Préparez le projet maintenant et choisissez le moment adapté pour engager les formalités.", href: "/creer-entreprise-en-etant-salarie", action: "Construire ma feuille de route", points: ["Création immédiate ou progressive", "Contraintes à vérifier", "Calendrier du projet"] },
   { id: "job-seeker", icon: CircleHelp, asset: imagery.chooseStatusHero, title: "Je suis demandeur d’emploi", short: "Calendrier à cadrer", description: "Situez la création dans votre calendrier et identifiez les dispositifs à vérifier auprès des organismes compétents.", href: "/creer-entreprise-demandeur-emploi", action: "Cadrer mon calendrier", points: ["Dates de démarches", "Rémunération envisagée", "Éligibilité à confirmer"] },
   { id: "existing", icon: RefreshCcw, asset: imagery.existingBusinessHero, title: "Mon activité existe déjà", short: "Micro → société", description: "Étudiez le passage d'une micro-entreprise ou d'une EI vers une société adaptée au projet.", href: "/passer-micro-entreprise-en-societe", action: "Étudier la transition", points: ["Activité déjà facturée", "Continuité des contrats", "Structure cible"] },
@@ -95,6 +96,10 @@ export default function HomePage() {
             <PathwayMediaSwitcher item={activePath} />
           </div>
         </div>
+      </Section>
+
+      <Section className="overflow-hidden bg-white/55">
+        <div className="container-shell"><ActivitySpotlight /></div>
       </Section>
 
       <Section className="overflow-hidden bg-white/55">

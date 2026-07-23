@@ -9,6 +9,7 @@ type Crop = {
 
 type AssetJob = {
   source: string;
+  sourceDirectory?: string;
   directory: string;
   name: string;
   widths: number[];
@@ -17,8 +18,9 @@ type AssetJob = {
 
 const root = process.cwd();
 const sourceDirectory = path.join(root, "oree-company- images");
+const requestedImageDirectory = path.join(root, "the demanded images");
 const outputDirectory = path.join(root, "public/assets/imagery");
-const requiredDirectories = ["brand", "heroes", "pathways", "process", "support", "testimonials", "landing", "app", "mobile"];
+const requiredDirectories = ["activities", "brand", "heroes", "pathways", "process", "support", "testimonials", "landing", "app", "mobile"];
 
 const jobs: AssetJob[] = [
   {
@@ -111,6 +113,70 @@ const jobs: AssetJob[] = [
     name: "process-document-review",
     widths: [480, 720, 960, 1280],
   },
+  {
+    source: "ChatGPT Image 23 juil. 2026, 11_01_09 (1).png",
+    sourceDirectory: requestedImageDirectory,
+    directory: "activities",
+    name: "activity-artisan-workshop",
+    widths: [480, 720, 960, 1280, 1586],
+    mobile: { aspect: [4, 5], position: "right" },
+  },
+  {
+    source: "ChatGPT Image 23 juil. 2026, 11_01_09 (2).png",
+    sourceDirectory: requestedImageDirectory,
+    directory: "activities",
+    name: "activity-local-shop",
+    widths: [480, 720, 960, 1280, 1586],
+    mobile: { aspect: [4, 5], position: "right" },
+  },
+  {
+    source: "ChatGPT Image 23 juil. 2026, 11_01_10 (3).png",
+    sourceDirectory: requestedImageDirectory,
+    directory: "activities",
+    name: "activity-field-service",
+    widths: [480, 720, 960, 1280, 1586],
+    mobile: { aspect: [4, 5], position: "right" },
+  },
+  {
+    source: "ChatGPT Image 23 juil. 2026, 11_01_10 (4).png",
+    sourceDirectory: requestedImageDirectory,
+    directory: "activities",
+    name: "activity-restaurant-owner",
+    widths: [480, 720, 960, 1280, 1586],
+    mobile: { aspect: [4, 5], position: "right" },
+  },
+  {
+    source: "ChatGPT Image 23 juil. 2026, 11_01_13 (5).png",
+    sourceDirectory: requestedImageDirectory,
+    directory: "activities",
+    name: "activity-logistics",
+    widths: [480, 720, 960, 1280, 1586],
+    mobile: { aspect: [4, 5], position: "right" },
+  },
+  {
+    source: "ChatGPT Image 23 juil. 2026, 11_01_13 (6).png",
+    sourceDirectory: requestedImageDirectory,
+    directory: "pathways",
+    name: "pathway-home-founder",
+    widths: [480, 720, 960, 1280],
+    mobile: { aspect: [4, 5], position: "right" },
+  },
+  {
+    source: "ChatGPT Image 23 juil. 2026, 11_01_14 (7).png",
+    sourceDirectory: requestedImageDirectory,
+    directory: "pathways",
+    name: "pathway-founders-discussion",
+    widths: [480, 720, 960, 1280],
+    mobile: { aspect: [4, 5], position: "right" },
+  },
+  {
+    source: "ChatGPT Image 23 juil. 2026, 11_01_14 (8).png",
+    sourceDirectory: requestedImageDirectory,
+    directory: "process",
+    name: "process-project-organisation",
+    widths: [480, 720, 960, 1280],
+    mobile: { aspect: [4, 5], position: "center" },
+  },
 ];
 
 async function resetOutput() {
@@ -147,7 +213,7 @@ async function writeFormats(input: string, destination: string, width: number, c
 }
 
 async function optimize(job: AssetJob) {
-  const input = path.join(sourceDirectory, job.source);
+  const input = path.join(job.sourceDirectory ?? sourceDirectory, job.source);
   const metadata = await sharp(input).metadata();
   if (!metadata.width || !metadata.height) throw new Error(`Unable to read dimensions for ${job.source}`);
 

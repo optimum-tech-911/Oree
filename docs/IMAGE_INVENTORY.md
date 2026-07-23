@@ -1,6 +1,6 @@
 # Inventaire des images Orée
 
-Audit réalisé le 15 juillet 2026 sur les 35 sources du dossier `oree-company- images`. Les fichiers sources restent hors du chemin public. Seuls les éléments marqués **Sélectionné** sont optimisés dans `public/assets/imagery/`.
+Audit initial réalisé le 15 juillet 2026 sur les 35 sources du dossier `oree-company- images`, complété le 23 juillet 2026 par huit scènes dans `the demanded images`. Les fichiers sources restent hors du chemin public. Seuls les éléments marqués **Sélectionné** sont optimisés dans `public/assets/imagery/`.
 
 Les personnes représentées sont générées et ne doivent jamais être présentées comme des salariés, clients ou partenaires réels. Les scènes retenues portent une mention « Scène illustrative » ou « Situation illustrative » lorsqu'elles apparaissent dans l'interface.
 
@@ -44,7 +44,22 @@ Les personnes représentées sont générées et ne doivent jamais être présen
 
 ## Synthèse
 
-- 13 images sélectionnées et publiées en variantes AVIF/WebP.
+- 21 images sélectionnées et publiées en variantes AVIF/WebP.
 - 10 alternatives conservées uniquement dans le dossier source hors production.
 - 12 images rejetées, principalement pour faux écrans, faux documents officiels ou manque de confiance.
 - Aucun portrait n'est utilisé comme faux témoignage, client ou membre d'équipe.
+
+## Ajouts activité — 23 juillet 2026
+
+| Fichier original | Nom sémantique | Sujet principal | Usage prévu | Statut |
+|---|---|---|---|---|
+| `11_01_09 (1).png` | `activity-artisan-workshop` | Artisan dans son atelier | Sélecteur d'activités de l'accueil | **Sélectionné** |
+| `11_01_09 (2).png` | `activity-local-shop` | Commerçante dans un magasin de proximité | Sélecteur d'activités de l'accueil | **Sélectionné** |
+| `11_01_10 (3).png` | `activity-field-service` | Professionnelle préparant une intervention | Sélecteur d'activités de l'accueil | **Sélectionné** |
+| `11_01_10 (4).png` | `activity-restaurant-owner` | Restaurateur préparant sa salle | Sélecteur d'activités de l'accueil | **Sélectionné** |
+| `11_01_13 (5).png` | `activity-logistics` | Professionnel préparant une livraison | Sélecteur d'activités de l'accueil | **Sélectionné** |
+| `11_01_13 (6).png` | `pathway-home-founder` | Créatrice structurant son projet chez elle | Parcours « Je crée seul » | **Sélectionné** |
+| `11_01_14 (7).png` | `pathway-founders-discussion` | Trois porteurs discutant d'un projet | Parcours « Nous créons à plusieurs » | **Sélectionné** |
+| `11_01_14 (8).png` | `process-project-organisation` | Dossier de travail, carnet et calculatrice | Rail du processus | **Sélectionné** |
+
+Ces scènes représentent des situations illustratives. Elles ne sont associées à aucun nom, témoignage ou rôle réel.

@@ -31,7 +31,7 @@ export function ProcessRail() {
     <div className="grid gap-5 lg:grid-cols-[.76fr_1.24fr]">
       <div className="route-map relative overflow-hidden rounded-[34px] border border-[var(--line)] p-6 sm:p-8 lg:min-h-[500px] lg:p-10">
         <div className="absolute inset-x-0 top-0 h-52 overflow-hidden sm:h-60 lg:h-[46%]">
-          <ArtDirectedPicture asset={imagery.documentReview} sizes="(max-width: 1023px) 100vw, 42vw" className="size-full" />
+          <ArtDirectedPicture asset={imagery.projectOrganisation} sizes="(max-width: 1023px) 100vw, 42vw" className="size-full" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,18,32,.08),rgba(11,18,32,.12)_45%,var(--canvas)_100%)]" />
           <span className="absolute left-5 top-5 rounded-full bg-[var(--ink)]/86 px-3 py-2 text-[9px] font-semibold tracking-[.04em] text-white">Situation illustrative · contrôle documentaire</span>
         </div>

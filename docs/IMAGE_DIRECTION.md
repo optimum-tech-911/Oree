@@ -72,7 +72,7 @@ Le produit doit rester complet sans image. Une image enrichit une section mais n
 
 ## Bibliothèque intégrée
 
-L'audit détaillé des 35 sources se trouve dans `docs/IMAGE_INVENTORY.md`. Treize scènes sont retenues ; les autres restent hors du chemin public. Les fichiers de production vivent dans `public/assets/imagery/` et leur métadonnée accessible est centralisée dans `app/content/imagery.ts`.
+L'audit détaillé des 43 sources se trouve dans `docs/IMAGE_INVENTORY.md`. Vingt-et-une scènes sont retenues ; les autres restent hors du chemin public. Les fichiers de production vivent dans `public/assets/imagery/` et leur métadonnée accessible est centralisée dans `app/content/imagery.ts`.
 
 Règles actives :
 

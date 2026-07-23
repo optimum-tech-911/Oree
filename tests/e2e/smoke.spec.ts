@@ -210,6 +210,20 @@ test("le ruban reste animé et contrôlable sur mobile", async ({ page }) => {
   await expect(rail.getByText(/Les organismes et interlocuteurs concernés varient/)).toBeVisible();
 });
 
+test("le sélecteur d'activités reste utile et animé sur mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const spotlight = page.locator("[data-activity-spotlight]");
+  await spotlight.scrollIntoViewIfNeeded();
+  const artisan = spotlight.getByRole("button", { name: /Artisanat/i });
+  const logistics = spotlight.getByRole("button", { name: /Logistique/i });
+  await expect(artisan).toHaveAttribute("aria-pressed", "true");
+  await expect(spotlight.getByRole("img", { name: /Artisan préparant son travail dans son atelier/i })).toBeVisible();
+  await logistics.click();
+  await expect(logistics).toHaveAttribute("aria-pressed", "true");
+  await expect(spotlight.getByRole("img", { name: /Professionnel de la logistique préparant une livraison/i })).toBeVisible();
+});
+
 test("les mouvements respectent la préférence de réduction", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ width: 1440, height: 1000 });

@@ -8,9 +8,11 @@ L'intégration conserve le diagnostic, le cockpit React, le Guide Orée, les esp
 
 - Accueil : `hero-home-company-journey` occupe le panneau humain du héros 55/45 ; le cockpit produit réel se superpose sans masquer la scène.
 - Sélecteur de parcours : six intentions utilisent une image dédiée et ne chargent que la scène active.
+- Activités : un sélecteur interactif n'affiche qu'une scène active parmi artisanat, commerce, services terrain, restauration et logistique ; il évite de charger une galerie complète sur mobile.
+- Parcours accueil : les scènes « projet chez soi » et « associés en discussion » remplacent les visuels génériques des entrées solo et équipe.
 - Landing pages : images distinctes pour SASU, EURL, SAS, SARL, salarié, activité existante et dossier bloqué.
 - Choix du statut : scène de décision derrière le comparateur React.
-- Processus : `process-document-review` forme un fond documentaire lisible dans le rail des six étapes, avec un dégradé dérivé de la palette pour préserver le texte.
+- Processus : `process-project-organisation` forme un fond documentaire lisible dans le rail des six étapes, avec un dégradé dérivé de la palette pour préserver le texte.
 - Offres : la scène d'accompagnement donne un contexte humain au choix du niveau de service, sans être présentée comme une photo d'équipe réelle.
 - Accompagnement : scène d'explication humaine, explicitement indiquée comme illustrative.
 - Rendez-vous : scène de visioconférence secondaire sur grand écran ; le sélecteur de créneau reste prioritaire.
@@ -25,8 +27,8 @@ Le composant `ArtDirectedPicture` choisit les sources mobiles sous 768 px. Le co
 
 ## Performance
 
-- 13 sources sélectionnées donnent 176 variantes AVIF/WebP après la dernière optimisation.
-- Le dossier public d'images pèse environ 5 Mo au total ; une route ne charge qu'une fraction de ce volume.
+- 21 sources sélectionnées donnent 298 variantes AVIF/WebP après la dernière optimisation.
+- Le dossier public d'images pèse environ 9,6 Mo au total ; une route ne charge qu'une fraction de ce volume et les nouvelles scènes restent lazy.
 - Le principal visuel de chaque héros est eager avec `fetchPriority="high"`.
 - Les images hors écran restent lazy.
 - Les tailles disponibles sont 480/640/720/800/960/1280/1448/1586 selon le composant et la source.
@@ -76,8 +78,8 @@ Le runtime de navigateur intégré n'était pas disponible. Les vérifications d
 ## Vérifications exécutées
 
 - `npm install --save-dev sharp` ;
-- `npm run images:optimize` — 13 sources, 176 sorties, 4,7 Mo ;
-- contrôle automatisé du manifeste — 176 chemins résolus, 0 manquant ;
+- `npm run images:optimize` — 21 sources, 298 sorties, 9,6 Mo ;
+- contrôle automatisé du manifeste — 298 chemins résolus, 0 manquant ;
 - `npm run check` — lint, TypeScript strict, 6 tests unitaires et build de production réussis ;
 - la suite Chromium contrôle également le méga-menu, les polices, le CTA bleu, le chargement des images et l'absence de débordement horizontal aux largeurs 390, 768, 1440 et 1728 px ;
 - contrôle HTTP local — page d'accueil et ressource AVIF servies en `200 OK` ;
