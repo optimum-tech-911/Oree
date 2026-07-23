@@ -224,6 +224,19 @@ test("le sélecteur d'activités reste utile et animé sur mobile", async ({ pag
   await expect(spotlight.getByRole("img", { name: /Professionnel de la logistique préparant une livraison/i })).toBeVisible();
 });
 
+test("les contacts directs restent accessibles sur mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await expect(page.locator("[data-home-conversion-hero]").getByRole("link", { name: /Parler à l’équipe/i })).toHaveAttribute("href", "#contact");
+  const contact = page.locator("[data-direct-contact]");
+  await contact.scrollIntoViewIfNeeded();
+  await expect(contact.getByRole("link", { name: /Appeler/i })).toHaveAttribute("href", "tel:+33787823208");
+  await expect(contact.getByRole("link", { name: /Envoyer un SMS/i })).toHaveAttribute("href", /sms:\+33787823208/);
+  await expect(contact.getByRole("link", { name: /Écrire par e-mail/i })).toHaveAttribute("href", /mailto:sebaasofiene@gmail\.com/);
+  await expect(contact.getByRole("link", { name: /^WhatsApp Continuer/i })).toHaveAttribute("href", /wa\.me\/33787823208/);
+  await expect(contact.getByRole("link", { name: /^WhatsApp Business/i })).toHaveAttribute("href", /api\.whatsapp\.com\/send/);
+});
+
 test("les mouvements respectent la préférence de réduction", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ width: 1440, height: 1000 });

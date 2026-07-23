@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { ArrowRight, Check, MessageCircle, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { HeroCockpit } from "@/components/marketing/HeroCockpit";
@@ -70,6 +70,9 @@ export function HomeConversionHero() {
             <ButtonLink to="/comment-ca-marche" variant="ghost" size="lg" className="hidden border border-white/14 text-white hover:bg-white/[.08] sm:inline-flex">
               Voir le parcours
             </ButtonLink>
+            <a href="#contact" onClick={() => analytics.track("primary_cta_clicked", { path: "/", location: "hero", intent: "direct_contact" })} className="inline-flex h-12 items-center justify-center gap-2 rounded-[14px] border border-white/14 px-4 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:border-[var(--mint)]/70 hover:bg-white/[.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--ink)] sm:h-14">
+              <MessageCircle className="size-4 text-[color:var(--mint)]" aria-hidden="true" />Parler à l’équipe
+            </a>
           </motion.div>
 
           <motion.ul

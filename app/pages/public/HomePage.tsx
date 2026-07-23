@@ -25,6 +25,7 @@ import { Faq } from "@/components/marketing/Faq";
 import { EcosystemRail } from "@/components/marketing/EcosystemRail";
 import { HomeConversionHero } from "@/components/marketing/HomeConversionHero";
 import { ActivitySpotlight } from "@/components/marketing/ActivitySpotlight";
+import { DirectContactPanel } from "@/components/marketing/DirectContactPanel";
 import { CostClarity } from "@/components/marketing/CostClarity";
 import { ServiceScope } from "@/components/marketing/ServiceScope";
 import { PathwayMediaSwitcher } from "@/components/media/PathwayMediaSwitcher";
@@ -152,6 +153,10 @@ export default function HomePage() {
             <div className="mt-6 flex items-center gap-4 rounded-[18px] bg-[var(--ink)] p-4 text-white"><span className="grid size-10 shrink-0 place-items-center rounded-[13px] bg-[var(--mint)] text-[color:var(--ink)]"><Bot className="size-4" /></span><div className="min-w-0 flex-1"><p className="text-sm font-semibold">Une question de navigation ?</p><p className="mt-1 text-xs text-white/72">Le Guide Orée retrouve une page ou une action dans l'index local.</p></div><button type="button" onClick={openAssistant} className="shrink-0 text-xs font-semibold text-[color:var(--mint)]">Ouvrir</button></div>
           </div>
         </div>
+      </Section>
+
+      <Section className="bg-white/55">
+        <div className="container-shell"><DirectContactPanel /></div>
       </Section>
 
       <Section className="bg-white/55">

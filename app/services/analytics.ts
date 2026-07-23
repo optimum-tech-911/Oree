@@ -21,7 +21,8 @@ export type AnalyticsEvent =
   | "demo_session_started"
   | "micro_intent_self_filtered"
   | "assistant_opened"
-  | "assistant_search";
+  | "assistant_search"
+  | "contact_option_selected";
 
 export type AnalyticsPayload = Record<string, string | number | boolean | string[] | undefined>;
 
@@ -38,6 +39,7 @@ const ga4EventByInternalEvent: Partial<Record<AnalyticsEvent, string>> = {
   diagnostic_completed: "diagnostic_completed",
   lead_submitted: "generate_lead",
   appointment_booked: "schedule",
+  contact_option_selected: "select_content",
   account_created: "sign_up",
   login_completed: "login",
 };
