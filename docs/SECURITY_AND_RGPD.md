@@ -4,8 +4,8 @@
 
 - RLS partout ;
 - clé service role uniquement côté serveur ;
-- Turnstile sur les entrées publiques ;
-- rate limiting ;
+- honeypot invisible sur les entrées publiques ;
+- rate limiting serveur ;
 - validation Zod serveur ;
 - bucket privé ;
 - URLs signées courtes ;

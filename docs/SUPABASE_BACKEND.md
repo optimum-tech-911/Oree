@@ -5,7 +5,6 @@
 ```env
 VITE_SUPABASE_URL=https://PROJECT.supabase.co
 VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
-VITE_TURNSTILE_SITE_KEY=
 ```
 
 Ces valeurs sont publiques. La sécurité repose sur RLS.
@@ -16,9 +15,6 @@ Ces valeurs sont publiques. La sécurité repose sur RLS.
 SUPABASE_URL=
 SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
-TURNSTILE_SECRET_KEY=
-TURNSTILE_ALLOWED_HOSTNAMES=domaine.fr,staging.domaine.fr
-TURNSTILE_EXPECTED_ACTION=submit_lead
 LEAD_CLAIM_SECRET=at-least-32-random-characters
 PRIVACY_POLICY_VERSION=version-publiee
 ALLOWED_ORIGINS=https://domaine.fr,https://staging.domaine.fr
@@ -27,13 +23,10 @@ CRM_WEBHOOK_URL=
 CRM_WEBHOOK_SECRET=
 ```
 
-Le formulaire de diagnostic utilise le rendu explicite Turnstile côté navigateur et vérifie le jeton, l’action `submit_lead` et, lorsque la liste est renseignée, le nom d’hôte dans `submit-lead`. En environnement connecté, les deux clés doivent être configurées ensemble. La fonction serveur refuse la soumission si le secret est absent.
-
-Pour un test local connecté, les clés de test officielles Cloudflare peuvent être
-utilisées temporairement avec `VITE_TURNSTILE_SITE_KEY=1x00000000000000000000AA`,
-`TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA`,
-`TURNSTILE_EXPECTED_ACTION=test` et les hôtes `localhost,127.0.0.1`. Les clés
-et l’action de production doivent être rétablies avant toute mise en ligne.
+Le formulaire de diagnostic ne dépend d'aucune configuration captcha externe. La
+fonction `submit-lead` conserve la validation Zod, le consentement, l'idempotence,
+le honeypot invisible et un rate limiting serveur fondé sur des empreintes hachées
+dans `lead_intake_attempts`.
 
 ## Migrations
 
@@ -50,6 +43,7 @@ Appliquer dans l'ordre :
 9. `0009_rls_advisor_cleanup.sql`
 10. `0010_permission_hardening_repair.sql`
 11. `0011_operations_workflow_repair.sql`
+12. `0012_lead_intake_attempts.sql`
 
 Avec le CLI :
 
@@ -99,7 +93,7 @@ Les opérations créant plusieurs objets doivent finir dans une fonction SQL tra
 ## État distant au 22 juillet 2026
 
 - projet lié : `sksydcdkliuisaahysya` (`oree`) ;
-- migrations `0001` à `0011` appliquées ;
+- migrations `0001` à `0012` appliquées ;
 - `submit-lead`, `claim-lead` et `create-project` actives ;
 - la procédure transactionnelle `submit_lead_bundle` a été vérifiée sur le projet
   distant dans une transaction annulée, sans conserver de lead de test ;
@@ -107,12 +101,6 @@ Les opérations créant plusieurs objets doivent finir dans une fonction SQL tra
 - secret de revendication de lead généré et configuré côté Edge ;
 - origine locale autorisée pour le développement.
 
-La clé publique `VITE_TURNSTILE_SITE_KEY` et le secret Edge
-`TURNSTILE_SECRET_KEY` ne sont pas encore configurés. Tant qu'ils manquent, le
-diagnostic reste volontairement fermé à l'envoi et répond `captcha_failed` : ne
-pas remplacer cette protection par un contournement de production.
-
 Le jeton de gestion Supabase ne doit jamais être placé dans un fichier `.env`, dans le
-frontend ou dans Git. Il sert uniquement aux opérations CLI ponctuelles. Les clés
-Turnstile, l’origine de production et les URLs Auth doivent encore être configurées avec
-le domaine définitif.
+frontend ou dans Git. Il sert uniquement aux opérations CLI ponctuelles. L’origine de
+production et les URLs Auth doivent encore être configurées avec le domaine définitif.

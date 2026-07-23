@@ -21,7 +21,6 @@ export type LeadSubmissionBody = {
   result?: DiagnosticRecommendation;
   submissionId?: string;
   anonymousSessionId?: string;
-  turnstileToken?: string;
   honeypot?: string;
 };
 
@@ -29,7 +28,6 @@ export type LeadSubmissionOptions = {
   result?: DiagnosticRecommendation;
   submissionId?: string;
   anonymousSessionId?: string;
-  turnstileToken?: string;
   honeypot?: string;
 };
 
@@ -43,7 +41,6 @@ export function buildLeadSubmissionBody(
   if (options.result) body.result = options.result;
   if (options.submissionId) body.submissionId = options.submissionId;
   if (options.anonymousSessionId) body.anonymousSessionId = options.anonymousSessionId;
-  if (options.turnstileToken) body.turnstileToken = options.turnstileToken;
   if (options.honeypot) body.honeypot = options.honeypot;
   return body;
 }

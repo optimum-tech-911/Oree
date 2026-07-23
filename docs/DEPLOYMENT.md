@@ -21,7 +21,7 @@ Ajouter les variables publiques par environnement. Ne jamais ajouter les secrets
 
 ## Headers
 
-`public/_headers` fournit une base. Introduire CSP en Report-Only, observer les violations, puis imposer la policy exacte pour Supabase, Google, Turnstile et les services retenus.
+`public/_headers` fournit une base. Introduire CSP en Report-Only, observer les violations, puis imposer la policy exacte pour Supabase, Google et les services retenus.
 
 ## Branches
 

@@ -119,7 +119,6 @@ Le projet démarre avec npm install puis npm run dev.
 ./supabase/config.toml
 ./supabase/functions/_shared/cors.ts
 ./supabase/functions/_shared/http.ts
-./supabase/functions/_shared/turnstile.ts
 ./supabase/functions/claim-lead/index.ts
 ./supabase/functions/create-project/index.ts
 ./supabase/functions/submit-lead/index.ts

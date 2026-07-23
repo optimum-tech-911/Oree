@@ -16,7 +16,7 @@ backend et sans affaiblir Supabase, RLS, le mode démonstration ou le système v
 - diagnostic enrichi pour les projets solo, à plusieurs, salariés, demandeurs d’emploi,
   micro-entrepreneurs et dossiers bloqués ;
 - soumission de lead atomique, consentement et attribution persistés, idempotence,
-  Turnstile et revendication sécurisée après authentification ;
+  honeypot, rate limiting serveur et revendication sécurisée après authentification ;
 - espace client entièrement relié aux projets, documents, fondateurs, tâches, messages,
   rendez-vous, profils et préférences ;
 - espace opérations relié aux leads, projets, attributions, documents, rendez-vous,
@@ -63,18 +63,16 @@ premier administrateur.
 - aucune invitation externe avant branchement d’un fournisseur e-mail sécurisé ;
 - aucune synchronisation avec un calendrier tiers avant choix du fournisseur ;
 - aucune donnée analytique publicitaire avant configuration et consentement ;
-- aucune soumission publique en environnement connecté sans Turnstile valide ;
 - aucune promotion administrateur depuis un profil éditable.
 
 ## Prérequis avant mise en production publique
 
 1. fournir le domaine final et les URLs Auth autorisées ;
-2. créer Turnstile et fournir les clés site/secret ainsi que les hôtes autorisés ;
-3. choisir le fournisseur d’e-mail et l’adresse expéditrice ;
-4. confirmer CRM, calendrier, GTM/GA4/Ads le cas échéant ;
-5. valider identité juridique, mentions, coordonnées, offres, tarifs et politique de
+2. choisir le fournisseur d’e-mail et l’adresse expéditrice ;
+3. confirmer CRM, calendrier, GTM/GA4/Ads le cas échéant ;
+4. valider identité juridique, mentions, coordonnées, offres, tarifs et politique de
    confidentialité ;
-6. créer le premier compte équipe et l’attribuer au rôle `admin` côté serveur.
+5. créer le premier compte équipe et l’attribuer au rôle `admin` côté serveur.
 
 ## Éléments V4 rejetés
 

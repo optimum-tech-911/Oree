@@ -1,6 +1,6 @@
 # État d’implémentation — V3 canonique
 
-Mise à jour : 22 juillet 2026.
+Mise à jour : 23 juillet 2026.
 
 ## État de livraison
 
@@ -8,7 +8,7 @@ Le dépôt V3 est l’application canonique. Les apports utiles de V4 ont été 
 fonction par fonction ; V4 n’est ni une seconde application ni une cible de déploiement.
 
 Le projet Supabase `sksydcdkliuisaahysya` (`oree`) est lié et actif. Les migrations `0001` à
-`0011` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`
+`0012` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`
 sont actives, et le lint distant ne remonte aucune erreur de schéma.
 
 ## Parcours publics
@@ -19,7 +19,8 @@ sont actives, et le lint distant ne remonte aucune erreur de schéma.
 - reprise sécurisée du lead après authentification ;
 - téléphone facultatif sauf demande de rappel ;
 - consentement, attribution UTM/GCLID/GBRAID/WBRAID et analytics conditionnels ;
-- Turnstile rendu explicitement, vérifié côté serveur et fermé par défaut sans secret ;
+- soumission sans captcha externe, protégée par honeypot invisible et rate limiting
+  serveur haché ;
 - Guide Orée local, vocal lorsque disponible, indexé depuis les contenus versionnés ;
 - mode démonstration complet lorsque Supabase n’est pas configuré.
 
@@ -73,13 +74,13 @@ modifier directement le stade opérationnel de son projet.
 - index Guide Orée : 1 685 entrées issues de 84 fichiers ;
 - build Vite de production : réussi ;
 - Supabase DB lint distant : aucune erreur ;
-- historique distant : migrations `0001` à `0011` synchronisées ;
+- historique distant : migrations `0001` à `0012` synchronisées ;
 - trois Edge Functions : état `ACTIVE`.
 
 La procédure d’intake `submit_lead_bundle` a aussi été exécutée dans une
 transaction annulée sur le projet distant : l’écriture est valide et aucun lead
-de test n’a été conservé. L’endpoint `submit-lead` répond correctement
-`captcha_failed` sans jeton valide, ce qui confirme qu’il reste fermé par défaut.
+de test n’a été conservé. L’endpoint `submit-lead` accepte désormais les demandes
+valides sans variable captcha, tout en rejetant les honeypots et les envois répétés.
 
 Le runtime de navigateur intégré n’était pas disponible pendant cette passe : aucune
 revue visuelle manuelle supplémentaire n’est revendiquée. Le test authentifié de bout en
@@ -88,7 +89,6 @@ bout nécessite au moins un compte réel.
 ## Configuration externe restant à fournir
 
 - domaine de production et URLs de redirection Supabase Auth ;
-- clés Turnstile site/secret et hôtes autorisés ;
 - adresse d’envoi et fournisseur d’e-mail transactionnel ;
 - fournisseur de calendrier externe si synchronisation bidirectionnelle souhaitée ;
 - CRM/webhook éventuel ;

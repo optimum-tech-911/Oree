@@ -5,7 +5,8 @@ const migration = readFileSync(new URL("../supabase/migrations/0006_appointment_
 const portalMigration = readFileSync(new URL("../supabase/migrations/0007_portal_operations_and_intake.sql", import.meta.url), "utf8");
 const portalDocumentsMigration = readFileSync(new URL("../supabase/migrations/0008_portal_documents_and_read_state.sql", import.meta.url), "utf8");
 const operationsSafetyMigration = readFileSync(new URL("../supabase/migrations/0011_operations_workflow_repair.sql", import.meta.url), "utf8");
-const turnstileVerifier = readFileSync(new URL("../supabase/functions/_shared/turnstile.ts", import.meta.url), "utf8");
+const rateLimitMigration = readFileSync(new URL("../supabase/migrations/0012_lead_intake_attempts.sql", import.meta.url), "utf8");
+const submitLeadFunction = readFileSync(new URL("../supabase/functions/submit-lead/index.ts", import.meta.url), "utf8");
 
 describe("appointment permission hardening", () => {
   it("removes member writes and leaves authenticated browsers read-only", () => {
@@ -18,12 +19,15 @@ describe("appointment permission hardening", () => {
 });
 
 describe("lead intake security", () => {
-  it("fails closed and binds Turnstile verification to the lead action", () => {
-    expect(turnstileVerifier).toMatch(/if \(!secret\)[\s\S]*return false/);
-    expect(turnstileVerifier).toMatch(/TURNSTILE_EXPECTED_ACTION/);
-    expect(turnstileVerifier).toMatch(/result\.action !== expectedAction/);
-    expect(turnstileVerifier).toMatch(/AbortController/);
-    expect(turnstileVerifier).not.toMatch(/if \(!secret\) return true/);
+  it("uses local anti-abuse controls without requiring third-party captcha configuration", () => {
+    expect(submitLeadFunction).toMatch(/honeypot/);
+    expect(submitLeadFunction).toMatch(/checkLeadRateLimit/);
+    expect(submitLeadFunction).toMatch(/lead_intake_attempts/);
+    expect(submitLeadFunction).not.toMatch(/captcha_failed|siteverify/);
+    expect(rateLimitMigration).toMatch(/create table if not exists public\.lead_intake_attempts/i);
+    expect(rateLimitMigration).toMatch(/alter table public\.lead_intake_attempts enable row level security/i);
+    expect(rateLimitMigration).toMatch(/revoke all on table public\.lead_intake_attempts from public, anon, authenticated/i);
+    expect(rateLimitMigration).toMatch(/grant select, insert on table public\.lead_intake_attempts to service_role/i);
   });
 
   it("keeps intake atomic, idempotent and strips duplicated contact data", () => {

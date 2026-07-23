@@ -61,14 +61,12 @@ describe("lead attribution contract", () => {
     const body = buildLeadSubmissionBody({ firstName: "Lina" }, null, {
       submissionId: "58c55530-9c39-4c52-bf1f-0ad01fbe8844",
       anonymousSessionId: "58c55530-9c39-4c52-bf1f-0ad01fbe8844",
-      turnstileToken: "verified-token",
       honeypot: "",
       result: { forms: ["SASU"], title: "Piste", explanation: "À confirmer", reasons: [], pointsToValidate: [], action: { label: "Continuer", href: "/inscription" }, complexity: "simple" },
     });
     expect(body).toMatchObject({
       submissionId: "58c55530-9c39-4c52-bf1f-0ad01fbe8844",
       anonymousSessionId: "58c55530-9c39-4c52-bf1f-0ad01fbe8844",
-      turnstileToken: "verified-token",
       result: { forms: ["SASU"] },
     });
     expect(body).not.toHaveProperty("honeypot");
