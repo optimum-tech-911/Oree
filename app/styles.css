@@ -298,6 +298,31 @@ img, svg, video { display: block; max-width: 100%; }
 .ecosystem-item:hover { transform: translateY(-3px) scale(1.025); box-shadow: 0 14px 34px rgba(11,18,32,.1); }
 .ecosystem-logo { width: 100%; height: 52px; object-fit: contain; mix-blend-mode: multiply; }
 
+/* Mobile keeps the same living ecosystem as desktop. The previous static grid
+   made this part of the journey feel like a separate, less capable site. */
+.ecosystem-mobile-viewport {
+  overflow: hidden;
+  margin-inline: -.625rem;
+  padding-block: .35rem;
+}
+.ecosystem-mobile-track {
+  display: flex;
+  width: max-content;
+  animation: ecosystem-mobile-marquee 34s linear infinite;
+  will-change: transform;
+}
+.ecosystem-mobile-track.is-paused { animation-play-state: paused; }
+.ecosystem-mobile-sequence { gap: .75rem; padding-inline: .625rem; }
+.ecosystem-mobile-sequence .ecosystem-item {
+  width: 178px;
+  min-height: 112px;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1.15rem;
+  box-shadow: 0 12px 32px rgba(11,18,32,.06);
+}
+@keyframes ecosystem-mobile-marquee { to { transform: translateX(-50%); } }
+
 .route-map {
   background:
     radial-gradient(circle at 76% 16%, rgba(36, 87, 255, .12), transparent 28rem),
@@ -418,6 +443,7 @@ img, svg, video { display: block; max-width: 100%; }
   .container-shell { width: min(100% - 1.25rem, 90rem); }
   .container-wide { width: min(100% - .75rem, 104rem); }
   .interactive-card:hover { transform: none; }
+  .ecosystem-mobile-track { animation-duration: 29s; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -426,4 +452,7 @@ img, svg, video { display: block; max-width: 100%; }
   .ecosystem-viewport { overflow-x: auto; mask-image: none; }
   .ecosystem-track { animation: none !important; }
   .ecosystem-track > .ecosystem-sequence:last-child { display: none; }
+  .ecosystem-mobile-viewport { overflow-x: auto; }
+  .ecosystem-mobile-track { animation: none !important; }
+  .ecosystem-mobile-track > .ecosystem-sequence:last-child { display: none; }
 }

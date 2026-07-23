@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight, Check, FileCheck2, ReceiptText, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { HeroCockpit } from "@/components/marketing/HeroCockpit";
@@ -86,17 +86,8 @@ export function HomeConversionHero() {
             ))}
           </motion.ul>
 
-          <div className="mt-7 grid grid-cols-2 gap-2 lg:hidden" aria-label="Aperçu du parcours Orée">
-            <div className="rounded-[16px] border border-white/10 bg-white/[.045] p-3.5">
-              <FileCheck2 className="size-4 text-[color:var(--mint)]" />
-              <p className="mt-3 text-xs font-semibold">Prochaine action</p>
-              <p className="mt-1 text-[10px] leading-4 text-white/72">Toujours visible dans le projet.</p>
-            </div>
-            <div className="rounded-[16px] border border-white/10 bg-white/[.045] p-3.5">
-              <ReceiptText className="size-4 text-[color:var(--blue)]" />
-              <p className="mt-3 text-xs font-semibold">Coûts distingués</p>
-              <p className="mt-1 text-[10px] leading-4 text-white/72">Service, formalités et options.</p>
-            </div>
+          <div className="mt-8 lg:hidden" aria-label="Aperçu animé du parcours Orée">
+            <HeroCockpit compact />
           </div>
         </div>
 

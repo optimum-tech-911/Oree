@@ -197,12 +197,16 @@ test("le ruban de formalités défile, reste exact et se suspend au survol", asy
   await expect(track).toHaveCSS("animation-play-state", "paused");
 });
 
-test("le ruban devient une grille lisible sur mobile", async ({ page }) => {
+test("le ruban reste animé et contrôlable sur mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   const rail = page.locator("[data-ecosystem-rail]");
   await expect(rail.locator(".ecosystem-viewport")).toBeHidden();
   await expect(rail.locator("[data-ecosystem-mobile]").getByRole("img", { name: "URSSAF" })).toBeVisible();
+  const mobileTrack = rail.locator(".ecosystem-mobile-track");
+  await expect(mobileTrack).toHaveCSS("animation-name", "ecosystem-mobile-marquee");
+  await rail.getByRole("button", { name: /Mettre en pause le défilement des organismes/i }).click();
+  await expect(mobileTrack).toHaveCSS("animation-play-state", "paused");
   await expect(rail.getByText(/Les organismes et interlocuteurs concernés varient/)).toBeVisible();
 });
 
@@ -240,8 +244,11 @@ test("le héros d'accueil présente une proposition stable et un aperçu produit
 test("le héros d'accueil ne change pas automatiquement son message", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto("/");
-  const heading = page.locator("[data-home-conversion-hero]").getByRole("heading").first();
+  const hero = page.locator("[data-home-conversion-hero]");
+  const heading = hero.getByRole("heading").first();
   const copy = await heading.textContent();
+  await expect(hero.getByText("Studio Horizon", { exact: true })).toBeVisible();
+  await expect(hero.getByText("Lecture du projet", { exact: true })).toBeVisible();
   await page.waitForTimeout(3800);
   await expect(heading).toHaveText(copy ?? "");
 });

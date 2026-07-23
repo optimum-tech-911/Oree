@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Check, FileText, MessageSquareText, ShieldCheck, Sparkles } from "lucide-react";
 
@@ -16,12 +16,21 @@ const insights = [
   { title: "Accompagnement", copy: "Un conseiller peut reprendre exactement là où vous vous êtes arrêté." },
 ];
 
-export function HeroCockpit() {
+export function HeroCockpit({ compact = false }: { compact?: boolean }) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(1);
 
+  // The desktop cockpit is manually explorable. In its compact mobile form it
+  // also advances gently, so the product preview keeps communicating that the
+  // project evolves as information is added.
+  useEffect(() => {
+    if (!compact || reduce) return;
+    const timer = window.setInterval(() => setActive((current) => (current + 1) % steps.length), 3600);
+    return () => window.clearInterval(timer);
+  }, [compact, reduce]);
+
   return (
-    <div className="relative mx-auto w-full max-w-[660px] lg:translate-x-3">
+    <div className={`relative mx-auto w-full max-w-[660px] ${compact ? "max-w-[560px]" : "lg:translate-x-3"}`}>
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 34, rotateY: -8, rotateX: 3 }}
         animate={{ opacity: 1, y: 0, rotateY: 0, rotateX: 0 }}
@@ -40,7 +49,7 @@ export function HeroCockpit() {
             <div className="text-right"><p className="text-[9px] font-extrabold uppercase tracking-[.16em] text-white/72">Progression</p><p className="mt-1 text-lg font-extrabold tracking-[-.04em] text-[color:var(--mint)]">64%</p></div>
           </div>
 
-          <div className="relative mt-5 grid gap-3 lg:grid-cols-[1.08fr_.92fr]">
+          <div className={`relative mt-5 grid gap-3 ${compact ? "" : "lg:grid-cols-[1.08fr_.92fr]"}`}>
             <div className="relative rounded-[24px] border border-white/8 bg-white/[.035] p-3">
               <div className="absolute bottom-8 left-[29px] top-8 w-px bg-white/9" />
               <div className="space-y-2">
@@ -64,7 +73,7 @@ export function HeroCockpit() {
               </div>
             </div>
 
-            <div className="flex min-h-[278px] flex-col gap-3">
+            <div className={`flex flex-col gap-3 ${compact ? "min-h-[230px]" : "min-h-[278px]"}`}>
               <div className="relative flex-1 overflow-hidden rounded-[24px] border border-white/8 bg-white/[.045] p-5 pb-17">
                 <div className="absolute inset-x-5 top-0 h-px kinetic-line bg-white/8" />
                 <div className="flex items-center justify-between"><span className="text-[9px] font-extrabold uppercase tracking-[.16em] text-white/72">Lecture du projet</span><ShieldCheck className="size-4 text-[color:var(--mint)]" /></div>

@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { Landmark } from "lucide-react";
+import { Landmark, Pause, Play } from "lucide-react";
 
 const ecosystemItems = [
   { name: "INPI et République française", src: "/assets/ecosystem/inpi-republique-francaise.webp" },
@@ -14,9 +15,9 @@ const ecosystemItems = [
   { name: "Bpifrance", src: "/assets/ecosystem/bpifrance.webp" },
 ];
 
-function RailSequence({ hidden = false }: { hidden?: boolean }) {
+function RailSequence({ hidden = false, className = "" }: { hidden?: boolean; className?: string }) {
   return (
-    <div className="ecosystem-sequence" aria-hidden={hidden || undefined} role={hidden ? undefined : "list"}>
+    <div className={`ecosystem-sequence ${className}`} aria-hidden={hidden || undefined} role={hidden ? undefined : "list"}>
       {ecosystemItems.map((item) => (
         <span key={item.name} className="ecosystem-item" role={hidden ? undefined : "listitem"}>
           <img src={item.src} alt={hidden ? "" : item.name} width="180" height="58" loading="lazy" className="ecosystem-logo" />
@@ -28,6 +29,7 @@ function RailSequence({ hidden = false }: { hidden?: boolean }) {
 
 export function EcosystemRail() {
   const reduce = useReducedMotion();
+  const [mobilePaused, setMobilePaused] = useState(false);
 
   return (
     <motion.section
@@ -63,14 +65,18 @@ export function EcosystemRail() {
         </div>
 
         <div className="mt-8 md:hidden" data-ecosystem-mobile>
-          <div className="grid grid-cols-2 border-l border-t border-[var(--line)]" role="list">
-            {ecosystemItems.map((item) => (
-              <div key={item.name} role="listitem" className="grid min-h-28 place-items-center border-b border-r border-[var(--line)] bg-white p-4">
-                <img src={item.src} alt={item.name} width="180" height="58" loading="lazy" className="max-h-14 w-full object-contain mix-blend-multiply" />
-              </div>
-            ))}
+          <div className="ecosystem-mobile-viewport" aria-label="Organismes susceptibles d'intervenir dans le parcours. Le carrousel défile automatiquement.">
+            <div className={`ecosystem-mobile-track ${reduce || mobilePaused ? "is-paused" : ""}`} role="list">
+              <RailSequence className="ecosystem-mobile-sequence" />
+              <RailSequence hidden className="ecosystem-mobile-sequence" />
+            </div>
           </div>
-          <p className="mt-4 text-[11px] leading-5 text-[color:var(--muted)]">Les organismes et interlocuteurs concernés varient selon votre activité, votre structure et votre dossier.</p>
+          <div className="mt-4 flex items-center justify-between gap-4">
+            <p className="text-[11px] leading-5 text-[color:var(--muted)]">Les organismes et interlocuteurs concernés varient selon votre activité, votre structure et votre dossier.</p>
+            <button type="button" onClick={() => setMobilePaused((value) => !value)} className="grid size-10 shrink-0 place-items-center rounded-full border border-[var(--line)] bg-white text-[color:var(--ink)] shadow-sm" aria-label={mobilePaused ? "Reprendre le défilement des organismes" : "Mettre en pause le défilement des organismes"}>
+              {mobilePaused ? <Play className="size-4 fill-current" /> : <Pause className="size-4" />}
+            </button>
+          </div>
         </div>
         <p className="mt-4 text-[10px] leading-5 text-[color:var(--muted)]">Logos et marques cités à titre informatif pour situer l'écosystème de la création d'entreprise. Leur présence ne constitue pas l'affirmation d'un partenariat commercial avec Orée.</p>
       </div>
