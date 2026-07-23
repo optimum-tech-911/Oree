@@ -146,7 +146,7 @@ test("la page d'accueil applique les polices, la couleur d'action et les images 
   await page.goto("/");
   await expect(page.locator("body")).toHaveCSS("font-family", /Onest/);
   await expect(page.locator(".editorial-mark").first()).toHaveCSS("font-family", /Newsreader/);
-  const heroCta = page.locator("main").getByRole("link", { name: /Faire le diagnostic/ }).first();
+  const heroCta = page.locator("main").getByRole("button", { name: /Contacter l’équipe/i }).first();
   await expect(heroCta).toHaveCSS("background-color", "rgb(36, 87, 255)");
   await expect(heroCta).toHaveCSS("color", "rgb(247, 245, 239)");
   await expect(page.locator("header").getByRole("link", { name: /Démarrer mon diagnostic/ })).toHaveCSS("background-color", "rgb(36, 87, 255)");
@@ -227,14 +227,48 @@ test("le sélecteur d'activités reste utile et animé sur mobile", async ({ pag
 test("les contacts directs restent accessibles sur mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  await expect(page.locator("[data-home-conversion-hero]").getByRole("link", { name: /Parler à l’équipe/i })).toHaveAttribute("href", "#contact");
-  const contact = page.locator("[data-direct-contact]");
-  await contact.scrollIntoViewIfNeeded();
+  const hero = page.locator("[data-home-conversion-hero]");
+  const launcher = page.locator("[data-contact-launcher]");
+  await expect(launcher).toBeVisible();
+  await expect(launcher.getByText("Contacter l’équipe", { exact: true })).toHaveCSS("color", "rgb(247, 245, 239)");
+  await hero.getByRole("button", { name: /Contacter l’équipe/i }).click();
+  const contact = page.locator("[data-contact-sheet]");
+  await expect(contact).toBeVisible();
   await expect(contact.getByRole("link", { name: /Appeler/i })).toHaveAttribute("href", "tel:+33787823208");
   await expect(contact.getByRole("link", { name: /Envoyer un SMS/i })).toHaveAttribute("href", /sms:\+33787823208/);
   await expect(contact.getByRole("link", { name: /Écrire par e-mail/i })).toHaveAttribute("href", /mailto:sebaasofiene@gmail\.com/);
   await expect(contact.getByRole("link", { name: /^WhatsApp Continuer/i })).toHaveAttribute("href", /wa\.me\/33787823208/);
   await expect(contact.getByRole("link", { name: /^WhatsApp Business/i })).toHaveAttribute("href", /api\.whatsapp\.com\/send/);
+});
+
+test("le lanceur de contact reste présent sur ordinateur", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+  await expect(page.locator("[data-contact-launcher]")).toBeVisible();
+});
+
+test("le Guide Orée peut basculer vers un contact direct", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Tout refuser" }).click();
+  await page.getByRole("button", { name: "Ouvrir le Guide Orée" }).click();
+  const directAssistantAction = page.getByRole("button", { name: /Parler directement à l’équipe/i });
+  await expect(directAssistantAction).toBeVisible();
+  await expect(directAssistantAction.getByText("Parler directement à l’équipe", { exact: true })).toHaveCSS("color", "rgb(247, 245, 239)");
+  await directAssistantAction.click();
+  await expect(page.locator("[data-contact-sheet]")).toBeVisible();
+  await expect(page.locator("[data-contact-sheet]").getByRole("link", { name: /WhatsApp Business/i })).toBeVisible();
+});
+
+test("les actions de réponse du Guide restent lisibles sans survol", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Tout refuser" }).click();
+  await page.getByRole("button", { name: "Ouvrir le Guide Orée" }).click();
+  await page.getByRole("button", { name: "Je suis salarié et je veux me lancer" }).click();
+  const responseAction = page.locator("[data-assistant-response-action]").last();
+  await expect(responseAction).toBeVisible();
+  await expect(responseAction.locator("span").first()).toHaveCSS("color", "rgb(247, 245, 239)");
 });
 
 test("les mouvements respectent la préférence de réduction", async ({ page }) => {
@@ -249,7 +283,7 @@ test("les mouvements respectent la préférence de réduction", async ({ page })
 test("le CTA principal réagit clairement au survol", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  const cta = page.locator("main").getByRole("link", { name: /Faire le diagnostic/ }).first();
+  const cta = page.locator("main").getByRole("button", { name: /Contacter l’équipe/i }).first();
   await page.waitForTimeout(1100);
   await cta.hover();
   await page.waitForTimeout(220);
@@ -302,6 +336,7 @@ for (const width of [320, 360, 390, 430]) {
     const heading = hero.getByRole("heading").first();
     const primaryCta = hero.locator("[data-primary-cta]");
     const assistant = page.locator("button[aria-label='Ouvrir le Guide Orée']");
+    const contactLauncher = page.locator("[data-contact-launcher]");
 
     await expect(headerSurface).toBeVisible();
     await expect(page.locator("header").getByRole("link", { name: "Se connecter" })).toBeVisible();
@@ -311,14 +346,16 @@ for (const width of [320, 360, 390, 430]) {
     await expect(page.getByText("Orientation offerte")).toHaveCount(0);
     await page.getByRole("button", { name: "Tout refuser" }).click();
     await expect(assistant).toBeVisible();
+    await expect(contactLauncher).toBeVisible();
 
-    const boxes = await Promise.all([headerSurface, heading, primaryCta, assistant].map((locator) => locator.boundingBox()));
-    const [headerBox, headingBox, ctaBox, assistantBox] = boxes;
-    expect(headerBox && headingBox && ctaBox && assistantBox).toBeTruthy();
+    const boxes = await Promise.all([headerSurface, heading, primaryCta, assistant, contactLauncher].map((locator) => locator.boundingBox()));
+    const [headerBox, headingBox, ctaBox, assistantBox, contactBox] = boxes;
+    expect(headerBox && headingBox && ctaBox && assistantBox && contactBox).toBeTruthy();
     expect(headingBox!.y).toBeGreaterThanOrEqual(headerBox!.y + headerBox!.height + 20);
     expect(ctaBox!.x).toBeGreaterThanOrEqual(0);
     expect(ctaBox!.x + ctaBox!.width).toBeLessThanOrEqual(width);
     expect(assistantBox!.x + assistantBox!.width).toBeLessThanOrEqual(width);
+    expect(contactBox!.x + contactBox!.width).toBeLessThanOrEqual(assistantBox!.x - 8);
 
     for (const control of [page.locator("header").getByRole("link", { name: "Se connecter" }), page.locator("header").getByRole("button", { name: "Ouvrir le menu" }), primaryCta]) {
       const box = await control.boundingBox();

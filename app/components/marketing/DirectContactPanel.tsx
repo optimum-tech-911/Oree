@@ -3,59 +3,10 @@ import { Mail, MessageCircle, MessageSquareText, PhoneCall, Send } from "lucide-
 import { Badge } from "@/components/ui/Badge";
 import { analytics } from "@/services/analytics";
 import { cn } from "@/lib/cn";
+import { directContact, directContactOptions, type DirectContactOption } from "@/content/contact";
 
-const phone = "+33787823208";
-const displayPhone = "+33 7 87 82 32 08";
-const email = "sebaasofiene@gmail.com";
-const message = "Bonjour, j’ai une question au sujet de la création de mon entreprise.";
-
-const options = [
-  {
-    id: "call",
-    label: "Appeler",
-    description: "Parler directement à l’équipe.",
-    href: `tel:${phone}`,
-    icon: PhoneCall,
-    tone: "bg-[var(--action)] text-white shadow-[0_14px_34px_rgba(36,87,255,.2)]",
-    external: false,
-  },
-  {
-    id: "sms",
-    label: "Envoyer un SMS",
-    description: "Poser une question en quelques mots.",
-    href: `sms:${phone}?body=${encodeURIComponent(message)}`,
-    icon: MessageSquareText,
-    tone: "bg-white text-[color:var(--ink)]",
-    external: false,
-  },
-  {
-    id: "email",
-    label: "Écrire par e-mail",
-    description: "Envoyer une demande plus détaillée.",
-    href: `mailto:${email}?subject=${encodeURIComponent("Demande depuis Orée Entreprises")}&body=${encodeURIComponent(message)}`,
-    icon: Mail,
-    tone: "bg-white text-[color:var(--ink)]",
-    external: false,
-  },
-  {
-    id: "whatsapp",
-    label: "WhatsApp",
-    description: "Continuer la conversation dans WhatsApp.",
-    href: `https://wa.me/${phone.slice(1)}?text=${encodeURIComponent(message)}`,
-    icon: MessageCircle,
-    tone: "bg-[var(--mint-soft)] text-[color:var(--ink)]",
-    external: true,
-  },
-  {
-    id: "whatsapp-business",
-    label: "WhatsApp Business",
-    description: "Ouvrir l’échange côté professionnel.",
-    href: `https://api.whatsapp.com/send?phone=${phone.slice(1)}&text=${encodeURIComponent(message)}`,
-    icon: Send,
-    tone: "bg-[var(--ink)] text-white",
-    external: true,
-  },
-] as const;
+const icons: Record<DirectContactOption["id"], typeof PhoneCall> = { call: PhoneCall, sms: MessageSquareText, email: Mail, whatsapp: MessageCircle, "whatsapp-business": Send };
+const tones: Record<DirectContactOption["id"], string> = { call: "bg-[var(--action)] text-white shadow-[0_14px_34px_rgba(36,87,255,.2)]", sms: "bg-white text-[color:var(--ink)]", email: "bg-white text-[color:var(--ink)]", whatsapp: "bg-[var(--mint-soft)] text-[color:var(--ink)]", "whatsapp-business": "bg-[var(--ink)] text-white" };
 
 export function DirectContactPanel() {
   const reduce = useReducedMotion();
@@ -75,14 +26,14 @@ export function DirectContactPanel() {
           <h2 className="mt-6 text-balance text-4xl font-semibold leading-[.98] tracking-[-.05em] sm:text-5xl">Choisissez le canal qui vous semble <span className="editorial-mark text-[color:var(--mint)]">le plus simple.</span></h2>
           <p className="mt-5 max-w-xl text-sm leading-7 text-white/72 sm:text-base">Un appel pour aller droit au but, un message pour répondre à votre rythme, ou un e-mail si votre demande mérite davantage de contexte.</p>
           <dl className="mt-8 grid gap-3 border-t border-white/10 pt-6 text-sm sm:grid-cols-2">
-            <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">Téléphone</dt><dd className="mt-1 font-semibold text-white">{displayPhone}</dd></div>
-            <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">E-mail</dt><dd className="mt-1 break-all font-semibold text-white">{email}</dd></div>
+            <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">Téléphone</dt><dd className="mt-1 font-semibold text-white">{directContact.displayPhone}</dd></div>
+            <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">E-mail</dt><dd className="mt-1 break-all font-semibold text-white">{directContact.email}</dd></div>
           </dl>
         </motion.div>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          {options.map((option, index) => {
-            const Icon = option.icon;
+          {directContactOptions.map((option, index) => {
+            const Icon = icons[option.id];
             const isPrimary = option.id === "call";
             return (
               <motion.a
@@ -97,7 +48,7 @@ export function DirectContactPanel() {
                 transition={{ duration: .48, delay: reduce ? 0 : .1 + index * .055, ease: [0.16, 1, 0.3, 1] }}
                 className={cn(
                   "group relative flex min-h-36 flex-col justify-between overflow-hidden rounded-[20px] border border-[var(--line)] p-5 transition duration-300 ease-out hover:-translate-y-1 hover:border-[var(--action)]/35 hover:shadow-[0_18px_38px_rgba(11,18,32,.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--action)] focus-visible:ring-offset-2 sm:min-h-40",
-                  option.tone,
+                  tones[option.id],
                   isPrimary && "sm:col-span-2 sm:min-h-32 sm:flex-row sm:items-center sm:gap-6",
                 )}
               >

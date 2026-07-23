@@ -1,11 +1,12 @@
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight, Check, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowRight, Check, PhoneCall, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
-import { ButtonLink } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { HeroCockpit } from "@/components/marketing/HeroCockpit";
 import { ArtDirectedPicture } from "@/components/media/ArtDirectedPicture";
 import { imagery } from "@/content/imagery";
 import { analytics } from "@/services/analytics";
+import { openDirectContact } from "@/content/contact";
 
 const reassurance = [
   "Une première orientation avant de créer un compte",
@@ -56,23 +57,26 @@ export function HomeConversionHero() {
             transition={{ delay: .22, duration: .58 }}
             className="mt-7 flex flex-col gap-3 sm:flex-row"
           >
-            <ButtonLink
-              to="/diagnostic"
-              onClick={() => analytics.track("primary_cta_clicked", { path: "/", location: "hero", intent: "general_orientation" })}
+            <Button
+              type="button"
+              onClick={openDirectContact}
               variant="dark"
               size="lg"
               className="w-full sm:w-auto"
               data-primary-cta
+            >
+              <PhoneCall className="size-4" />Contacter l’équipe
+            </Button>
+            <ButtonLink
+              to="/diagnostic"
+              onClick={() => analytics.track("primary_cta_clicked", { path: "/", location: "hero", intent: "general_orientation" })}
+              variant="ghost"
+              size="lg"
+              className="w-full border border-white/14 text-white hover:bg-white/[.08] sm:w-auto"
               arrow
             >
               Faire le diagnostic
             </ButtonLink>
-            <ButtonLink to="/comment-ca-marche" variant="ghost" size="lg" className="hidden border border-white/14 text-white hover:bg-white/[.08] sm:inline-flex">
-              Voir le parcours
-            </ButtonLink>
-            <a href="#contact" onClick={() => analytics.track("primary_cta_clicked", { path: "/", location: "hero", intent: "direct_contact" })} className="inline-flex h-12 items-center justify-center gap-2 rounded-[14px] border border-white/14 px-4 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:border-[var(--mint)]/70 hover:bg-white/[.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--ink)] sm:h-14">
-              <MessageCircle className="size-4 text-[color:var(--mint)]" aria-hidden="true" />Parler à l’équipe
-            </a>
           </motion.div>
 
           <motion.ul

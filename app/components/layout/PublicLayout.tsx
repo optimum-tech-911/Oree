@@ -5,6 +5,7 @@ import { PublicFooter } from "@/components/layout/PublicFooter";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { AmbientPointer } from "@/components/layout/AmbientPointer";
 import { MobileConversionBar, mobileConversionForPath } from "@/components/layout/MobileConversionBar";
+import { ContactLauncher } from "@/components/marketing/ContactLauncher";
 
 const darkHeroRoutes = new Set(["/", "/creation-sasu", "/creation-eurl", "/creation-sas", "/creation-sarl", "/creer-entreprise-seul", "/creer-entreprise-en-etant-salarie", "/creer-entreprise-demandeur-emploi", "/passer-micro-entreprise-en-societe", "/creer-entreprise-a-plusieurs", "/dossier-creation-entreprise-bloque"]);
 
@@ -31,6 +32,7 @@ export function PublicLayout() {
       </AnimatePresence>
       <PublicFooter />
       <MobileConversionBar />
+      <ContactLauncher />
     </div>
   );
 }

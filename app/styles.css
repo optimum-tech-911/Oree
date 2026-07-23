@@ -206,6 +206,14 @@ img, svg, video { display: block; max-width: 100%; }
 .button-on-light { color: var(--ink) !important; }
 .hero-primary-cta { color: var(--ink) !important; }
 .hero-secondary-cta, .assistant-launcher-label { color: var(--canvas) !important; }
+
+/*
+ * Explicit foreground tokens for hand-built dark controls.  Do not rely on an
+ * arbitrary Tailwind colour utility here: if a utility is not emitted during a
+ * production build, a button falls back to the page ink and becomes unreadable.
+ */
+.foreground-on-dark { color: var(--canvas) !important; }
+.foreground-on-dark-muted { color: rgba(247, 245, 239, .78) !important; }
 .hero-primary-cta:hover, .hero-secondary-cta:hover { transform: translateY(-4px) scale(1.01); }
 [data-primary-cta]:hover { transform: translateY(-4px); }
 .button-sheen { position: relative; overflow: hidden; isolation: isolate; }
