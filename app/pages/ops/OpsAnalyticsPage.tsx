@@ -7,7 +7,12 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function OpsAnalyticsPage() {
   usePageMeta("Analyse acquisition", "Analysez les sources, campagnes et résultats commerciaux sans données personnelles publicitaires.");
-  const { data, error } = useQuery({ queryKey: ["ops", "dashboard"], queryFn: operationsRepository.getDashboard });
+  const { data, error } = useQuery({
+    queryKey: ["ops", "dashboard"],
+    queryFn: operationsRepository.getDashboard,
+    refetchInterval: 30_000,
+    refetchIntervalInBackground: true,
+  });
   const leads = useMemo(() => data?.leads ?? [], [data?.leads]);
   const sources = useMemo(() => Object.entries(leads.reduce<Record<string, number>>((acc, lead) => { const key = lead.source || "Accès direct"; acc[key] = (acc[key] ?? 0) + 1; return acc; }, {})).sort((a, b) => b[1] - a[1]), [leads]);
   const campaigns = useMemo(() => Object.entries(leads.reduce<Record<string, number>>((acc, lead) => { const key = lead.campaign || "Sans campagne"; acc[key] = (acc[key] ?? 0) + 1; return acc; }, {})).sort((a, b) => b[1] - a[1]), [leads]);

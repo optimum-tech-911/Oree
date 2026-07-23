@@ -1,5 +1,6 @@
 export async function verifyTurnstile(token: string | undefined, ip?: string | null) {
   const secret = Deno.env.get("TURNSTILE_SECRET_KEY");
+  const expectedAction = Deno.env.get("TURNSTILE_EXPECTED_ACTION")?.trim() || "submit_lead";
   if (!secret) {
     console.error("TURNSTILE_SECRET_KEY is not configured");
     return false;
@@ -21,7 +22,7 @@ export async function verifyTurnstile(token: string | undefined, ip?: string | n
     });
     if (!response.ok) return false;
     const result = await response.json() as { success?: boolean; action?: string; hostname?: string };
-    if (result.success !== true || result.action !== "submit_lead") return false;
+    if (result.success !== true || result.action !== expectedAction) return false;
 
     const allowedHostnames = (Deno.env.get("TURNSTILE_ALLOWED_HOSTNAMES") ?? "")
       .split(",")

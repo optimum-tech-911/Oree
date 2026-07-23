@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 const migration = readFileSync(new URL("../supabase/migrations/0006_appointment_permission_hardening.sql", import.meta.url), "utf8");
 const portalMigration = readFileSync(new URL("../supabase/migrations/0007_portal_operations_and_intake.sql", import.meta.url), "utf8");
 const portalDocumentsMigration = readFileSync(new URL("../supabase/migrations/0008_portal_documents_and_read_state.sql", import.meta.url), "utf8");
+const operationsSafetyMigration = readFileSync(new URL("../supabase/migrations/0011_operations_workflow_repair.sql", import.meta.url), "utf8");
 const turnstileVerifier = readFileSync(new URL("../supabase/functions/_shared/turnstile.ts", import.meta.url), "utf8");
 
 describe("appointment permission hardening", () => {
@@ -19,7 +20,8 @@ describe("appointment permission hardening", () => {
 describe("lead intake security", () => {
   it("fails closed and binds Turnstile verification to the lead action", () => {
     expect(turnstileVerifier).toMatch(/if \(!secret\)[\s\S]*return false/);
-    expect(turnstileVerifier).toMatch(/result\.action !== "submit_lead"/);
+    expect(turnstileVerifier).toMatch(/TURNSTILE_EXPECTED_ACTION/);
+    expect(turnstileVerifier).toMatch(/result\.action !== expectedAction/);
     expect(turnstileVerifier).toMatch(/AbortController/);
     expect(turnstileVerifier).not.toMatch(/if \(!secret\) return true/);
   });
@@ -46,5 +48,11 @@ describe("lead intake security", () => {
     expect(portalDocumentsMigration).toMatch(/bucket_id = 'project-documents'/i);
     expect(portalDocumentsMigration).toMatch(/owner_id = v_user::text/i);
     expect(portalDocumentsMigration).toMatch(/grant execute on function public\.register_document_upload[^;]+to authenticated/i);
+  });
+
+  it("keeps at least one active administrator through role changes", () => {
+    expect(operationsSafetyMigration).toMatch(/pg_advisory_xact_lock/i);
+    expect(operationsSafetyMigration).toMatch(/at least one active admin is required/i);
+    expect(operationsSafetyMigration).toMatch(/create or replace function public\.admin_set_staff_role/i);
   });
 });

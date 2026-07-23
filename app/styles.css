@@ -102,36 +102,40 @@ img, svg, video { display: block; max-width: 100%; }
 .shadow-soft { box-shadow: var(--shadow-soft); }
 .shadow-lift { box-shadow: var(--shadow-lift); }
 
-.surface-noise, .noise-layer { position: relative; }
-.surface-noise::after, .noise-layer::after {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  content: "";
-  pointer-events: none;
-  opacity: .022;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.58'/%3E%3C/svg%3E");
-}
+/* Decorative surfaces establish sensible defaults, but utilities such as
+   `fixed`, `absolute` and `relative` must always be able to override them. */
+@layer components {
+  .surface-noise, .noise-layer { position: relative; }
+  .surface-noise::after, .noise-layer::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    content: "";
+    pointer-events: none;
+    opacity: .022;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.58'/%3E%3C/svg%3E");
+  }
 
-.hero-grid, .blueprint-grid { position: relative; isolation: isolate; overflow: hidden; }
-/* The interface uses photography, product proof and whitespace as structure.
-   Keep the legacy classes for layout compatibility, but never render the old
-   square/grid texture. */
-.hero-grid::before, .blueprint-grid::before { display: none; }
-.hero-grid::after {
-  position: absolute;
-  z-index: -2;
-  width: 58rem;
-  height: 58rem;
-  top: -34rem;
-  right: -18rem;
-  content: "";
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(36, 87, 255, .28), rgba(36, 87, 255, .06) 42%, transparent 72%);
-  filter: blur(10px);
-  pointer-events: none;
-  animation: aurora-drift 14s ease-in-out infinite alternate;
+  .hero-grid, .blueprint-grid { position: relative; isolation: isolate; overflow: hidden; }
+  /* The interface uses photography, product proof and whitespace as structure.
+     Keep the legacy classes for layout compatibility, but never render the old
+     square/grid texture. */
+  .hero-grid::before, .blueprint-grid::before { display: none; }
+  .hero-grid::after {
+    position: absolute;
+    z-index: -2;
+    width: 58rem;
+    height: 58rem;
+    top: -34rem;
+    right: -18rem;
+    content: "";
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(36, 87, 255, .28), rgba(36, 87, 255, .06) 42%, transparent 72%);
+    filter: blur(10px);
+    pointer-events: none;
+    animation: aurora-drift 14s ease-in-out infinite alternate;
+  }
 }
 
 .grid-fade {
@@ -171,17 +175,21 @@ img, svg, video { display: block; max-width: 100%; }
   -webkit-background-clip: text;
 }
 
-.soft-panel {
-  border: 1px solid var(--line);
-  background: rgba(247,245,239, .82);
-  box-shadow: 0 1px 0 rgba(247,245,239,.9) inset, var(--shadow-soft);
-  backdrop-filter: blur(18px);
-}
-.glass-panel {
-  border: 1px solid rgba(247,245,239, .12);
-  background: rgba(247,245,239, .065);
-  box-shadow: 0 1px 0 rgba(247,245,239,.08) inset;
-  backdrop-filter: blur(22px);
+/* Keep reusable surfaces below Tailwind utilities so an explicit `bg-*`
+   or `text-*` choice on a component always wins. */
+@layer components {
+  .soft-panel {
+    border: 1px solid var(--line);
+    background: rgba(247,245,239, .82);
+    box-shadow: 0 1px 0 rgba(247,245,239,.9) inset, var(--shadow-soft);
+    backdrop-filter: blur(18px);
+  }
+  .glass-panel {
+    border: 1px solid rgba(247,245,239, .12);
+    background: rgba(247,245,239, .065);
+    box-shadow: 0 1px 0 rgba(247,245,239,.08) inset;
+    backdrop-filter: blur(22px);
+  }
 }
 .interactive-card {
   transition: transform .42s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .42s ease, background-color .35s ease;

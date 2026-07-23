@@ -10,7 +10,12 @@ const qualifiedStatuses = new Set(["qualified", "appointment_booked", "proposal_
 
 export default function OpsDashboardPage() {
   usePageMeta("Pilotage opérationnel", "Suivez les demandes, dossiers, documents et rendez-vous à partir des données autorisées.");
-  const { data, isLoading, error } = useQuery({ queryKey: ["ops", "dashboard"], queryFn: operationsRepository.getDashboard, refetchInterval: 60_000 });
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["ops", "dashboard"],
+    queryFn: operationsRepository.getDashboard,
+    refetchInterval: 15_000,
+    refetchIntervalInBackground: true,
+  });
   const leads = data?.leads ?? [];
   const [renderedAt] = useState(() => Date.now());
   const since = renderedAt - 7 * 24 * 60 * 60 * 1_000;

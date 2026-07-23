@@ -7,6 +7,7 @@ import { opsNavigation } from "@/config/routes";
 import { cn } from "@/lib/cn";
 import { useAuth } from "@/features/auth/auth-context";
 import { isSupabaseConfigured } from "@/services/supabase/client";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
 function OpsNav({ onSelect }: { onSelect?: () => void }) {
   return (
@@ -22,7 +23,7 @@ function OpsNav({ onSelect }: { onSelect?: () => void }) {
             className={({ isActive }) => cn(
               "group flex items-center gap-3 rounded-[15px] px-3.5 py-3 text-sm font-semibold transition duration-300",
               isActive
-                ? "bg-white text-[color:var(--ink)] shadow-[0_12px_34px_rgba(11,18,32,.18)]"
+                ? "bg-white !text-[color:var(--ink)] shadow-[0_12px_34px_rgba(11,18,32,.18)]"
                 : "text-white/72 hover:bg-white/[.07] hover:text-white",
             )}
           >
@@ -48,7 +49,8 @@ export function OpsLayout() {
 
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[color:var(--ink)]">
-      <aside className="hero-grid surface-noise fixed inset-y-0 left-0 z-40 hidden w-[276px] overflow-hidden bg-[var(--night)] text-white xl:flex xl:flex-col">
+      <ScrollToTop />
+      <aside className="hero-grid surface-noise !fixed inset-y-0 left-0 z-40 hidden w-[276px] overflow-hidden bg-[var(--night)] text-white xl:flex xl:flex-col">
         <div className="relative z-10 px-6 py-7"><Logo inverted /></div>
         <div className="relative z-10 mx-4 mb-7 rounded-[20px] border border-white/[.08] bg-white/[.045] p-4">
           <div className="flex items-center justify-between">
@@ -75,7 +77,7 @@ export function OpsLayout() {
         </Link>
       </aside>
 
-      <div className="xl:pl-[276px]">
+      <div className="min-w-0 xl:pl-[276px]">
         <header className="sticky top-0 z-30 border-b border-black/[.06] bg-white/86 backdrop-blur-2xl">
           <div className="flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3">
@@ -115,7 +117,7 @@ export function OpsLayout() {
         {open ? (
           <>
             <motion.button aria-label="Fermer la navigation" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} className="fixed inset-0 z-50 bg-black/55 backdrop-blur-sm xl:hidden" />
-            <motion.aside initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }} transition={{ type: "spring", damping: 30, stiffness: 280 }} className="hero-grid surface-noise fixed inset-y-0 left-0 z-[60] w-[min(88vw,330px)] bg-[var(--night)] text-white xl:hidden">
+            <motion.aside initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }} transition={{ type: "spring", damping: 30, stiffness: 280 }} className="hero-grid surface-noise !fixed inset-y-0 left-0 z-[60] w-[min(88vw,330px)] bg-[var(--night)] text-white xl:hidden">
               <div className="relative z-10 flex items-center justify-between p-6"><Logo inverted /><button onClick={() => setOpen(false)} aria-label="Fermer la navigation" className="grid size-10 place-items-center rounded-full border border-white/10 bg-white/[.06]"><X className="size-5" /></button></div>
               <div className="relative z-10 mt-3"><OpsNav onSelect={() => setOpen(false)} /></div>
             </motion.aside>

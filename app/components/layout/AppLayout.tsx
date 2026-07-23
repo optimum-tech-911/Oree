@@ -30,7 +30,7 @@ export function AppLayout() {
         {clientNavigation.map((item) => {
           const Icon = item.icon!;
           return (
-            <NavLink end={item.href === "/app"} key={item.href} to={item.href} onClick={() => setMobileOpen(false)} className={({ isActive }) => cn("group flex items-center gap-3 rounded-[15px] px-3 py-3 text-[13px] font-bold transition", isActive ? "bg-white text-[color:var(--ink)] shadow-[0_12px_34px_rgba(11,18,32,.16)]" : "text-white/72 hover:bg-white/7 hover:text-white") }>
+            <NavLink end={item.href === "/app"} key={item.href} to={item.href} onClick={() => setMobileOpen(false)} className={({ isActive }) => cn("group flex items-center gap-3 rounded-[15px] px-3 py-3 text-[13px] font-bold transition", isActive ? "bg-white !text-[color:var(--ink)] shadow-[0_12px_34px_rgba(11,18,32,.16)]" : "text-white/72 hover:bg-white/7 hover:text-white") }>
               <span className={cn("grid size-8 place-items-center rounded-[11px] transition", location.pathname === item.href ? "bg-[var(--mint-soft)] text-[color:var(--ink)]" : "bg-white/5 text-white/72 group-hover:bg-white/8") }><Icon className="size-4" /></span>{item.label}
               {item.href === "/app/messages" && unreadMessages > 0 ? <span className="ml-auto grid size-5 place-items-center rounded-full bg-[var(--blue)] text-[9px] text-white">{unreadMessages}</span> : null}
             </NavLink>

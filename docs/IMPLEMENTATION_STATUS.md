@@ -1,6 +1,6 @@
 # État d’implémentation — V3 canonique
 
-Mise à jour : 20 juillet 2026.
+Mise à jour : 22 juillet 2026.
 
 ## État de livraison
 
@@ -8,7 +8,7 @@ Le dépôt V3 est l’application canonique. Les apports utiles de V4 ont été 
 fonction par fonction ; V4 n’est ni une seconde application ni une cible de déploiement.
 
 Le projet Supabase `sksydcdkliuisaahysya` (`oree`) est lié et actif. Les migrations `0001` à
-`0009` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`
+`0011` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`
 sont actives, et le lint distant ne remonte aucune erreur de schéma.
 
 ## Parcours publics
@@ -47,6 +47,8 @@ sont actives, et le lint distant ne remonte aucune erreur de schéma.
 - équipe et rôles administrés par RPC contrôlée ;
 - journal d’audit des actions sensibles ;
 - profil opérationnel réel, séparé du rôle interne.
+- rafraîchissement de la file des demandes et du cockpit toutes les 15 secondes pour
+  faire remonter les nouvelles demandes sans rechargement manuel ;
 
 Toutes les lectures restent filtrées par RLS. Les changements opérationnels sensibles
 passent par des fonctions SQL contrôlées qui vérifient l’utilisateur, le rôle et/ou
@@ -63,16 +65,21 @@ modifier directement le stade opérationnel de son projet.
 - imagerie centralisée dans `app/content/imagery.ts`, optimisée AVIF/WebP et sans faux
   document, faux écran produit, témoignage ou partenariat.
 
-## Vérifications du 20 juillet 2026
+## Vérifications du 22 juillet 2026
 
 - ESLint : réussi ;
 - TypeScript strict : réussi ;
-- Vitest : 25 tests réussis sur 25 ;
-- index Guide Orée : 1 673 entrées issues de 84 fichiers ;
+- Vitest : 26 tests réussis sur 26 ;
+- index Guide Orée : 1 685 entrées issues de 84 fichiers ;
 - build Vite de production : réussi ;
 - Supabase DB lint distant : aucune erreur ;
-- historique distant : migrations `0001` à `0009` synchronisées ;
+- historique distant : migrations `0001` à `0011` synchronisées ;
 - trois Edge Functions : état `ACTIVE`.
+
+La procédure d’intake `submit_lead_bundle` a aussi été exécutée dans une
+transaction annulée sur le projet distant : l’écriture est valide et aucun lead
+de test n’a été conservé. L’endpoint `submit-lead` répond correctement
+`captcha_failed` sans jeton valide, ce qui confirme qu’il reste fermé par défaut.
 
 Le runtime de navigateur intégré n’était pas disponible pendant cette passe : aucune
 revue visuelle manuelle supplémentaire n’est revendiquée. Le test authentifié de bout en
