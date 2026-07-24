@@ -1,0 +1,2 @@
+import{n as e}from"./cn-DVP2SKvG.js";var t=e(`clock-3`,[[`circle`,{cx:`12`,cy:`12`,r:`10`,key:`1mglay`}],[`path`,{d:`M12 6v6h4`,key:`135r8i`}]]);export{t};
+//# sourceMappingURL=clock-3-CNTo6RJa.js.map

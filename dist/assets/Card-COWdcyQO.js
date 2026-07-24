@@ -1,0 +1,2 @@
+import{t as e}from"./react-core-DCq9KknI.js";import{t}from"./cn-DVP2SKvG.js";var n=e();function r({className:e,...r}){return(0,n.jsx)(`div`,{className:t(`soft-panel rounded-[30px]`,e),...r})}export{r as t};
+//# sourceMappingURL=Card-COWdcyQO.js.map

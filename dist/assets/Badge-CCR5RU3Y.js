@@ -1,0 +1,2 @@
+import{t as e}from"./react-core-DCq9KknI.js";import{t}from"./cn-DVP2SKvG.js";var n=e();function r({className:e,children:r,...i}){return(0,n.jsx)(`span`,{className:t(`inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white/78 px-3 py-1.5 text-[11px] font-semibold tracking-[.025em] text-[color:var(--muted)] shadow-[0_8px_28px_rgba(11,18,32,.045)] backdrop-blur-xl`,e),...i,children:r})}export{r as t};
+//# sourceMappingURL=Badge-CCR5RU3Y.js.map
