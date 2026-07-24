@@ -2506,7 +2506,7 @@
   },
   {
     "id": "app/main.tsx:502",
-    "text": "] : undefined; createRoot(document.getElementById(",
+    "text": "] : undefined; const root = document.getElementById(",
     "file": "app/main.tsx"
   },
   {

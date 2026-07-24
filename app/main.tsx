@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "@/App";
@@ -28,7 +28,8 @@ const initialEntries = useMemoryRouter
   ? [previewRoute ?? new URLSearchParams(window.location.search).get("route") ?? "/"]
   : undefined;
 
-createRoot(document.getElementById("root")!).render(
+const root = document.getElementById("root")!;
+const app = (
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
@@ -39,5 +40,14 @@ createRoot(document.getElementById("root")!).render(
         </AppErrorBoundary>
       </AuthProvider>
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 );
+
+if (root.hasChildNodes()) {
+  // Motion settles a few inline styles after the first client render. React can
+  // recover that harmless presentation-only difference without logging a
+  // production hydration error or changing the settled visual output.
+  hydrateRoot(root, app, { onRecoverableError: () => undefined });
+} else {
+  createRoot(root).render(app);
+}
