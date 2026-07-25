@@ -3,5 +3,9 @@ Allow: /
 Disallow: /app/
 Disallow: /ops/
 Disallow: /auth/
+Disallow: /connexion/
+Disallow: /inscription/
+Disallow: /mot-de-passe-oublie/
+Disallow: /reinitialiser-mot-de-passe/
 
-Sitemap: https://example.fr/sitemap.xml
+Sitemap: https://oree.optimutech.fr/sitemap.xml
