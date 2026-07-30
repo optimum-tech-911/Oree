@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Check, FileText, MessageSquareText, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowUpRight, Check, FileText, MessageSquareText, ShieldCheck } from "lucide-react";
 
 const steps = [
   { label: "Projet", detail: "Activité, porteurs et calendrier", meta: "Complet" },
@@ -43,7 +43,7 @@ export function HeroCockpit({ compact = false }: { compact?: boolean }) {
 
           <div className="relative flex items-center justify-between border-b border-white/8 pb-4">
             <div className="flex items-center gap-3">
-              <span className="grid size-11 place-items-center rounded-[15px] bg-[var(--mint)] text-[color:var(--ink)]"><Sparkles className="size-4.5" /></span>
+              <span className="grid size-11 place-items-center rounded-[15px] border border-white/10 bg-white/[.05] text-white"><FileText className="size-4.5" /></span>
               <div><p className="text-[9px] font-extrabold uppercase tracking-[.18em] text-white/72">Dossier de création</p><p className="mt-1 text-sm font-extrabold text-white sm:text-base">Studio Horizon</p></div>
             </div>
             <div className="text-right"><p className="text-[9px] font-extrabold uppercase tracking-[.16em] text-white/72">Progression</p><p className="mt-1 text-lg font-extrabold tracking-[-.04em] text-[color:var(--mint)]">64%</p></div>
@@ -93,7 +93,7 @@ export function HeroCockpit({ compact = false }: { compact?: boolean }) {
             </div>
           </div>
 
-          <div className="relative mt-3 flex items-center justify-between rounded-[18px] border border-white/8 bg-white/[.035] px-4 py-3"><div className="flex items-center gap-2"><span className="relative size-2 rounded-full bg-[var(--mint)]"><span className="assistant-pulse" /></span><span className="text-[10px] font-bold text-white/72">Guide Orée prêt à répondre sur cette étape</span></div><span className="hidden text-[9px] uppercase tracking-[.12em] text-white/72 sm:inline">⌘ K</span></div>
+          <div className="relative mt-3 flex items-center justify-between rounded-[18px] border border-white/8 bg-white/[.035] px-4 py-3"><div className="flex items-center gap-2"><FileText className="size-3.5 text-white/72" /><span className="text-[10px] font-bold text-white/72">Guide Orée disponible pour cette étape</span></div><span className="hidden text-[9px] uppercase tracking-[.12em] text-white/72 sm:inline">⌘ K</span></div>
         </div>
       </motion.div>
 

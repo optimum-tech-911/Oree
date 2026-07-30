@@ -375,20 +375,20 @@ img, svg, video { display: block; max-width: 100%; }
     linear-gradient(180deg, color-mix(in srgb, var(--canvas) 96%, var(--action)) 0%, var(--canvas) 100%);
 }
 
-.assistant-pulse, .animate-pulse-ring {
+.animate-pulse-ring {
   position: absolute;
   inset: -7px;
   z-index: -1;
   border: 1px solid rgba(70, 214, 166, .46);
   border-radius: 999px;
-  animation: assistant-pulse 2.8s ease-out infinite;
+  animation: confirmation-ring 2.8s ease-out infinite;
 }
 
 .sticky-mobile-cta {
   padding-bottom: max(.75rem, env(safe-area-inset-bottom));
 }
 
-@keyframes assistant-pulse { 0% { transform: scale(.78); opacity: 0; } 20% { opacity: .8; } 100% { transform: scale(1.45); opacity: 0; } }
+@keyframes confirmation-ring { 0% { transform: scale(.78); opacity: 0; } 20% { opacity: .8; } 100% { transform: scale(1.45); opacity: 0; } }
 @keyframes float-soft { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(0,-10px,0); } }
 @keyframes float-orbit { 0%,100% { transform: translate3d(0,0,0) rotate(-1deg); } 50% { transform: translate3d(0,-13px,0) rotate(1deg); } }
 @keyframes aurora-drift { from { transform: translate3d(-4%, -2%, 0) scale(1); } to { transform: translate3d(4%, 4%, 0) scale(1.08); } }

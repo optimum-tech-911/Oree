@@ -1,4 +1,4 @@
-import { ArrowDown, Check, FileInput, Layers3, MessagesSquare, ShieldCheck, Sparkles, UserRoundCheck } from "lucide-react";
+import { ArrowDown, Check, FileInput, Layers3, ListChecks, MessagesSquare, ShieldCheck, UserRoundCheck } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Section, SectionHeader } from "@/components/ui/Section";
@@ -8,7 +8,7 @@ import { Reveal } from "@/components/marketing/Reveal";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const beforeAccount = [
-  [Sparkles, "Diagnostic sans compte", "Commencez immédiatement. Les réponses non sensibles restent sauvegardées pendant votre exploration."],
+  [ListChecks, "Diagnostic sans compte", "Commencez immédiatement. Les réponses non sensibles restent sauvegardées pendant votre exploration."],
   [UserRoundCheck, "Résultat explicable", "L'orientation présente ses raisons, ses alternatives et les points qui restent à confirmer."],
   [FileInput, "Conversion progressive", "Le compte devient utile au bon moment : sauvegarde multi-appareils, pièces, associés et suivi."],
 ] as const;

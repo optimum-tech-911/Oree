@@ -11,11 +11,11 @@ import {
   Gauge,
   GitBranch,
   Handshake,
+  Inbox,
   LayoutDashboard,
   MessageSquareText,
   History,
   Settings,
-  Sparkles,
   UsersRound,
 } from "lucide-react";
 
@@ -47,7 +47,7 @@ export const clientNavigation: NavigationItem[] = [
 
 export const opsNavigation: NavigationItem[] = [
   { label: "Pilotage", href: "/ops", icon: Gauge },
-  { label: "Leads", href: "/ops/leads", icon: Sparkles },
+  { label: "Leads", href: "/ops/leads", icon: Inbox },
   { label: "Projets", href: "/ops/projets", icon: Building2 },
   { label: "Documents", href: "/ops/documents", icon: FileCheck2 },
   { label: "Rendez-vous", href: "/ops/rendez-vous", icon: CalendarDays },

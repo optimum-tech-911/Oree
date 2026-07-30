@@ -109,7 +109,7 @@ export const publicRoutes = [
     path: "/tarifs/",
     title: "Tarifs et coûts - Orée",
     description:
-      "Comprenez la séparation entre honoraires Orée, frais légaux, coûts tiers et options avant tout engagement.",
+      "Créez une SASU, EURL, SAS ou SARL pour 600 € tout compris, avec accompagnement, frais de greffe et annonce légale inclus.",
     h1: "Tarifs et coûts",
     kind: "pricing",
   },

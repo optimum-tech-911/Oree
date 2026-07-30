@@ -96,12 +96,19 @@ function hasStructuredData(html) {
 async function assertStaticFiles() {
   const robotsPath = path.join(distDir, "robots.txt");
   const sitemapPath = path.join(distDir, "sitemap.xml");
+  const llmsPath = path.join(distDir, "llms.txt");
   await stat(robotsPath).catch(() => fail("dist/robots.txt is missing."));
   await stat(sitemapPath).catch(() => fail("dist/sitemap.xml is missing."));
+  await stat(llmsPath).catch(() => fail("dist/llms.txt is missing."));
 
   const robots = await readFile(robotsPath, "utf8");
   const sitemap = await readFile(sitemapPath, "utf8");
+  const llms = await readFile(llmsPath, "utf8");
   if (!robots.includes("Sitemap: https://oree.optimutech.fr/sitemap.xml")) fail("robots.txt points to the wrong sitemap.");
+  if (!robots.includes("https://oree.optimutech.fr/llms.txt")) fail("robots.txt does not disclose the AI-readable overview.");
+  if (!llms.startsWith("# Orée Entreprises\n\n> ")) fail("llms.txt does not follow the expected title and summary structure.");
+  if (!llms.includes("600 € tout compris") || !llms.includes("100 €")) fail("llms.txt is missing the confirmed offer.");
+  if (!llms.includes("ne constitue pas un conseil juridique automatique définitif")) fail("llms.txt is missing the legal-guidance boundary.");
 
   const sitemapRoutes = new Set(
     [...sitemap.matchAll(/<loc>(https:\/\/oree\.optimutech\.fr\/[^<]*)<\/loc>/g)].map((match) => {
@@ -113,6 +120,7 @@ async function assertStaticFiles() {
 
   for (const route of requiredRoutes) {
     if (!sitemapRoutes.has(route)) fail(`sitemap.xml is missing ${route}.`);
+    if (!llms.includes(canonicalUrl(route))) fail(`llms.txt is missing ${route}.`);
   }
   for (const route of sitemapRoutes) {
     if (!requiredRoutes.has(route)) fail(`sitemap.xml contains unexpected route ${route}.`);

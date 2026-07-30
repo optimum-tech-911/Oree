@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { Bell, Bot, ChevronDown, Command, LogOut, Menu, Search, X } from "lucide-react";
+import { Bell, ChevronDown, Command, LogOut, Menu, Search, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { Logo } from "@/components/ui/Logo";
 import { clientNavigation } from "@/config/routes";
@@ -49,7 +49,7 @@ export function AppLayout() {
           <div className="flex h-[70px] items-center justify-between rounded-[22px] border border-white/70 bg-white/84 px-3 shadow-[0_12px_48px_rgba(11,18,32,.07)] backdrop-blur-2xl sm:px-5">
             <div className="flex items-center gap-3"><button type="button" onClick={() => setMobileOpen(true)} className="grid size-11 place-items-center rounded-full border border-[var(--line)] bg-white lg:hidden"><Menu className="size-5" /></button><div><p className="text-[9px] font-extrabold uppercase tracking-[.15em] text-[color:var(--muted)]">Espace projet</p><h1 className="mt-1 text-lg font-extrabold tracking-[-.035em]">{current?.label ?? "Vue d'ensemble"}</h1></div></div>
             <div className="flex items-center gap-2">
-              <button type="button" onClick={() => window.dispatchEvent(new CustomEvent("oree:assistant-open"))} className="grid size-11 place-items-center rounded-full border border-[var(--line)] bg-[var(--mint-soft)] text-[color:var(--ink)] shadow-sm transition hover:-translate-y-0.5 xl:hidden" aria-label="Ouvrir le Guide Orée"><Bot className="size-4.5" /></button>
+              <button type="button" onClick={() => window.dispatchEvent(new CustomEvent("oree:assistant-open"))} className="grid size-11 place-items-center rounded-full border border-[var(--line)] bg-white text-[color:var(--ink)] shadow-sm transition hover:-translate-y-0.5 xl:hidden" aria-label="Ouvrir le Guide Orée"><Search className="size-4.5" /></button>
               <button type="button" onClick={() => window.dispatchEvent(new CustomEvent("oree:assistant-open"))} className="hidden h-11 min-w-[300px] items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 text-left text-xs font-extrabold text-[color:var(--muted)] shadow-sm transition hover:border-[var(--blue)]/28 hover:text-[color:var(--ink)] xl:flex"><Search className="size-4" />Demander au Guide Orée <kbd className="ml-auto inline-flex items-center gap-1 rounded-md bg-[var(--paper)] px-2 py-1 text-[9px] font-extrabold"><Command className="size-2.5" />K</kbd></button>
               <Link to="/app/notifications" className="relative grid size-11 place-items-center rounded-full border border-[var(--line)] bg-white shadow-sm transition hover:-translate-y-0.5" aria-label="Ouvrir les notifications"><Bell className="size-4.5" /><span className="absolute right-2.5 top-2.5 size-2 rounded-full bg-[var(--blue)] ring-2 ring-white" /></Link>
               <Link to="/app/parametres" className="hidden items-center gap-2 rounded-full bg-[var(--ink)] py-2 pl-2 pr-3 text-xs font-extrabold text-white shadow-[0_12px_32px_rgba(11,18,32,.18)] sm:flex"><span className="grid size-8 place-items-center rounded-full bg-[var(--mint)] text-[9px] text-[color:var(--ink)]">{initials}</span><span className="hidden md:inline">Mon compte</span><ChevronDown className="size-3.5 text-white/72" /></Link>

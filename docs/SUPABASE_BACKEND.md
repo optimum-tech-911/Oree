@@ -19,6 +19,9 @@ LEAD_CLAIM_SECRET=at-least-32-random-characters
 PRIVACY_POLICY_VERSION=version-publiee
 ALLOWED_ORIGINS=https://domaine.fr,https://staging.domaine.fr
 RESEND_API_KEY=
+RESEND_FROM_EMAIL=
+LEAD_NOTIFICATION_EMAIL=
+APP_PUBLIC_URL=
 CRM_WEBHOOK_URL=
 CRM_WEBHOOK_SECRET=
 ```
@@ -44,6 +47,7 @@ Appliquer dans l'ordre :
 10. `0010_permission_hardening_repair.sql`
 11. `0011_operations_workflow_repair.sql`
 12. `0012_lead_intake_attempts.sql`
+13. `0013_offer_and_ads_lead_workflow.sql`
 
 Avec le CLI :
 

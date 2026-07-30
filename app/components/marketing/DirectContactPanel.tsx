@@ -10,6 +10,11 @@ const tones: Record<DirectContactOption["id"], string> = { call: "bg-[var(--acti
 
 export function DirectContactPanel() {
   const reduce = useReducedMotion();
+  const trackContact = (option: DirectContactOption) => {
+    analytics.track("contact_option_selected", { channel: option.id, location: "home_contact" });
+    if (option.id === "call") analytics.track("phone_click", { location: "home_contact" });
+    if (option.id === "whatsapp" || option.id === "whatsapp-business") analytics.track("whatsapp_click", { location: "home_contact", channel: option.id });
+  };
 
   return (
     <div id="contact" data-direct-contact className="relative overflow-hidden rounded-[30px] border border-[var(--line)] bg-[var(--paper)] p-5 shadow-[0_24px_72px_rgba(11,18,32,.08)] sm:p-8 lg:p-10">
@@ -28,6 +33,7 @@ export function DirectContactPanel() {
           <dl className="mt-8 grid gap-3 border-t border-white/10 pt-6 text-sm sm:grid-cols-2">
             <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">Téléphone</dt><dd className="mt-1 font-semibold text-white">{directContact.displayPhone}</dd></div>
             <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">E-mail</dt><dd className="mt-1 break-all font-semibold text-white">{directContact.email}</dd></div>
+            <div className="sm:col-span-2"><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">Disponibilités</dt><dd className="mt-1 font-semibold text-white">{directContact.availability}</dd></div>
           </dl>
         </motion.div>
 
@@ -41,7 +47,7 @@ export function DirectContactPanel() {
                 href={option.href}
                 target={option.external ? "_blank" : undefined}
                 rel={option.external ? "noreferrer" : undefined}
-                onClick={() => analytics.track("contact_option_selected", { channel: option.id, location: "home_contact" })}
+                onClick={() => trackContact(option)}
                 initial={reduce ? false : { opacity: 0, y: 16 }}
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: .22 }}

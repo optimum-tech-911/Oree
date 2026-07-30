@@ -10,7 +10,7 @@ Toute l'interface dérive de quatre couleurs de base seulement :
 
 1. **Encre profonde** — `#0B1220` : confiance, navigation, espaces projet et contrastes forts.
 2. **Bleu d'action** — `#2457FF` : CTA principal, orientation active, lien et focus.
-3. **Menthe de signal** — `#46D6A6` : validation, progression, sécurité et présence du Guide Orée.
+3. **Menthe de signal** — `#46D6A6` : validation, progression et sécurité.
 4. **Blanc chaud** — `#F7F5EF` : lecture, respirations, formulaires et surfaces principales.
 
 Les tons `--paper`, `--ink-2`, `--accent-deep` et `--mint-soft` sont uniquement des dérivés de luminosité de ces quatre couleurs. Ne jamais introduire de violet, orange, rouge, rose ou vert indépendant. Les anciennes variables sémantiques restent mappées sur cette palette afin de préserver la compatibilité du code.

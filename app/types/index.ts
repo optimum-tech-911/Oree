@@ -41,6 +41,11 @@ export type DiagnosticAnswers = {
   lastName?: string;
   email?: string;
   phone?: string;
+  preferredContactChannel?: "email" | "phone" | "whatsapp";
+  legalFormInterest?: LegalFormCode | "OTHER";
+  activityDetails?: string;
+  creationTimeline?: string;
+  message?: string;
   privacyAccepted?: boolean;
   wantsCallback?: boolean;
 };

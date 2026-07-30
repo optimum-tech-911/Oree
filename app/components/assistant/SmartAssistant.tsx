@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowRight, Bot, ChevronRight, Command, Compass, FileSearch, ListChecks, Mic, MicOff, PhoneCall, Send, X } from "lucide-react";
-import { assistantKnowledge, type AssistantKnowledge } from "@/content/knowledge";
+import { ArrowRight, ChevronRight, Command, Compass, FileSearch, ListChecks, Mic, MicOff, PhoneCall, Search, Send, X } from "lucide-react";
+import { assistantKnowledge, expandAssistantTokens, rankAssistantKnowledge } from "@/content/knowledge";
 import generatedIndex from "@/generated/search-index.json";
 import { mobileConversionForPath } from "@/components/layout/MobileConversionBar";
 import { readConsent } from "@/features/consent/consent";
@@ -22,49 +22,15 @@ type ChatMessage = {
 };
 
 const quickPrompts = [
+  "Que comprend le forfait de création ?",
   "Quel statut pour créer seul ?",
   "Quels documents dois-je fournir ?",
   "Je suis salarié et je veux me lancer",
   "Où en est mon dossier ?",
 ];
 
-const synonymGroups = [
-  ["rdv", "rendez vous", "rendez-vous", "appel", "creneau"],
-  ["papier", "papiers", "piece", "pieces", "document", "documents", "justificatif"],
-  ["sasu", "eurl", "seul", "solo", "unipersonnelle"],
-  ["sas", "sarl", "associe", "associes", "plusieurs", "deux"],
-  ["micro", "auto entrepreneur", "auto-entrepreneur", "independant"],
-  ["bloque", "blocage", "rejete", "rejet", "correction", "erreur"],
-  ["prix", "cout", "tarif", "frais", "combien"],
-  ["avancement", "suivi", "progression", "statut dossier", "etape"],
-];
-
-function expandTokens(query: string) {
-  const normalized = normalizeText(query);
-  const tokens = new Set(normalized.split(" ").filter((token) => token.length > 1));
-  for (const group of synonymGroups) {
-    if (group.some((item) => normalized.includes(normalizeText(item)))) {
-      group.flatMap((item) => normalizeText(item).split(" ")).forEach((item) => tokens.add(item));
-    }
-  }
-  return { normalized, tokens: [...tokens] };
-}
-
-function scoreKnowledge(item: AssistantKnowledge, query: string) {
-  const { normalized, tokens } = expandTokens(query);
-  const haystack = normalizeText(`${item.title} ${item.keywords.join(" ")} ${item.answer}`);
-  let score = 0;
-  if (haystack.includes(normalized)) score += 30;
-  for (const token of tokens) {
-    if (normalizeText(item.title).includes(token)) score += 8;
-    if (item.keywords.some((keyword) => normalizeText(keyword).includes(token))) score += 6;
-    if (haystack.includes(token)) score += 2;
-  }
-  return score;
-}
-
 function scoreGenerated(item: GeneratedRecord, query: string) {
-  const { normalized, tokens } = expandTokens(query);
+  const { normalized, tokens } = expandAssistantTokens(query);
   const haystack = normalizeText(item.text);
   let score = haystack.includes(normalized) ? 15 : 0;
   for (const token of tokens) if (haystack.includes(token)) score += 2;
@@ -161,9 +127,7 @@ export function SmartAssistant() {
     setInput("");
     analytics.track("assistant_search", { queryLength: query.length, path: location.pathname });
 
-    const ranked = assistantKnowledge
-      .map((item) => ({ item, score: scoreKnowledge(item, query) + (location.pathname.startsWith(item.route) ? 3 : 0) }))
-      .sort((a, b) => b.score - a.score);
+    const ranked = rankAssistantKnowledge(query, location.pathname);
     const best = ranked[0];
 
     if (best && best.score >= 6) {
@@ -229,9 +193,9 @@ export function SmartAssistant() {
       <motion.button
         type="button"
         onClick={openAssistant}
-        whileHover={reduce ? undefined : { y: -4 }}
+        whileHover={reduce ? undefined : { y: -2 }}
         className={cn(
-          "fixed right-3 z-[70] flex h-12 items-center gap-2 rounded-full border border-white/10 bg-[var(--ink)] px-2.5 text-xs font-semibold text-white shadow-[0_18px_52px_rgba(11,18,32,.28)] transition-all duration-500 sm:right-6",
+          "fixed right-3 z-[70] flex h-12 items-center gap-2 rounded-full border border-white/14 bg-[var(--ink)] px-4 text-xs font-semibold text-white shadow-[0_12px_34px_rgba(11,18,32,.2)] transition-all duration-300 sm:right-6",
           location.pathname === "/" && homeHeroVisible
             ? "bottom-[max(1rem,env(safe-area-inset-bottom))] top-auto sm:bottom-auto sm:top-[7rem]"
             : hasMobileConversion
@@ -241,8 +205,8 @@ export function SmartAssistant() {
         )}
         aria-label="Ouvrir le Guide Orée"
       >
-        <span className="relative grid size-8 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><Bot className="size-4" /><span className="assistant-pulse" /></span>
-        <span className={cn("assistant-launcher-label hidden pr-1 sm:block", location.pathname === "/" && homeHeroVisible && "sm:hidden")}>Aide</span>
+        <Search className="size-4" />
+        <span className={cn("assistant-launcher-label hidden sm:block", location.pathname === "/" && homeHeroVisible && "sm:hidden")}>Guide</span>
       </motion.button>
 
       <AnimatePresence>
@@ -254,12 +218,11 @@ export function SmartAssistant() {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 36, scale: .985 }}
               transition={{ type: "spring", damping: 30, stiffness: 310 }}
-              className="fixed inset-2 z-[80] flex flex-col overflow-hidden rounded-[30px] border border-white/10 bg-[var(--paper)] shadow-[0_50px_160px_rgba(11,18,32,.48)] sm:inset-y-4 sm:left-auto sm:right-4 sm:w-[500px] lg:w-[530px]"
-              aria-label="Assistant de navigation Orée"
+              className="fixed inset-2 z-[80] flex flex-col overflow-hidden rounded-[24px] border border-white/10 bg-[var(--paper)] shadow-[0_34px_100px_rgba(11,18,32,.38)] sm:inset-y-4 sm:left-auto sm:right-4 sm:w-[500px] lg:w-[530px]"
+              aria-label="Guide de navigation Orée"
             >
-              <div className="relative overflow-hidden bg-[var(--ink)] p-5 text-white sm:p-6">
-                <div className="absolute -right-20 -top-28 size-64 rounded-full bg-[var(--blue)]/35 blur-[75px]" />
-                <div className="relative flex items-center justify-between"><div className="flex items-center gap-3"><span className="relative grid size-12 place-items-center rounded-[17px] bg-[var(--mint)] text-[color:var(--ink)]"><Bot className="size-5" /><span className="assistant-pulse" /></span><div><p className="text-lg font-extrabold tracking-[-.035em]">Guide Orée</p><p className="mt-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white/72"><span className="size-1.5 rounded-full bg-[var(--mint)]" />{records.length.toLocaleString("fr-FR")} éléments indexés</p></div></div><button type="button" onClick={closeAssistant} className="grid size-10 place-items-center rounded-full border border-white/10 bg-white/6 text-white/72 transition hover:bg-white/12 hover:text-white"><X className="size-5" /></button></div>
+              <div className="bg-[var(--ink)] p-5 text-white sm:p-6">
+                <div className="flex items-center justify-between"><div className="flex items-center gap-3"><span className="grid size-11 place-items-center rounded-[13px] border border-white/12 bg-white/[.045]"><Search className="size-4.5" /></span><div><p className="text-lg font-extrabold tracking-[-.035em]">Guide Orée</p><p className="mt-1 text-[10px] font-bold uppercase tracking-[.12em] text-white/72">{records.length.toLocaleString("fr-FR")} éléments documentés</p></div></div><button type="button" onClick={closeAssistant} className="grid size-10 place-items-center rounded-full border border-white/10 bg-white/6 text-white/72 transition hover:bg-white/12 hover:text-white"><X className="size-5" /></button></div>
                 <div className="relative mt-5 flex items-center gap-2 rounded-[16px] border border-white/8 bg-white/[.04] px-3 py-2.5 text-[10px] text-white/72"><FileSearch className="size-3.5 text-[color:var(--mint)]" />Contexte actuel : <span className="truncate font-extrabold text-white/66">{location.pathname}</span><span className="ml-auto hidden items-center gap-1 rounded-md border border-white/10 px-2 py-1 font-bold sm:flex"><Command className="size-3" />K</span></div>
               </div>
 
@@ -285,7 +248,7 @@ export function SmartAssistant() {
                   {speechSupported ? <button type="button" onClick={startVoice} className={cn("grid size-10 shrink-0 place-items-center rounded-full transition", listening ? "bg-[var(--blue)] text-white" : "bg-white text-[color:var(--muted)] hover:text-[color:var(--ink)]")} aria-label="Dicter une demande">{listening ? <MicOff className="size-4" /> : <Mic className="size-4" />}</button> : null}
                   <button type="submit" disabled={!input.trim()} className="grid size-10 shrink-0 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)] transition hover:scale-105 disabled:opacity-35"><Send className="size-4" /></button>
                 </div>
-                <p className="mt-2 text-center text-[9px] font-bold uppercase tracking-[.1em] text-[color:var(--muted)]">Assistant local et auditable · prêt pour une fonction IA Supabase</p>
+                <p className="mt-2 text-center text-[9px] font-bold uppercase tracking-[.1em] text-[color:var(--muted)]">Guide de navigation · réponses issues des contenus Orée</p>
               </form>
             </motion.aside>
           </>

@@ -24,6 +24,12 @@ Le frontend utilise `app/services/attribution.ts`.
 
 ```text
 landing_view
+pricing_viewed
+primary_cta_clicked
+phone_click
+whatsapp_click
+callback_form_started
+callback_requested
 diagnostic_started
 diagnostic_step_completed
 diagnostic_completed
@@ -52,4 +58,10 @@ Ne jamais envoyer à GA4 : nom, email, téléphone, texte libre du projet, nom d
 
 ## Google Ads
 
-Le premier lancement peut compter `lead_submitted` et `appointment_booked`, mais l'optimisation doit migrer vers `lead_qualified`, puis `customer_won`. Chaque événement serveur possède un identifiant d'idempotence.
+Le premier lancement peut compter `lead_submitted`, `callback_requested` et une véritable
+`appointment_booked`. La démonstration de calendrier n’est pas une conversion.
+
+Les changements opérations `qualified` et `won` préparent respectivement
+`qualify_lead` et `close_convert_lead`. Chaque événement serveur possède une clé
+d’idempotence. Les conversions navigateur utilisent un `event_id` stable et ne sont
+émises qu’une fois par session.

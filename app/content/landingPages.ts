@@ -1,4 +1,7 @@
 import type { LegalFormCode } from "@/types";
+import { commercialOffers } from "@/config/commercial-offers";
+
+const companyOffer = commercialOffers.companyCreation;
 
 export type LandingPageContent = {
   slug: string;
@@ -21,10 +24,10 @@ export const landingPages: Record<string, LandingPageContent> = {
   "creation-sasu": {
     slug: "creation-sasu",
     eyebrow: "Création de SASU",
-    title: "Créez votre SASU avec un parcours",
-    highlight: "clair, suivi et humain.",
-    description: "Vérifiez que la SASU correspond à votre projet, centralisez vos informations et avancez étape par étape depuis un espace unique.",
-    primaryCta: "Commencer mon projet SASU",
+    title: "Créez votre SASU pour",
+    highlight: companyOffer.priceLabel,
+    description: "Accompagnement, greffe, annonce légale et corrections du dossier inclus. Vérifiez aussi que la SASU correspond bien à votre projet.",
+    primaryCta: companyOffer.ctaLabel,
     secondaryCta: "Comparer avec l'EURL",
     secondaryHref: "/creation-eurl",
     searchIntent: "creation_sasu",
@@ -50,10 +53,10 @@ export const landingPages: Record<string, LandingPageContent> = {
   "creation-eurl": {
     slug: "creation-eurl",
     eyebrow: "Création d'EURL",
-    title: "Structurez votre EURL en maîtrisant",
-    highlight: "chaque décision administrative.",
-    description: "Clarifiez le cadre de votre projet solo, préparez vos informations et faites suivre chaque pièce avant la formalité.",
-    primaryCta: "Commencer mon projet EURL",
+    title: "Créez votre EURL pour",
+    highlight: companyOffer.priceLabel,
+    description: "Accompagnement, greffe, annonce légale et corrections du dossier inclus. Clarifiez le cadre de votre projet solo avant la formalité.",
+    primaryCta: companyOffer.ctaLabel,
     secondaryCta: "Comparer avec la SASU",
     secondaryHref: "/creation-sasu",
     searchIntent: "creation_eurl",
@@ -79,10 +82,10 @@ export const landingPages: Record<string, LandingPageContent> = {
   "creation-sas": {
     slug: "creation-sas",
     eyebrow: "Création de SAS",
-    title: "Alignez les associés avant de",
-    highlight: "construire la société.",
-    description: "Rôles, capital, décisions, documents : organisez un projet à plusieurs dans un espace commun avant la formalité.",
-    primaryCta: "Préparer notre SAS",
+    title: "Créez votre SAS pour",
+    highlight: companyOffer.priceLabel,
+    description: "Accompagnement, greffe, annonce légale et corrections du dossier inclus. Organisez les associés, le capital et la gouvernance avant la formalité.",
+    primaryCta: companyOffer.ctaLabel,
     secondaryCta: "Comparer avec la SARL",
     secondaryHref: "/creation-sarl",
     searchIntent: "creation_sas",
@@ -108,10 +111,10 @@ export const landingPages: Record<string, LandingPageContent> = {
   "creation-sarl": {
     slug: "creation-sarl",
     eyebrow: "Création de SARL",
-    title: "Construisez une SARL où chacun sait",
-    highlight: "ce qu'il doit faire.",
-    description: "Organisez les associés, la gérance, les apports et le dossier dans un parcours collectif et lisible.",
-    primaryCta: "Préparer notre SARL",
+    title: "Créez votre SARL pour",
+    highlight: companyOffer.priceLabel,
+    description: "Accompagnement, greffe, annonce légale et corrections du dossier inclus. Organisez les associés, la gérance et les apports avant la formalité.",
+    primaryCta: companyOffer.ctaLabel,
     secondaryCta: "Comparer avec la SAS",
     secondaryHref: "/creation-sas",
     searchIntent: "creation_sarl",

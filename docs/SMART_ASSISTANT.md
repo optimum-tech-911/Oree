@@ -9,6 +9,7 @@ Sources :
 - base contrôlée : `app/content/knowledge.ts` ;
 - index généré : `app/generated/search-index.json` ;
 - script : `scripts/generate-assistant-index.mjs`.
+- offre commerciale de référence : `app/config/commercial-offers.ts`.
 
 Le script analyse les fichiers du projet, extrait des chaînes françaises utiles et les associe à des routes. Il s'exécute avant `dev` et `build`.
 
@@ -20,6 +21,16 @@ Le script analyse les fichiers du projet, extrait des chaînes françaises utile
 - suggestions contextuelles ;
 - reconnaissance vocale si disponible ;
 - fonctionnement dans les espaces public, client et opérations.
+- réponses contrôlées sur le prix, les formes prises en charge, les inclusions, le
+  moment du paiement, les exclusions, l’offre micro-entreprise et les moyens de
+  contact ;
+- réponse de prudence dédiée lorsqu’une mention HT, TTC ou TVA non configurée est
+  demandée.
+
+La base contrôlée reprend uniquement les informations commerciales confirmées et
+utiles au visiteur. Les paramètres internes de campagnes publicitaires, les
+qualifications opérations et les données privées ne font pas partie des réponses
+publiques du Guide.
 
 ## Limites assumées
 

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
-  Bot,
   BriefcaseBusiness,
   CircleHelp,
   FileCheck2,
@@ -11,6 +10,7 @@ import {
   MessageSquareText,
   RefreshCcw,
   Scale,
+  Search,
   ShieldCheck,
   UserRoundCheck,
   UsersRound,
@@ -27,12 +27,14 @@ import { HomeConversionHero } from "@/components/marketing/HomeConversionHero";
 import { ActivitySpotlight } from "@/components/marketing/ActivitySpotlight";
 import { DirectContactPanel } from "@/components/marketing/DirectContactPanel";
 import { CostClarity } from "@/components/marketing/CostClarity";
+import { CompanyOfferCard } from "@/components/marketing/CommercialOfferCard";
 import { ServiceScope } from "@/components/marketing/ServiceScope";
 import { PathwayMediaSwitcher } from "@/components/media/PathwayMediaSwitcher";
 import { ArtDirectedPicture } from "@/components/media/ArtDirectedPicture";
 import { imagery } from "@/content/imagery";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { analytics } from "@/services/analytics";
+import { commercialOffers } from "@/config/commercial-offers";
 
 const audiencePaths = [
   { id: "solo", icon: Fingerprint, asset: imagery.homeFounderPathway, title: "Je crée seul", short: "SASU · EURL · EI", description: "Comparez les structures unipersonnelles et organisez votre dossier avant de retenir une option.", href: "/creer-entreprise-seul", action: "Comparer les options", points: ["Situation actuelle", "Mode de rémunération", "Évolution future"] },
@@ -54,7 +56,7 @@ const safeguards = [
 const faqs = [
   { question: "Dois-je déjà savoir quelle société créer ?", answer: "Non. Le diagnostic commence par votre situation, votre activité, vos associés éventuels et vos priorités. Les structures apparaissent ensuite comme des pistes à comparer, jamais comme une réponse automatique définitive." },
   { question: "Puis-je commencer sans créer de compte ?", answer: "Oui. Vous pouvez avancer dans le diagnostic et obtenir une première orientation avant de créer un compte. L'inscription devient utile pour poursuivre le dossier dans l'espace connecté." },
-  { question: "Comment sont présentés les coûts ?", answer: "Les honoraires ORÉE, les frais légaux applicables et les éventuelles prestations tierces doivent apparaître séparément dans un devis validé avant engagement." },
+  { question: "Que comprend le prix de création ?", answer: `${commercialOffers.companyCreation.priceLabel} comprend l’accompagnement, les frais de greffe, l’annonce légale et les corrections ou compléments du dossier. Les modifications de sociétés existantes ne sont pas prises en charge.` },
   { question: "La plateforme remplace-t-elle un conseil juridique ?", answer: "Non. Elle organise les informations, explique le parcours et met en évidence les points à valider. Les recommandations personnalisées et actes réglementés nécessitent l'intervention d'un professionnel habilité." },
   { question: "Que se passe-t-il si mon dossier est déjà bloqué ?", answer: "Un parcours distinct permet de situer l'étape et la demande reçue. Il organise la vérification sans promettre qu'une correction sera automatiquement acceptée par l'organisme compétent." },
 ];
@@ -135,6 +137,10 @@ export default function HomePage() {
       </Section>
 
       <Section className="bg-white/55">
+        <div className="container-shell"><CompanyOfferCard trackingLocation="home_offer" /></div>
+      </Section>
+
+      <Section>
         <div className="container-shell"><CostClarity /></div>
       </Section>
 
@@ -150,7 +156,7 @@ export default function HomePage() {
             <h2 className="mt-6 text-balance text-4xl font-semibold leading-[1] tracking-[-.05em] sm:text-5xl lg:text-6xl">La plateforme prépare le contexte. <span className="editorial-mark text-[color:var(--blue)]">L’humain intervient au bon endroit.</span></h2>
             <p className="mt-6 max-w-2xl text-base leading-8 text-[color:var(--muted)]">Vous pouvez demander un échange pour reprendre les informations déjà structurées. La disponibilité, les compétences mobilisées et le périmètre d'intervention doivent être confirmés avant la prestation.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink to="/rendez-vous" variant="primary" arrow>Demander un échange</ButtonLink><ButtonLink to="/accompagnement" variant="secondary">Comprendre l'accompagnement</ButtonLink></div>
-            <div className="mt-6 flex items-center gap-4 rounded-[18px] bg-[var(--ink)] p-4 text-white"><span className="grid size-10 shrink-0 place-items-center rounded-[13px] bg-[var(--mint)] text-[color:var(--ink)]"><Bot className="size-4" /></span><div className="min-w-0 flex-1"><p className="text-sm font-semibold">Une question de navigation ?</p><p className="mt-1 text-xs text-white/72">Le Guide Orée retrouve une page ou une action dans l'index local.</p></div><button type="button" onClick={openAssistant} className="shrink-0 text-xs font-semibold text-[color:var(--mint)]">Ouvrir</button></div>
+            <div className="mt-6 flex items-center gap-4 rounded-[16px] border border-[var(--line)] bg-white p-4"><Search className="size-5 shrink-0 text-[color:var(--muted)]" /><div className="min-w-0 flex-1"><p className="text-sm font-semibold">Une question de navigation ?</p><p className="mt-1 text-xs text-[color:var(--muted)]">Le Guide Orée retrouve une page ou une action dans les contenus du site.</p></div><button type="button" onClick={openAssistant} className="shrink-0 text-xs font-semibold text-[color:var(--blue)]">Ouvrir</button></div>
           </div>
         </div>
       </Section>

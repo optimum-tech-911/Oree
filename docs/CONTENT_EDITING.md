@@ -12,6 +12,15 @@ Remplacer nom, descripteur, email, téléphone, adresse et raison sociale.
 
 Chaque entrée définit : titre, promesse, bénéfices, CTA, FAQ et intention initiale.
 
+## Offre commerciale et contacts
+
+`app/config/commercial-offers.ts`
+
+Cette configuration est l’autorité unique pour les tarifs publics, les inclusions,
+les formes couvertes, le moment du paiement, le téléphone, WhatsApp et l’e-mail.
+Modifier cette source plutôt que de saisir un prix ou une coordonnée dans un composant.
+Le libellé fiscal reste masqué tant qu’il n’est pas validé.
+
 ## Connaissance du Guide
 
 `app/content/knowledge.ts`

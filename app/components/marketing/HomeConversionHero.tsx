@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight, Check, PhoneCall, Sparkles } from "lucide-react";
+import { ArrowRight, Check, PhoneCall } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { HeroCockpit } from "@/components/marketing/HeroCockpit";
@@ -7,10 +7,11 @@ import { ArtDirectedPicture } from "@/components/media/ArtDirectedPicture";
 import { imagery } from "@/content/imagery";
 import { analytics } from "@/services/analytics";
 import { openDirectContact } from "@/content/contact";
+import { commercialOffers } from "@/config/commercial-offers";
 
 const reassurance = [
   "Une première orientation avant de créer un compte",
-  "Honoraires, frais légaux et options présentés séparément",
+  `${commercialOffers.companyCreation.priceLabel} avec greffe et annonce légale incluses`,
   "Aucun document sensible nécessaire pour commencer",
 ];
 
@@ -29,7 +30,7 @@ export function HomeConversionHero() {
         <div className="max-w-3xl">
           <motion.div initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             <Badge className="border-white/12 bg-white/[.06] text-white/72">
-              <Sparkles className="size-3.5 text-[color:var(--mint)]" />SASU · EURL · SAS · SARL
+              <Check className="size-3.5 text-[color:var(--mint)]" />SASU · EURL · SAS · SARL · {commercialOffers.companyCreation.priceLabel}
             </Badge>
           </motion.div>
 
@@ -39,7 +40,7 @@ export function HomeConversionHero() {
             transition={{ delay: .06, duration: .72, ease: [0.22, 1, 0.36, 1] }}
             className="mt-6 text-balance text-[clamp(2.65rem,5.25vw,6.1rem)] font-semibold leading-[.94] tracking-[-.06em]"
           >
-            Créez votre société avec un parcours <span className="editorial-mark text-[color:var(--mint)]">clair et piloté.</span>
+            Créez votre société pour <span className="editorial-mark text-[color:var(--mint)]">{commercialOffers.companyCreation.priceLabel}</span>
           </motion.h1>
 
           <motion.p
@@ -48,7 +49,7 @@ export function HomeConversionHero() {
             transition={{ delay: .15, duration: .58 }}
             className="mt-6 max-w-2xl text-pretty text-base leading-7 text-white/72 sm:text-lg sm:leading-8"
           >
-            ORÉE relie votre situation à une orientation indicative, un dossier organisé et une prochaine action visible — sans vous demander de choisir un statut au hasard.
+            {commercialOffers.companyCreation.description} Accompagnement, greffe, annonce légale et corrections du dossier sont inclus.
           </motion.p>
 
           <motion.div
@@ -57,26 +58,26 @@ export function HomeConversionHero() {
             transition={{ delay: .22, duration: .58 }}
             className="mt-7 flex flex-col gap-3 sm:flex-row"
           >
-            <Button
-              type="button"
-              onClick={openDirectContact}
-              variant="dark"
+            <ButtonLink
+              to="/diagnostic"
+              onClick={() => analytics.track("primary_cta_clicked", { path: "/", location: "hero", intent: "company_creation", offer: commercialOffers.companyCreation.id })}
+              variant="accent"
               size="lg"
               className="w-full sm:w-auto"
               data-primary-cta
+              arrow
+            >
+              {commercialOffers.companyCreation.ctaLabel}
+            </ButtonLink>
+            <Button
+              type="button"
+              onClick={openDirectContact}
+              variant="ghost"
+              size="lg"
+              className="w-full border border-white/14 bg-[var(--ink)] text-white hover:bg-[var(--ink-2)] sm:w-auto"
             >
               <PhoneCall className="size-4" />Contacter l’équipe
             </Button>
-            <ButtonLink
-              to="/diagnostic"
-              onClick={() => analytics.track("primary_cta_clicked", { path: "/", location: "hero", intent: "general_orientation" })}
-              variant="ghost"
-              size="lg"
-              className="w-full border border-white/14 text-white hover:bg-white/[.08] sm:w-auto"
-              arrow
-            >
-              Faire le diagnostic
-            </ButtonLink>
           </motion.div>
 
           <motion.ul

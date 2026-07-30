@@ -8,7 +8,7 @@ import { landingPages } from "@/content/landingPages";
     for (const slug of ["creation-sasu", "creation-eurl", "creation-sas", "creation-sarl"]) {
       const page = landingPages[slug];
       expect(page).toBeDefined();
-      expect(page?.title.length).toBeGreaterThan(20);
+      expect(`${page?.title} ${page?.highlight}`.length).toBeGreaterThan(20);
     }
   });
 

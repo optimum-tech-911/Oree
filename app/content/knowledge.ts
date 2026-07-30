@@ -1,3 +1,6 @@
+import { commercialOffers } from "@/config/commercial-offers";
+import { normalizeText } from "@/lib/format";
+
 export type AssistantKnowledge = {
   id: string;
   title: string;
@@ -6,6 +9,60 @@ export type AssistantKnowledge = {
   answer: string;
   actions: Array<{ label: string; href: string }>;
 };
+
+const assistantSynonymGroups = [
+  ["rdv", "rendez vous", "rendez-vous", "appel", "rappel", "creneau", "disponibilite"],
+  ["papier", "papiers", "piece", "pieces", "document", "documents", "justificatif"],
+  ["sasu", "eurl", "seul", "solo", "unipersonnelle"],
+  ["sas", "sarl", "associe", "associes", "plusieurs", "deux"],
+  ["micro", "auto entrepreneur", "auto-entrepreneur", "independant"],
+  ["bloque", "blocage", "rejete", "rejet", "correction", "erreur"],
+  ["prix", "cout", "tarif", "frais", "combien", "forfait"],
+  ["payer", "paie", "paiement", "reglement", "quand"],
+  ["inclus", "incluse", "compris", "comprend", "contenu"],
+  ["modifier", "modification", "changer", "societe existante"],
+  ["ht", "ttc", "tva", "taxe", "fiscalite"],
+  ["telephone", "appeler", "contact", "contacter", "whatsapp", "email", "e-mail"],
+  ["avancement", "suivi", "progression", "statut dossier", "etape"],
+];
+
+export function expandAssistantTokens(query: string) {
+  const normalized = normalizeText(query);
+  const tokens = new Set(normalized.split(" ").filter((token) => token.length > 1));
+
+  for (const group of assistantSynonymGroups) {
+    if (group.some((item) => normalized.includes(normalizeText(item)))) {
+      group.flatMap((item) => normalizeText(item).split(" ")).forEach((item) => tokens.add(item));
+    }
+  }
+
+  return { normalized, tokens: [...tokens] };
+}
+
+function scoreAssistantKnowledge(item: AssistantKnowledge, query: string) {
+  const { normalized, tokens } = expandAssistantTokens(query);
+  const normalizedTitle = normalizeText(item.title);
+  const haystack = normalizeText(`${item.title} ${item.keywords.join(" ")} ${item.answer}`);
+  let score = 0;
+
+  if (haystack.includes(normalized)) score += 30;
+  for (const token of tokens) {
+    if (normalizedTitle.includes(token)) score += 8;
+    if (item.keywords.some((keyword) => normalizeText(keyword).includes(token))) score += 6;
+    if (haystack.includes(token)) score += 2;
+  }
+
+  return score;
+}
+
+export function rankAssistantKnowledge(query: string, pathname = "") {
+  return assistantKnowledge
+    .map((item) => ({
+      item,
+      score: scoreAssistantKnowledge(item, query) + (pathname.startsWith(item.route) ? 3 : 0),
+    }))
+    .sort((a, b) => b.score - a.score);
+}
 
 export const assistantKnowledge: AssistantKnowledge[] = [
   {
@@ -80,12 +137,92 @@ export const assistantKnowledge: AssistantKnowledge[] = [
     actions: [{ label: "Comprendre les points à vérifier", href: "/creer-entreprise-demandeur-emploi" }],
   },
   {
-    id: "pricing",
-    title: "Offres et coûts",
+    id: "company-offer-price",
+    title: "Prix fixe de création de société",
     route: "/tarifs",
-    keywords: ["prix", "tarif", "coût", "cout", "combien", "frais", "offre", "paiement"],
-    answer: "Les offres distinguent les honoraires du service, les frais légaux obligatoires et les éventuelles prestations tierces. Un devis détaillé doit préciser les montants applicables avant tout engagement.",
-    actions: [{ label: "Voir les tarifs", href: "/tarifs" }],
+    keywords: ["prix", "tarif", "coût", "cout", "combien", "offre", "forfait", "sasu", "eurl", "sas", "sarl", "supplément", "surcharge"],
+    answer: `La création d’une SASU, EURL, SAS ou SARL est proposée à ${commercialOffers.companyCreation.priceLabel}. Le prix est identique pour ces quatre formes, sans supplément selon la forme choisie. ${commercialOffers.companyCreation.otherFormsWording}`,
+    actions: [
+      { label: "Voir l’offre complète", href: "/tarifs" },
+      { label: "Commencer ma création", href: "/diagnostic" },
+    ],
+  },
+  {
+    id: "company-offer-included",
+    title: "Ce qui est inclus dans le forfait société",
+    route: "/tarifs",
+    keywords: ["inclus", "incluse", "compris", "comprend", "contenu", "forfait", "accompagnement", "greffe", "annonce légale", "correction", "complément", "dépôt"],
+    answer: `Le forfait à ${commercialOffers.companyCreation.priceLabel} comprend ${commercialOffers.companyCreation.included.map((item) => item.toLocaleLowerCase("fr-FR")).join(", ")}. Il concerne la préparation et le dépôt d’un dossier de création.`,
+    actions: [
+      { label: "Voir le détail de l’offre", href: "/tarifs" },
+      { label: "Comprendre l’accompagnement", href: "/accompagnement" },
+    ],
+  },
+  {
+    id: "company-offer-payment",
+    title: "Moment du paiement",
+    route: "/tarifs",
+    keywords: ["payer", "paie", "paiement", "règlement", "quand", "avant", "après", "informations", "dossier"],
+    answer: commercialOffers.companyCreation.paymentStage,
+    actions: [
+      { label: "Voir le fonctionnement", href: "/comment-ca-marche" },
+      { label: "Commencer ma création", href: "/diagnostic" },
+    ],
+  },
+  {
+    id: "company-offer-tax",
+    title: "TVA et mention fiscale du prix",
+    route: "/tarifs",
+    keywords: ["ht", "ttc", "tva", "taxe", "fiscalité", "facture", "prix hors taxe", "prix toutes taxes comprises"],
+    answer: `L’offre validée est affichée à ${commercialOffers.companyCreation.priceLabel}. Aucune mention publique HT, TTC ou de TVA supplémentaire n’est actuellement configurée : le Guide ne doit donc pas en inventer. Pour une précision de facturation ou de TVA, contactez l’équipe avant de vous engager.`,
+    actions: [
+      { label: "Voir les tarifs", href: "/tarifs" },
+      { label: "Demander un rappel", href: "/rendez-vous" },
+    ],
+  },
+  {
+    id: "company-offer-exclusions",
+    title: "Créations prises en charge et modifications exclues",
+    route: "/tarifs",
+    keywords: ["modifier", "modification", "changer", "société existante", "transfert", "siège", "dirigeant", "capital", "exclusion", "non pris en charge"],
+    answer: `${commercialOffers.companyCreation.restriction} Un dossier de création déjà commencé mais bloqué reste un besoin distinct : vous pouvez décrire le blocage pour vérifier la prochaine action.`,
+    actions: [
+      { label: "Voir l’offre de création", href: "/tarifs" },
+      { label: "Décrire un dossier bloqué", href: "/dossier-creation-entreprise-bloque" },
+    ],
+  },
+  {
+    id: "micro-creation-offer",
+    title: "Offre de création de micro-entreprise",
+    route: "/offres",
+    keywords: ["micro", "micro-entreprise", "auto entrepreneur", "auto-entrepreneur", "prix", "tarif", "coût", "combien", "démarche", "pour mon compte"],
+    answer: `La création de micro-entreprise est une offre distincte à ${commercialOffers.microEnterprise.priceLabel}. ${commercialOffers.microEnterprise.description} ${commercialOffers.microEnterprise.paymentStage}`,
+    actions: [
+      { label: "Voir les offres", href: "/offres" },
+      { label: "Étudier un passage en société", href: "/passer-micro-entreprise-en-societe" },
+    ],
+  },
+  {
+    id: "company-offer-contact",
+    title: "Contacter l’équipe Orée",
+    route: "/rendez-vous",
+    keywords: ["contact", "contacter", "téléphone", "appeler", "rappel", "whatsapp", "email", "e-mail", "adresse", "disponibilité", "équipe"],
+    answer: `Vous pouvez demander un rappel, appeler ou écrire sur WhatsApp au ${commercialOffers.contact.displayPhone}, ou envoyer un e-mail à ${commercialOffers.contact.email}. ${commercialOffers.contact.availability}.`,
+    actions: [
+      { label: "Demander un rappel", href: "/rendez-vous" },
+      { label: "Commencer le diagnostic", href: "/diagnostic" },
+    ],
+  },
+  {
+    id: "orientation-limits",
+    title: "Portée de l’orientation",
+    route: "/accompagnement",
+    keywords: ["conseil juridique", "avis définitif", "orientation", "recommandation", "validation humaine", "avocat", "expert", "garantie"],
+    answer: "Le diagnostic fournit une orientation indicative et auditable, pas un conseil juridique automatique définitif. Il formule les structures qui semblent devoir être comparées, les points à valider et l’action suivante. Une validation humaine reste proposée lorsque votre situation l’exige.",
+    actions: [
+      { label: "Comprendre l’accompagnement", href: "/accompagnement" },
+      { label: "Démarrer le diagnostic", href: "/diagnostic" },
+    ],
   },
   {
     id: "tracking",

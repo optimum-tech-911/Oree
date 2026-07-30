@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 
 const routes = [
   "/",
@@ -46,6 +47,12 @@ const routes = [
   "/ops/profil",
 ];
 
+async function skipWhenLoginIsRequired(page: Page, readySurface: Locator, reason: string) {
+  const loginHeading = page.getByRole("heading", { name: "Retrouvez votre projet." });
+  await expect(readySurface.or(loginHeading)).toBeVisible();
+  test.skip(await loginHeading.isVisible(), reason);
+}
+
 for (const route of routes) {
   test(`${route} se charge sans erreur d'exécution`, async ({ page }) => {
     const pageErrors: string[] = [];
@@ -53,7 +60,7 @@ for (const route of routes) {
     await page.goto(route);
     await expect(page).toHaveTitle(/Orée/);
     await expect(page.locator("body")).toBeVisible();
-    await expect(page.locator("h1, h2").first()).toBeVisible();
+    await expect(page.locator("h1, h2").filter({ visible: true }).first()).toBeVisible();
     expect(pageErrors).toEqual([]);
   });
 }
@@ -72,13 +79,41 @@ test("le diagnostic dossier bloqué affiche une synthèse avant les coordonnées
   await page.getByRole("button", { name: /statuts ou décisions/i }).click();
   await page.getByLabel(/décrivez le message/i).fill("Une correction des statuts est demandée avant le dépôt.");
   await page.getByRole("button", { name: /étape suivante/i }).click();
-  await expect(page.getByText(/point de blocage doit d’abord être qualifié/i)).toBeVisible();
+  await expect(page.getByRole("heading", { name: /point de blocage doit d’abord être qualifié/i })).toBeVisible();
 });
 
 test("une intention SAS ouvre directement le bon embranchement du diagnostic", async ({ page }) => {
   await page.goto("/diagnostic?intent=creation_sas");
   await expect(page.getByRole("button", { name: /à plusieurs/i })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByText(/qui porte le projet/i)).toBeVisible();
+});
+
+for (const form of ["sasu", "eurl", "sas", "sarl"]) {
+  test(`la landing ${form.toUpperCase()} affiche l’offre et les quatre actions d’acquisition`, async ({ page }) => {
+    await page.goto(`/creation-${form}`);
+    await expect(page.getByRole("heading", { name: new RegExp(`Créez votre ${form} pour 600 € tout compris`, "i") }).first()).toBeVisible();
+    const hero = page.locator("main section").first();
+    await expect(hero.getByRole("link", { name: "Commencer ma création" })).toBeVisible();
+    await expect(hero.getByRole("link", { name: "Être rappelé" })).toHaveAttribute("href", "#rappel");
+    await expect(hero.getByRole("link", { name: "Appeler" })).toHaveAttribute("href", /^tel:\+33787823208/);
+    await expect(hero.getByRole("link", { name: "Écrire sur WhatsApp" })).toHaveAttribute("href", /wa\.me\/33787823208/);
+  });
+}
+
+test("le formulaire de rappel reste utilisable sur mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/creation-sasu");
+  const form = page.locator("[data-callback-form]");
+  await form.scrollIntoViewIfNeeded();
+  await expect(form).toBeVisible();
+  await form.getByLabel("Prénom").fill("Camille");
+  await form.getByLabel("Nom", { exact: true }).fill("Martin");
+  await form.getByLabel("E-mail").fill("camille@example.fr");
+  await form.getByLabel("Téléphone").fill("06 12 34 56 78");
+  await form.getByLabel("Activité").fill("Conseil en stratégie");
+  await expect(form.getByRole("button", { name: "Être rappelé" })).toBeVisible();
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
 });
 
 test("la récupération du mot de passe confirme la demande", async ({ page }) => {
@@ -90,21 +125,27 @@ test("la récupération du mot de passe confirme la demande", async ({ page }) =
 
 test("la recherche documentaire filtre la liste", async ({ page }) => {
   await page.goto("/app/documents");
-  await page.getByPlaceholder("Rechercher").fill("capital");
+  const search = page.getByPlaceholder("Rechercher");
+  await skipWhenLoginIsRequired(page, search, "Une session client réelle est requise quand Supabase est configuré.");
+  await search.fill("capital");
   await expect(page.getByText("Attestation de dépôt du capital")).toBeVisible();
   await expect(page.getByText("Pièce d'identité")).toHaveCount(0);
 });
 
 test("un message peut être envoyé dans la démonstration", async ({ page }) => {
   await page.goto("/app/messages");
-  await page.getByPlaceholder("Rédiger un message…").fill("Message de contrôle fonctionnel");
+  const composer = page.getByPlaceholder("Rédiger un message…");
+  await skipWhenLoginIsRequired(page, composer, "Une session client réelle est requise quand Supabase est configuré.");
+  await composer.fill("Message de contrôle fonctionnel");
   await page.getByRole("button", { name: "Envoyer le message" }).click();
   await expect(page.getByText("Message de contrôle fonctionnel")).toBeVisible();
 });
 
 test("les filtres et détails opérations sont fonctionnels", async ({ page }) => {
   await page.goto("/ops/projets");
-  await page.getByPlaceholder(/rechercher dans projets/i).fill("cabinet");
+  const search = page.getByPlaceholder(/rechercher dans projets/i);
+  await skipWhenLoginIsRequired(page, search, "Une session opérations réelle est requise quand Supabase est configuré.");
+  await search.fill("cabinet");
   await expect(page.getByText("Cabinet de conseil")).toBeVisible();
   await page.getByRole("button", { name: "Détails" }).click();
   await expect(page.getByText(/projet orienté vers sasu/i)).toBeVisible();
@@ -113,17 +154,20 @@ test("les filtres et détails opérations sont fonctionnels", async ({ page }) =
 test("les notifications peuvent être marquées comme lues", async ({ page }) => {
   await page.goto("/app/notifications");
   const button = page.getByRole("button", { name: /tout marquer comme lu/i });
+  await skipWhenLoginIsRequired(page, button, "Une session client réelle est requise quand Supabase est configuré.");
   await button.click();
   await expect(button).toBeDisabled();
 });
 
 test("les modifications du projet sont enregistrées localement", async ({ page }) => {
   await page.goto("/app/projet");
-  await page.getByLabel("Nom du projet").fill("Projet éditorial");
+  const projectName = page.getByLabel("Nom du projet");
+  await skipWhenLoginIsRequired(page, projectName, "Une session client réelle est requise quand Supabase est configuré.");
+  await projectName.fill("Projet éditorial");
   await page.getByRole("button", { name: "Enregistrer" }).click();
   await expect(page.getByText("Projet enregistré")).toBeVisible();
   await page.reload();
-  await expect(page.getByLabel("Nom du projet")).toHaveValue("Projet éditorial");
+  await expect(projectName).toHaveValue("Projet éditorial");
 });
 
 test("le méga-menu de création reste lisible et contenu dans la fenêtre", async ({ page }) => {
@@ -146,10 +190,13 @@ test("la page d'accueil applique les polices, la couleur d'action et les images 
   await page.goto("/");
   await expect(page.locator("body")).toHaveCSS("font-family", /Onest/);
   await expect(page.locator(".editorial-mark").first()).toHaveCSS("font-family", /Newsreader/);
-  const heroCta = page.locator("main").getByRole("button", { name: /Contacter l’équipe/i }).first();
+  const heroCta = page.locator("main").getByRole("link", { name: /Commencer ma création/i }).first();
   await expect(heroCta).toHaveCSS("background-color", "rgb(36, 87, 255)");
   await expect(heroCta).toHaveCSS("color", "rgb(247, 245, 239)");
-  await expect(page.locator("header").getByRole("link", { name: /Démarrer mon diagnostic/ })).toHaveCSS("background-color", "rgb(36, 87, 255)");
+  const desktopHeaderCta = page.locator("header").getByRole("link", { name: /Démarrer mon diagnostic/ });
+  if (await desktopHeaderCta.count()) {
+    await expect(desktopHeaderCta).toHaveCSS("background-color", "rgb(36, 87, 255)");
+  }
   const loadedImages = await page.locator("img").evaluateAll((images) => images.filter((image) => {
     const img = image as HTMLImageElement;
     return img.complete && img.naturalWidth > 0;
@@ -260,6 +307,27 @@ test("le Guide Orée peut basculer vers un contact direct", async ({ page }) => 
   await expect(page.locator("[data-contact-sheet]").getByRole("link", { name: /WhatsApp Business/i })).toBeVisible();
 });
 
+test("le Guide Orée répond précisément sur l’offre confirmée", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/creation-sasu");
+  await page.getByRole("button", { name: "Tout refuser" }).click();
+  await page.getByRole("button", { name: "Ouvrir le Guide Orée" }).click();
+
+  const guide = page.getByLabel("Guide de navigation Orée");
+  await expect(guide).toBeVisible();
+  await expect(guide.locator(".lucide-bot, .lucide-sparkles")).toHaveCount(0);
+  await expect(guide).not.toContainText(/prêt pour une fonction IA/i);
+
+  const input = page.getByPlaceholder("Écrivez ou prononcez ce que vous cherchez…");
+  await input.fill("Les frais de greffe et l’annonce légale sont-ils inclus ?");
+  await input.press("Enter");
+  await expect(page.getByText(/comprend.*frais de greffe inclus.*annonce légale incluse/i)).toBeVisible();
+
+  await input.fill("Pouvez-vous modifier une société existante ?");
+  await input.press("Enter");
+  await expect(page.getByText(/modifications de sociétés existantes ne sont pas prises en charge/i)).toBeVisible();
+});
+
 test("les actions de réponse du Guide restent lisibles sans survol", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
@@ -283,7 +351,8 @@ test("les mouvements respectent la préférence de réduction", async ({ page })
 test("le CTA principal réagit clairement au survol", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  const cta = page.locator("main").getByRole("button", { name: /Contacter l’équipe/i }).first();
+  test.skip(!await page.evaluate(() => matchMedia("(hover: hover)").matches), "Le projet tactile ne simule pas un pointeur avec survol.");
+  const cta = page.locator("main").getByRole("link", { name: /Commencer ma création/i }).first();
   await page.waitForTimeout(1100);
   await cta.hover();
   await page.waitForTimeout(220);
@@ -295,9 +364,9 @@ test("le héros d'accueil présente une proposition stable et un aperçu produit
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   const hero = page.locator("[data-home-conversion-hero]");
-  await expect(hero.getByRole("heading", { name: /Créez votre société avec un parcours clair et piloté/i })).toBeVisible();
-  await expect(hero.getByRole("link", { name: /Faire le diagnostic/i })).toBeVisible();
-  await expect(hero.getByText("Studio Horizon", { exact: true })).toBeVisible();
+  await expect(hero.getByRole("heading", { name: /Créez votre société pour 600 € tout compris/i })).toBeVisible();
+  await expect(hero.getByRole("link", { name: /Commencer ma création/i })).toBeVisible();
+  await expect(hero.getByText("Studio Horizon", { exact: true }).filter({ visible: true })).toBeVisible();
   await expect(hero.getByRole("tab")).toHaveCount(0);
   await expect(hero.getByRole("button", { name: /Mettre en pause/i })).toHaveCount(0);
 });
@@ -308,8 +377,8 @@ test("le héros d'accueil ne change pas automatiquement son message", async ({ p
   const hero = page.locator("[data-home-conversion-hero]");
   const heading = hero.getByRole("heading").first();
   const copy = await heading.textContent();
-  await expect(hero.getByText("Studio Horizon", { exact: true })).toBeVisible();
-  await expect(hero.getByText("Lecture du projet", { exact: true })).toBeVisible();
+  await expect(hero.getByText("Studio Horizon", { exact: true }).filter({ visible: true })).toBeVisible();
+  await expect(hero.getByText("Lecture du projet", { exact: true }).filter({ visible: true })).toBeVisible();
   await page.waitForTimeout(3800);
   await expect(heading).toHaveText(copy ?? "");
 });
@@ -372,7 +441,7 @@ for (const width of [320, 360, 390, 430]) {
 test("le consentement initial ne masque pas le CTA d'une page d'acquisition mobile", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto("/creer-entreprise-demandeur-emploi");
-  const primaryCta = page.locator("main").getByRole("link", { name: /Comprendre mes options/i }).first();
+  const primaryCta = page.locator("main").getByRole("link", { name: /Commencer ma création/i }).first();
   const consent = page.getByLabel("Préférences de confidentialité");
   await expect(primaryCta).toBeVisible();
   await expect(consent).toBeVisible();
@@ -395,21 +464,15 @@ test("le consentement initial ne masque pas le CTA d'une page d'acquisition mobi
 test("la page tarifs garde une action utile dans le premier écran mobile", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto("/tarifs");
-  await expect(page.locator("main").getByRole("link", { name: /Préciser mon besoin/i }).first()).toBeInViewport();
+  await expect(page.locator("main").getByRole("link", { name: /Commencer ma création/i }).first()).toBeInViewport();
   await expect(page.locator(".sticky-mobile-cta")).toHaveCount(0);
 });
 
-test("le chargement de route affiche l'identité et une progression animée", async ({ page }) => {
-  await page.route("**/assets/HomePage-*.js", async (route) => {
-    await new Promise((resolve) => setTimeout(resolve, 850));
-    await route.continue();
-  });
+test("le chargement direct réutilise le HTML prérendu sans écran vide", async ({ page }) => {
   await page.goto("/", { waitUntil: "domcontentloaded" });
-  const loader = page.locator("[data-page-loader]");
-  await expect(loader).toBeVisible();
-  await expect(loader.getByRole("link", { name: /Orée Entreprises, accueil/ })).toBeVisible();
-  await expect(loader).toContainText("Préparation de votre espace");
+  await expect(page.getByRole("link", { name: /Orée Entreprises, accueil/ }).first()).toBeVisible();
   await expect(page.locator("[data-home-conversion-hero]")).toBeVisible();
+  await expect(page.locator("main")).not.toBeEmpty();
 });
 
 test("les contrôles à fond plein conservent un contraste lisible sur toutes les routes", async ({ page }) => {

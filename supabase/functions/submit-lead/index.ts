@@ -60,6 +60,11 @@ const inputSchema = z.object({
     lastName: z.string().trim().min(1).max(100),
     email: z.string().trim().email().max(254),
     phone: z.preprocess((value) => value === "" ? undefined : value, z.string().trim().min(6).max(30).optional()),
+    preferredContactChannel: z.enum(["email", "phone", "whatsapp"]).optional(),
+    legalFormInterest: z.enum(["SASU", "EURL", "SAS", "SARL", "EI", "MICRO", "OTHER"]).optional(),
+    activityDetails: z.string().trim().max(500).optional(),
+    creationTimeline: z.string().trim().max(80).optional(),
+    message: z.string().trim().max(4000).optional(),
     privacyAccepted: z.literal(true),
     wantsCallback: z.boolean().optional(),
   }).superRefine((answers, context) => {
@@ -124,6 +129,86 @@ async function checkLeadRateLimit(admin: ReturnType<typeof createClient>, reques
   return { allowed: true, ipHash, emailHash };
 }
 
+function escapeHtml(value: string) {
+  return value.replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  })[character] ?? character);
+}
+
+async function deliverLeadNotification(
+  admin: ReturnType<typeof createClient>,
+  leadId: string,
+  answers: z.infer<typeof inputSchema>["answers"],
+  attribution: z.infer<typeof attributionSchema> | null | undefined,
+) {
+  const apiKey = Deno.env.get("RESEND_API_KEY");
+  const recipient = Deno.env.get("LEAD_NOTIFICATION_EMAIL");
+  const from = Deno.env.get("RESEND_FROM_EMAIL");
+  const publicUrl = Deno.env.get("APP_PUBLIC_URL")?.replace(/\/+$/, "");
+  if (!apiKey || !recipient || !from || !publicUrl) return;
+
+  const secureUrl = `${publicUrl}/ops/leads?lead=${encodeURIComponent(leadId)}`;
+  const legalForm = answers.legalFormInterest ?? "À qualifier";
+  const activity = answers.activityDetails ?? answers.activity ?? "À préciser";
+  const timeline = answers.creationTimeline ?? answers.timeline ?? "À préciser";
+  const source = attribution?.utm_campaign ?? attribution?.utm_source ?? attribution?.landing_page ?? "Accès direct";
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from,
+      to: [recipient],
+      subject: `Nouvelle demande Orée · ${legalForm}`,
+      html: [
+        "<h1>Nouvelle demande de création</h1>",
+        `<p><strong>Forme :</strong> ${escapeHtml(legalForm)}</p>`,
+        `<p><strong>Activité :</strong> ${escapeHtml(activity)}</p>`,
+        `<p><strong>Calendrier :</strong> ${escapeHtml(timeline)}</p>`,
+        `<p><strong>Acquisition :</strong> ${escapeHtml(source)}</p>`,
+        `<p><a href="${escapeHtml(secureUrl)}">Ouvrir la fiche sécurisée</a></p>`,
+      ].join(""),
+    }),
+  });
+
+  const { data: job } = await admin
+    .from("notification_jobs")
+    .select("id,attempts")
+    .eq("template_key", "new_lead")
+    .eq("recipient", recipient)
+    .contains("payload", { leadId })
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (!response.ok) {
+    const providerError = (await response.text()).slice(0, 1000);
+    if (job) {
+      await admin.from("notification_jobs").update({
+        status: "failed",
+        attempts: (job.attempts ?? 0) + 1,
+        last_error: providerError,
+        next_attempt_at: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
+      }).eq("id", job.id);
+    }
+    throw new Error(`notification_delivery_failed:${response.status}`);
+  }
+
+  if (job) {
+    await admin.from("notification_jobs").update({
+      status: "sent",
+      attempts: (job.attempts ?? 0) + 1,
+      last_error: null,
+    }).eq("id", job.id);
+  }
+}
+
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") return new Response("ok", { headers: corsHeaders(request) });
   if (request.method !== "POST") return safeError(request, 405, "method_not_allowed");
@@ -165,6 +250,14 @@ Deno.serve(async (request) => {
       accepted: true,
       lead_id: leadId,
     });
+
+    // Lead persistence is already committed. Notification delivery is best-effort:
+    // a provider outage never changes the successful intake response.
+    try {
+      await deliverLeadNotification(admin, leadId, parsed.data.answers, parsed.data.attribution);
+    } catch (notificationError) {
+      console.error("submit-lead-notification", notificationError);
+    }
 
     return json(request, { id: leadId, claimToken }, 201);
   } catch (error) {

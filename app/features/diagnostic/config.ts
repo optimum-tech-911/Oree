@@ -8,13 +8,13 @@ import {
   Compass,
   Laptop2,
   Lightbulb,
+  Palette,
   PackageCheck,
   Scale,
   Store,
   Truck,
   UsersRound,
   Utensils,
-  WandSparkles,
   Wrench,
   FileWarning,
   UserRoundSearch,
@@ -79,7 +79,7 @@ export const activityChoices: Choice[] = [
   { value: "craft", label: "Artisanat & travaux", description: "Construction, réparation, fabrication, métiers manuels.", icon: Wrench },
   { value: "food", label: "Restauration & alimentation", description: "Restaurant, traiteur, commerce alimentaire.", icon: Utensils },
   { value: "transport", label: "Transport & livraison", description: "Transport de personnes, marchandises ou logistique.", icon: Truck },
-  { value: "creative", label: "Création & communication", description: "Design, photo, vidéo, contenu et production.", icon: WandSparkles },
+  { value: "creative", label: "Création & communication", description: "Design, photo, vidéo, contenu et production.", icon: Palette },
   { value: "other", label: "Autre activité", description: "Je préciserai mon activité dans la suite.", icon: Compass },
 ];
 

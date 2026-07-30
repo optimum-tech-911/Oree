@@ -21,6 +21,12 @@ export function ContactLauncher() {
   const closeRef = useRef<HTMLButtonElement>(null);
   const onHome = location.pathname === "/";
 
+  function trackContact(optionId: keyof typeof icons) {
+    analytics.track("contact_option_selected", { channel: optionId, location: "contact_sheet" });
+    if (optionId === "call") analytics.track("phone_click", { location: "contact_sheet" });
+    if (optionId === "whatsapp" || optionId === "whatsapp-business") analytics.track("whatsapp_click", { location: "contact_sheet", channel: optionId });
+  }
+
   function openContact() {
     setOpen(true);
     analytics.track("primary_cta_clicked", { path: location.pathname, location: "contact_launcher", intent: "direct_contact" });
@@ -58,10 +64,10 @@ export function ContactLauncher() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: .5, duration: .5, ease: [0.16, 1, 0.3, 1] }}
           whileHover={reduce ? undefined : { y: -3 }}
-          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-3 z-[69] inline-flex h-12 items-center gap-2 rounded-full border border-white/12 bg-[var(--ink)] px-4 text-xs font-semibold shadow-[0_18px_48px_rgba(11,18,32,.28)] backdrop-blur-xl transition hover:border-[var(--mint)]/70 hover:bg-[var(--ink-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--paper)] sm:left-6 sm:h-13 sm:px-5 lg:bottom-6"
+          className="foreground-on-dark fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-3 z-[69] inline-flex h-12 items-center gap-2 rounded-full border border-white/12 bg-[var(--ink)] px-4 text-xs font-semibold shadow-[0_18px_48px_rgba(11,18,32,.28)] backdrop-blur-xl transition hover:border-[var(--mint)]/70 hover:bg-[var(--ink-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--paper)] sm:left-6 sm:h-13 sm:px-5 lg:bottom-6"
           aria-label="Contacter l’équipe : téléphone, message ou WhatsApp"
         >
-          <span className="relative grid size-8 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><PhoneCall className="size-4" /><span className="assistant-pulse" /></span>
+          <span className="grid size-8 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><PhoneCall className="size-4" /></span>
           <span className="foreground-on-dark relative z-10">Contacter l’équipe</span>
         </motion.button>
       ) : null}
@@ -89,10 +95,10 @@ export function ContactLauncher() {
                 {directContactOptions.map((option, index) => {
                   const Icon = icons[option.id];
                   const primary = option.id === "call";
-                  return <motion.a key={option.id} href={option.href} target={option.external ? "_blank" : undefined} rel={option.external ? "noreferrer" : undefined} onClick={() => analytics.track("contact_option_selected", { channel: option.id, location: "contact_sheet" })} initial={reduce ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduce ? 0 : .08 + index * .045, duration: .35 }} className={cn("group flex min-h-20 items-center gap-3 rounded-[18px] border p-4 transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--action)] focus-visible:ring-offset-2", primary ? "border-[var(--action)] bg-[var(--action)] text-white shadow-[0_12px_30px_rgba(36,87,255,.2)] sm:col-span-2" : "border-[var(--line)] bg-white text-[color:var(--ink)] hover:border-[var(--action)]/35")}><span className={cn("grid size-10 shrink-0 place-items-center rounded-[13px]", primary ? "bg-white text-[color:var(--ink)]" : "bg-[var(--mint-soft)]")}><Icon className="size-4" /></span><span><span className="block text-sm font-semibold">{option.label}</span><span className={cn("mt-0.5 block text-xs", primary ? "text-white/72" : "text-[color:var(--muted)]")}>{option.description}</span></span></motion.a>;
+                  return <motion.a key={option.id} href={option.href} target={option.external ? "_blank" : undefined} rel={option.external ? "noreferrer" : undefined} onClick={() => trackContact(option.id)} initial={reduce ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduce ? 0 : .08 + index * .045, duration: .35 }} className={cn("group flex min-h-20 items-center gap-3 rounded-[18px] border p-4 transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--action)] focus-visible:ring-offset-2", primary ? "border-[var(--action)] bg-[var(--action)] text-white shadow-[0_12px_30px_rgba(36,87,255,.2)] sm:col-span-2" : "border-[var(--line)] bg-white text-[color:var(--ink)] hover:border-[var(--action)]/35")}><span className={cn("grid size-10 shrink-0 place-items-center rounded-[13px]", primary ? "bg-white text-[color:var(--ink)]" : "bg-[var(--mint-soft)]")}><Icon className="size-4" /></span><span><span className="block text-sm font-semibold">{option.label}</span><span className={cn("mt-0.5 block text-xs", primary ? "text-white/72" : "text-[color:var(--muted)]")}>{option.description}</span></span></motion.a>;
                 })}
               </div>
-              <p className="mt-4 px-1 text-xs leading-5 text-[color:var(--muted)]">{directContact.displayPhone} · {directContact.email}</p>
+              <p className="mt-4 px-1 text-xs leading-5 text-[color:var(--muted)]">{directContact.displayPhone} · {directContact.email}<br />{directContact.availability}</p>
             </motion.aside>
           </>
         ) : null}

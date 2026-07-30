@@ -1,6 +1,6 @@
 # État d’implémentation — V3 canonique
 
-Mise à jour : 23 juillet 2026.
+Mise à jour : 30 juillet 2026.
 
 ## État de livraison
 
@@ -10,6 +10,24 @@ fonction par fonction ; V4 n’est ni une seconde application ni une cible de d�
 Le projet Supabase `sksydcdkliuisaahysya` (`oree`) est lié et actif. Les migrations `0001` à
 `0012` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`
 sont actives, et le lint distant ne remonte aucune erreur de schéma.
+
+La migration locale `0013_offer_and_ads_lead_workflow.sql` et l’évolution de
+`submit-lead` sont prêtes dans le dépôt, mais ne sont pas encore appliquées au projet
+distant.
+
+## Offre commerciale et acquisition Ads
+
+- source typée unique pour le forfait société à 600 € tout compris et la création de
+  micro-entreprise à 100 € ;
+- offre société active pour SASU, EURL, SAS et SARL, sans supplément selon la forme ;
+- accueil, tarifs, accompagnement, diagnostic et landings de forme alignés ;
+- quatre actions d’acquisition : démarrage, rappel, téléphone et WhatsApp ;
+- formulaire de rappel court soumis par l’Edge Function sécurisée existante ;
+- événements de conversion typés, dédupliqués et filtrés contre les données
+  personnelles ;
+- file leads enrichie pour l’attribution Ads, les relances, notes, motifs et résultats ;
+- migration additive avec RLS pour les notes et événements lifecycle ;
+- plan de première campagne Search SASU documenté dans `docs/ADS_READINESS_PLAN.md`.
 
 ## Parcours publics
 
@@ -22,6 +40,7 @@ sont actives, et le lint distant ne remonte aucune erreur de schéma.
 - soumission sans captcha externe, protégée par honeypot invisible et rate limiting
   serveur haché ;
 - Guide Orée local, vocal lorsque disponible, indexé depuis les contenus versionnés ;
+- sitemap, robots et `llms.txt` générés depuis les routes canoniques et l’offre centrale ;
 - mode démonstration complet lorsque Supabase n’est pas configuré.
 
 ## Espace client connecté
@@ -65,6 +84,8 @@ modifier directement le stade opérationnel de son projet.
 - mouvement utile avec prise en charge de `prefers-reduced-motion` ;
 - imagerie centralisée dans `app/content/imagery.ts`, optimisée AVIF/WebP et sans faux
   document, faux écran produit, témoignage ou partenariat.
+- Guide Orée présenté comme un outil sobre de recherche et de navigation, sans robot,
+  étincelles, baguette magique, halo pulsant ou promesse d’intelligence artificielle.
 
 ## Vérifications du 22 juillet 2026
 
@@ -86,6 +107,24 @@ Le runtime de navigateur intégré n’était pas disponible pendant cette passe
 revue visuelle manuelle supplémentaire n’est revendiquée. Le test authentifié de bout en
 bout nécessite au moins un compte réel.
 
+## Vérifications du 30 juillet 2026
+
+- installation propre `npm ci` : réussie ;
+- ESLint et TypeScript strict : réussis ;
+- Vitest : 47 tests réussis sur 47 ;
+- build et prérendu : 47 routes réussies ;
+- Guide Orée : 1 931 entrées issues de 96 fichiers, avec réponses commerciales
+  contrôlées et tests de routage par intention ;
+- crawlabilité : 19 routes publiques contrôlées avec 6 user-agents ;
+- Playwright ciblé offre et rappel mobile : 12 tests réussis sur 12 dans Chromium et
+  Mobile Safari ;
+- Playwright ciblé Guide Orée et compositions mobiles : 7 scénarios réussis dans
+  Chromium ;
+- Playwright complet : 159 tests réussis et 11 scénarios connectés ignorés sans session
+  client ou opérations réelle ;
+- tests authentifiés réels : toujours conditionnés à la fourniture de comptes client et
+  opérations.
+
 ## Configuration externe restant à fournir
 
 - domaine de production et URLs de redirection Supabase Auth ;
@@ -93,7 +132,8 @@ bout nécessite au moins un compte réel.
 - fournisseur de calendrier externe si synchronisation bidirectionnelle souhaitée ;
 - CRM/webhook éventuel ;
 - GTM, GA4, Google Ads et conventions d’import des conversions qualifiées ;
-- identité juridique, coordonnées, offres, tarifs et politique de confidentialité validés ;
+- identité juridique, mentions légales, libellé fiscal et politique de confidentialité
+  validés ;
 - premier compte équipe à promouvoir en administrateur.
 
 Lire aussi `docs/SUPABASE_BACKEND.md`, `docs/FINAL_MERGE_REPORT.md`,

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Check, ChevronRight, CircleAlert, Clock3, FileText, ListChecks, LockKeyhole, ReceiptText, ShieldCheck, Sparkles } from "lucide-react";
+import { Check, ChevronRight, CircleAlert, Clock3, FileText, ListChecks, LockKeyhole, ReceiptText, ShieldCheck } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { landingPages } from "@/content/landingPages";
 import { Badge } from "@/components/ui/Badge";
@@ -11,8 +11,12 @@ import { Reveal } from "@/components/marketing/Reveal";
 import { LegalFormCards } from "@/components/marketing/LegalFormCards";
 import { DashboardPreview } from "@/components/marketing/DashboardPreview";
 import { ServiceScope } from "@/components/marketing/ServiceScope";
+import { AcquisitionContactActions } from "@/components/marketing/AcquisitionContactActions";
+import { CallbackLeadForm } from "@/components/marketing/CallbackLeadForm";
+import { CompanyOfferCard } from "@/components/marketing/CommercialOfferCard";
 import { HeroMedia } from "@/components/media/HeroMedia";
 import { imagery, landingHeroBySlug } from "@/content/imagery";
+import { commercialOffers, isSupportedCompanyForm } from "@/config/commercial-offers";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { analytics } from "@/services/analytics";
 
@@ -23,28 +27,30 @@ type OperationalModule = {
   documents: string[];
 };
 
+const companyCreationCostContext = `${commercialOffers.companyCreation.priceLabel} avec accompagnement, greffe, annonce légale et corrections du dossier inclus.`;
+
 const operationalBySlug: Record<string, OperationalModule> = {
   "creation-sasu": {
     quickAnswer: "La SASU peut convenir à un projet porté seul qui recherche une gouvernance souple. Elle doit rester comparée à l'EURL selon la rémunération, la protection recherchée et l'évolution prévue.",
-    costContext: "Le devis doit séparer les honoraires ORÉE, les frais légaux liés à la SASU et toute option choisie.",
+    costContext: companyCreationCostContext,
     timing: "Le calendrier dépend de la complétude du dossier et des organismes concernés ; aucun délai administratif n'est garanti.",
     documents: ["Identité et situation du dirigeant", "Adresse et justificatif du siège", "Capital et apports envisagés", "Informations sur l'activité"],
   },
   "creation-eurl": {
     quickAnswer: "L'EURL propose un cadre plus balisé pour entreprendre seul. Le régime du gérant, la rémunération et l'arrivée possible d'associés doivent être examinés face à la SASU.",
-    costContext: "Le coût dépend du périmètre d'accompagnement, des frais légaux et des éventuels services tiers retenus.",
+    costContext: companyCreationCostContext,
     timing: "La date utile est celle d'un dossier complet et cohérent, pas une promesse de traitement de l'administration.",
     documents: ["Identité et situation du gérant", "Adresse et justificatif du siège", "Capital et nature des apports", "Description précise de l'activité"],
   },
   "creation-sas": {
     quickAnswer: "La SAS offre une grande liberté d'organisation, qui exige d'aligner les associés sur les pouvoirs, les décisions, le capital et les scénarios d'évolution.",
-    costContext: "La complexité de la gouvernance et le nombre d'associés peuvent modifier le périmètre du service ; le devis doit l'expliquer.",
+    costContext: companyCreationCostContext,
     timing: "L'accord des associés et la complétude de chaque partie précèdent tout calendrier de formalité.",
     documents: ["Identité de chaque associé et dirigeant", "Répartition des apports et du capital", "Adresse du siège", "Décisions de gouvernance à confirmer"],
   },
   "creation-sarl": {
     quickAnswer: "La SARL encadre davantage l'organisation collective. La gérance, la détention du capital et les règles entre associés restent des sujets déterminants.",
-    costContext: "Honoraires, frais légaux et éventuelles interventions complémentaires doivent apparaître sur des lignes distinctes.",
+    costContext: companyCreationCostContext,
     timing: "Une pièce ou une décision manquante chez un associé peut décaler l'ensemble du dossier.",
     documents: ["Identité des associés et gérants", "Répartition des parts et apports", "Adresse du siège", "Organisation de la gérance"],
   },
@@ -92,6 +98,9 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
   const heroImage = landingHeroBySlug[slug] ?? imagery.sasuHero;
   const reduce = useReducedMotion();
   const diagnosticHref = `/diagnostic?intent=${content.searchIntent}`;
+  const requestedForm = slug.startsWith("creation-") ? slug.slice("creation-".length).toUpperCase() : undefined;
+  const legalForm = isSupportedCompanyForm(requestedForm) ? requestedForm : undefined;
+  const showCompanyOffer = slug !== "dossier-creation-entreprise-bloque";
   usePageMeta(content.eyebrow, content.description);
 
   useEffect(() => {
@@ -107,9 +116,8 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
             <motion.div initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}><Badge className="border-white/12 bg-white/[.06] text-white/72"><span className="size-1.5 rounded-full bg-[var(--mint)]" />{content.eyebrow}</Badge></motion.div>
             <motion.h1 initial={reduce ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .06, duration: .7, ease: [0.22, 1, 0.36, 1] }} className="mt-6 max-w-[850px] text-balance text-[clamp(2.65rem,5.55vw,5.9rem)] font-semibold leading-[.92] tracking-[-.06em]">{content.title} <span className="editorial-mark text-[color:var(--mint)]">{content.highlight}</span></motion.h1>
             <motion.p initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15, duration: .58 }} className="mt-6 max-w-2xl text-pretty text-base leading-8 text-white/72 sm:text-lg">{content.description}</motion.p>
-            <motion.div initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .22, duration: .58 }} className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink to={diagnosticHref} onClick={() => analytics.track("primary_cta_clicked", { slug, intent: content.searchIntent, location: "hero" })} variant="dark" size="lg" className="w-full sm:w-auto" arrow>{content.primaryCta}</ButtonLink>
-              <ButtonLink to={content.secondaryHref} variant="ghost" size="lg" className="hidden border border-white/12 text-white hover:bg-white/[.08] sm:inline-flex">{content.secondaryCta}</ButtonLink>
+            <motion.div initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .22, duration: .58 }} className="mt-7">
+              <AcquisitionContactActions diagnosticHref={diagnosticHref} legalForm={legalForm} location="acquisition_hero" dark />
             </motion.div>
             <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2.5 text-[11px] font-semibold text-white/72 sm:text-xs">{content.proofPoints.map((point) => <span key={point} className="flex items-center gap-2"><span className="grid size-4 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><Check className="size-2.5" /></span>{point}</span>)}</div>
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs"><Link to="/tarifs" className="inline-flex items-center gap-1.5 text-[color:var(--mint)]">Comprendre les coûts <ChevronRight className="size-3.5" /></Link><a href="#perimetre" className="inline-flex items-center gap-1.5 text-white/72">Voir qui fait quoi <ChevronRight className="size-3.5" /></a></div>
@@ -119,7 +127,7 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
             <div className="w-full origin-bottom scale-[.91] sm:scale-[.84] lg:scale-[.8]">
               <div className="relative overflow-hidden rounded-[28px] border border-white/12 bg-white/[.05] p-3 shadow-[0_38px_110px_rgba(11,18,32,.3)] backdrop-blur-2xl sm:p-4">
                 <div className="relative rounded-[22px] border border-white/8 bg-[var(--ink)] p-5 sm:p-6">
-                  <div className="flex items-start justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-[.13em] text-white/72">Votre prochain parcours</p><p className="mt-2 text-xl font-semibold tracking-[-.035em]">Orientation indicative</p></div><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--mint)] text-[color:var(--ink)]"><Sparkles className="size-4.5" /></span></div>
+                  <div className="flex items-start justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-[.13em] text-white/72">Votre prochain parcours</p><p className="mt-2 text-xl font-semibold tracking-[-.035em]">Orientation indicative</p></div><span className="grid size-11 place-items-center rounded-[14px] border border-white/10 bg-white/[.05] text-white"><ListChecks className="size-4.5" /></span></div>
                   <div className="mt-6 space-y-2.5">{["Situation et niveau d'avancement", "Associés et organisation", "Activité, clients et calendrier", "Priorités et points à valider"].map((label, index) => <div key={label} className={`flex items-center gap-3 rounded-[15px] border p-3 ${index === 0 ? "border-[var(--blue)]/35 bg-[var(--blue)]/12" : "border-white/7 bg-white/[.035]"}`}><span className={`grid size-8 place-items-center rounded-full text-[10px] font-semibold ${index === 0 ? "bg-[var(--blue)] text-white" : "bg-white/7 text-white/72"}`}>0{index + 1}</span><span className="text-xs font-semibold text-white/72 sm:text-sm">{label}</span></div>)}</div>
                   <div className="mt-3 grid gap-2.5 sm:grid-cols-2"><div className="rounded-[15px] border border-white/7 bg-white/[.035] p-3.5"><ListChecks className="size-4 text-[color:var(--blue)]" /><p className="mt-3 text-xs font-semibold">Étapes courtes</p><p className="mt-1 text-[10px] leading-4 text-white/72">Retour possible sans perdre les choix non sensibles.</p></div><div className="rounded-[15px] border border-white/7 bg-white/[.035] p-3.5"><LockKeyhole className="size-4 text-[color:var(--mint)]" /><p className="mt-3 text-xs font-semibold">Sans document au départ</p><p className="mt-1 text-[10px] leading-4 text-white/72">Commencez par décrire le projet.</p></div></div>
                   <div className="mt-3 rounded-[15px] bg-[var(--paper)] p-4 text-[color:var(--ink)]"><div className="flex items-start gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--mint-soft)]"><ShieldCheck className="size-4" /></span><div><p className="text-xs font-semibold">Orientation prudente</p><p className="mt-1 text-[11px] leading-5 text-[color:var(--muted)]">Les validations professionnelles ou officielles restent signalées.</p></div></div></div>
@@ -131,10 +139,17 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
       </section>
 
       <Section className="pt-14 sm:pt-18">
+        <div className={`container-shell grid items-start gap-5 ${showCompanyOffer ? "lg:grid-cols-2" : ""}`}>
+          {showCompanyOffer ? <CompanyOfferCard form={legalForm} compact trackingLocation={`landing_${slug}`} ctaHref={diagnosticHref} /> : null}
+          <CallbackLeadForm legalForm={legalForm} slug={slug} />
+        </div>
+      </Section>
+
+      <Section className="pt-0 sm:pt-2">
         <div className="container-shell">
           <SectionHeader eyebrow="Réponse directe" title={<>Ce qu’il faut savoir <span className="editorial-mark text-[color:var(--blue)]">pour cette situation.</span></>} description={operational.quickAnswer} />
           <div className="grid gap-4 lg:grid-cols-3">
-            <Reveal><article className="h-full rounded-[20px] border border-[var(--line)] bg-white p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--ink)] text-white"><ReceiptText className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">Coût à lire en trois lignes</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{operational.costContext}</p><Link to="/tarifs" className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--blue)]">Voir le cadre tarifaire <ChevronRight className="size-4" /></Link></article></Reveal>
+            <Reveal><article className="h-full rounded-[20px] border border-[var(--line)] bg-white p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--ink)] text-white"><ReceiptText className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">{legalForm ? commercialOffers.companyCreation.priceLabel : "Un coût expliqué avant engagement"}</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{legalForm ? commercialOffers.companyCreation.description : operational.costContext}</p><Link to="/tarifs" className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--blue)]">Voir le détail de l’offre <ChevronRight className="size-4" /></Link></article></Reveal>
             <Reveal delay={.05}><article className="h-full rounded-[20px] border border-[var(--line)] bg-white p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--mint-soft)]"><Clock3 className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">Calendrier sans garantie artificielle</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{operational.timing}</p></article></Reveal>
             <Reveal delay={.1}><article className="h-full rounded-[20px] border border-[var(--line)] bg-[var(--paper)] p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--blue)] text-white"><FileText className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">Informations à anticiper</h2><ul className="mt-4 space-y-2.5">{operational.documents.map((item) => <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--muted)]"><Check className="mt-1 size-3.5 shrink-0 text-[color:var(--success)]" />{item}</li>)}</ul></article></Reveal>
           </div>
@@ -165,7 +180,7 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
 
       <Section><div className="container-shell grid gap-12 lg:grid-cols-[.72fr_1.28fr]"><div className="lg:sticky lg:top-28 lg:self-start"><Badge>Questions fréquentes</Badge><h2 className="mt-6 text-4xl font-semibold leading-[1] tracking-[-.05em] sm:text-5xl">Les réponses essentielles avant de commencer.</h2><p className="mt-5 text-base leading-7 text-[color:var(--muted)]">Le fonctionnement général, les limites de l'orientation et les validations qui peuvent rester nécessaires.</p></div><Faq items={content.faq} /></div></Section>
 
-      <Section className="pt-0"><div className="container-shell"><div className="relative overflow-hidden rounded-[26px] bg-[var(--ink)] px-6 py-12 text-white sm:px-10 lg:px-14 lg:py-16"><div className="relative grid items-end gap-8 lg:grid-cols-[1fr_auto]"><div><Badge className="border-white/10 bg-white/[.06] text-white/72">Votre prochaine étape</Badge><h2 className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1] tracking-[-.05em] sm:text-5xl">Précisez votre situation pour obtenir une orientation argumentée.</h2></div><ButtonLink to={diagnosticHref} onClick={() => analytics.track("primary_cta_clicked", { slug, intent: content.searchIntent, location: "final" })} variant="dark" size="lg" arrow>{content.primaryCta}</ButtonLink></div></div></div></Section>
+      <Section className="pt-0"><div className="container-shell"><div className="relative overflow-hidden rounded-[26px] bg-[var(--ink)] px-6 py-12 text-white sm:px-10 lg:px-14 lg:py-16"><div className="relative"><div><Badge className="border-white/10 bg-white/[.06] text-white/72">Votre prochaine étape</Badge><h2 className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1] tracking-[-.05em] sm:text-5xl">Choisissez la manière la plus simple de commencer.</h2></div><div className="mt-8"><AcquisitionContactActions diagnosticHref={diagnosticHref} legalForm={legalForm} location="acquisition_final" dark /></div></div></div></div></Section>
     </>
   );
 }

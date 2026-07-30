@@ -6,6 +6,7 @@ const portalMigration = readFileSync(new URL("../supabase/migrations/0007_portal
 const portalDocumentsMigration = readFileSync(new URL("../supabase/migrations/0008_portal_documents_and_read_state.sql", import.meta.url), "utf8");
 const operationsSafetyMigration = readFileSync(new URL("../supabase/migrations/0011_operations_workflow_repair.sql", import.meta.url), "utf8");
 const rateLimitMigration = readFileSync(new URL("../supabase/migrations/0012_lead_intake_attempts.sql", import.meta.url), "utf8");
+const offerWorkflowMigration = readFileSync(new URL("../supabase/migrations/0013_offer_and_ads_lead_workflow.sql", import.meta.url), "utf8");
 const submitLeadFunction = readFileSync(new URL("../supabase/functions/submit-lead/index.ts", import.meta.url), "utf8");
 
 describe("appointment permission hardening", () => {
@@ -36,6 +37,23 @@ describe("lead intake security", () => {
     expect(portalMigration).toMatch(/v_safe_answers := p_answers - array/i);
     expect(portalMigration).toMatch(/'firstName', 'lastName', 'email', 'phone', 'privacyAccepted'/);
     expect(portalMigration).toMatch(/grant execute on function public\.submit_lead_bundle[^;]+to service_role/i);
+  });
+
+  it("keeps public lead creation behind the Edge Function and protects commercial notes", () => {
+    expect(offerWorkflowMigration).toMatch(/revoke all on function public\.submit_lead_bundle[^;]+from public, anon, authenticated/i);
+    expect(offerWorkflowMigration).toMatch(/grant execute on function public\.submit_lead_bundle[^;]+to service_role/i);
+    expect(offerWorkflowMigration).toMatch(/alter table public\.lead_notes enable row level security/i);
+    expect(offerWorkflowMigration).toMatch(/revoke all on table public\.lead_notes from public, anon, authenticated/i);
+    expect(offerWorkflowMigration).toMatch(/create policy lead_notes_staff_select/i);
+    expect(offerWorkflowMigration).not.toMatch(/grant insert on table public\.leads to anon/i);
+  });
+
+  it("queues notification context after the lead and records lifecycle conversions idempotently", () => {
+    expect(offerWorkflowMigration).toMatch(/insert into public\.notification_jobs/i);
+    expect(offerWorkflowMigration).toMatch(/'securePath'/);
+    expect(offerWorkflowMigration).toMatch(/'projectSummary'/);
+    expect(offerWorkflowMigration).toMatch(/create table if not exists public\.lead_lifecycle_events/i);
+    expect(offerWorkflowMigration).toMatch(/on conflict \(event_key\) do nothing/i);
   });
 
   it("routes sensitive operations through permission-checked RPCs", () => {

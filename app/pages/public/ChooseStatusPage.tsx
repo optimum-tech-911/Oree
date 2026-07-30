@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Check, CircleHelp, GitCompareArrows, Scale, Sparkles, UsersRound } from "lucide-react";
+import { ArrowRight, Check, CircleHelp, GitCompareArrows, Scale, UsersRound } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Section, SectionHeader } from "@/components/ui/Section";
@@ -23,7 +23,7 @@ const dimensions = [
   [UsersRound, "Associés et gouvernance", "Nombre d'associés, répartition des pouvoirs, décisions et évolution du capital."],
   [Scale, "Dirigeant et protection", "Régime social, rémunération, responsabilités et fonctionnement quotidien."],
   [CircleHelp, "Activité et économie", "Clients, charges, investissements, recrutement, marge et besoin de financement."],
-  [Sparkles, "Trajectoire future", "Arrivée d'associés, transmission, levée de fonds ou changement d'échelle."],
+  [GitCompareArrows, "Trajectoire future", "Arrivée d'associés, transmission, levée de fonds ou changement d'échelle."],
 ] as const;
 
 export default function ChooseStatusPage() {
@@ -65,7 +65,7 @@ export default function ChooseStatusPage() {
             <div className="glass-panel relative rounded-[38px] p-5 sm:p-7 lg:p-8">
               <div className="flex items-start justify-between gap-5">
                 <div><p className="text-xs font-semibold uppercase tracking-[.16em] text-white/72">Orientation express</p><h2 className="mt-2 text-2xl font-semibold tracking-[-.045em] sm:text-3xl">Votre point de départ</h2></div>
-                <span className="animate-pulse-ring grid size-12 shrink-0 place-items-center rounded-2xl bg-[var(--mint)] text-[color:var(--ink)]"><Sparkles className="size-5" /></span>
+                <span className="grid size-12 shrink-0 place-items-center rounded-2xl border border-[var(--line)] bg-white text-[color:var(--ink)]"><Scale className="size-5" /></span>
               </div>
 
               <div className="mt-8">

@@ -7,7 +7,11 @@ function ensure(error: { message: string } | null) {
 
 export type OpsLead = {
   id: string; name: string; email: string; phone: string; stage: string; window: string;
-  source: string; campaign: string; status: string; score: number; advisorId?: string; createdAt: string;
+  source: string; campaign: string; keyword: string; gclid: string; landingPage: string; referrer: string;
+  legalForm: string; activity: string; message: string; preferredContactChannel: string; status: string; score: number;
+  advisorId?: string; lastContactAt?: string; nextFollowUpAt?: string; qualificationReason: string;
+  lostReason: string; customerWonAt?: string; notes: Array<{ id: string; body: string; createdAt: string }>;
+  createdAt: string;
 };
 
 export type OpsProject = {
@@ -41,7 +45,30 @@ export type OpsDashboard = {
 function demoDashboard(): OpsDashboard {
   return {
     demo: true,
-    leads: mockLeads.map((lead, index) => ({ id: lead.id, name: lead.name, email: "", phone: "", stage: lead.intent, window: "", source: lead.source, campaign: "", status: lead.status, score: lead.score, createdAt: new Date(Date.now() - index * 3_600_000).toISOString() })),
+    leads: mockLeads.map((lead, index) => ({
+      id: lead.id,
+      name: lead.name,
+      email: "",
+      phone: "",
+      stage: lead.intent,
+      window: index === 0 ? "under-30" : "30-90",
+      source: lead.source,
+      campaign: index < 3 ? "FR | Search | Création SASU | Leads" : "",
+      keyword: index === 0 ? "prix création sasu" : "",
+      gclid: "",
+      landingPage: index < 3 ? "/creation-sasu" : "/",
+      referrer: "",
+      legalForm: lead.intent,
+      activity: lead.project,
+      message: "",
+      preferredContactChannel: index === 2 ? "phone" : "email",
+      status: index === 0 ? "appointment_booked" : index === 1 ? "qualified" : index === 2 ? "to_contact" : "new",
+      score: lead.score,
+      qualificationReason: index === 1 ? "Projet de société identifié et calendrier cohérent." : "",
+      lostReason: "",
+      notes: index === 1 ? [{ id: `${lead.id}-note`, body: "Premier échange réalisé.", createdAt: new Date(Date.now() - 30 * 60_000).toISOString() }] : [],
+      createdAt: new Date(Date.now() - index * 3_600_000).toISOString(),
+    })),
     projects: [], requirements: [], appointments: [], team: [],
   };
 }
@@ -50,7 +77,7 @@ export const operationsRepository = {
   async getDashboard(): Promise<OpsDashboard> {
     if (!isSupabaseConfigured || !supabase) return demoDashboard();
     const [leadsResult, projectsResult, requirementsResult, appointmentsResult, rolesResult] = await Promise.all([
-      supabase.from("leads").select("id,first_name,last_name,email,phone,project_stage,desired_creation_window,source_page,commercial_status,commercial_score,assigned_advisor_id,created_at").order("created_at", { ascending: false }).limit(500),
+      supabase.from("leads").select("id,first_name,last_name,email,phone,preferred_contact_method,project_stage,desired_creation_window,source_page,legal_form_interest,activity,message,creation_timeline,commercial_status,commercial_score,assigned_advisor_id,last_contact_at,next_follow_up_at,qualification_reason,lost_reason,customer_won_at,created_at").order("created_at", { ascending: false }).limit(500),
       supabase.from("projects").select("id,display_name,project_stage,progress,current_legal_form,department,owner_user_id,assigned_advisor_id,created_at").order("created_at", { ascending: false }).limit(500),
       supabase.from("document_requirements").select("id,project_id,label,category,status,advisor_comment,due_at,updated_at").order("updated_at", { ascending: false }).limit(500),
       supabase.from("appointments").select("id,project_id,starts_at,ends_at,status,appointment_type,advisor_id,notes").order("starts_at", { ascending: true }).limit(500),
@@ -59,9 +86,17 @@ export const operationsRepository = {
     [leadsResult.error, projectsResult.error, requirementsResult.error, appointmentsResult.error, rolesResult.error].forEach(ensure);
 
     const leadIds = (leadsResult.data ?? []).map((row) => row.id);
-    const attributionResult = leadIds.length ? await supabase.from("lead_attributions").select("lead_id,first_source,first_medium,first_campaign,first_term,first_landing_page").in("lead_id", leadIds) : { data: [], error: null };
+    const [attributionResult, notesResult] = await Promise.all([
+      leadIds.length ? supabase.from("lead_attributions").select("lead_id,first_source,first_medium,first_campaign,first_term,first_landing_page,first_referrer,gclid").in("lead_id", leadIds) : Promise.resolve({ data: [], error: null }),
+      leadIds.length ? supabase.from("lead_notes").select("id,lead_id,body,created_at").in("lead_id", leadIds).order("created_at", { ascending: false }) : Promise.resolve({ data: [], error: null }),
+    ]);
     ensure(attributionResult.error);
+    ensure(notesResult.error);
     const attributionByLead = new Map((attributionResult.data ?? []).map((row) => [row.lead_id, row]));
+    const notesByLead = new Map<string, OpsLead["notes"]>();
+    for (const note of notesResult.data ?? []) {
+      notesByLead.set(note.lead_id, [...(notesByLead.get(note.lead_id) ?? []), { id: note.id, body: note.body, createdAt: note.created_at }]);
+    }
 
     const projects: OpsProject[] = (projectsResult.data ?? []).map((row) => ({ id: row.id, displayName: row.display_name, stage: row.project_stage, progress: row.progress, legalForm: row.current_legal_form ?? "À confirmer", department: row.department ?? "", ownerId: row.owner_user_id, advisorId: row.assigned_advisor_id ?? undefined, createdAt: row.created_at }));
     const projectById = new Map(projects.map((project) => [project.id, project]));
@@ -76,7 +111,34 @@ export const operationsRepository = {
       demo: false,
       leads: (leadsResult.data ?? []).map((row) => {
         const attribution = attributionByLead.get(row.id);
-        return { id: row.id, name: `${row.first_name} ${row.last_name}`.trim(), email: row.email, phone: row.phone ?? "", stage: row.project_stage ?? "À préciser", window: row.desired_creation_window ?? "", source: attribution?.first_source ?? row.source_page ?? "Accès direct", campaign: attribution?.first_campaign ?? "", status: row.commercial_status, score: row.commercial_score, advisorId: row.assigned_advisor_id ?? undefined, createdAt: row.created_at };
+        return {
+          id: row.id,
+          name: `${row.first_name} ${row.last_name}`.trim(),
+          email: row.email,
+          phone: row.phone ?? "",
+          stage: row.project_stage ?? "À préciser",
+          window: row.creation_timeline ?? row.desired_creation_window ?? "",
+          source: attribution?.first_source ?? row.source_page ?? "Accès direct",
+          campaign: attribution?.first_campaign ?? "",
+          keyword: attribution?.first_term ?? "",
+          gclid: attribution?.gclid ?? "",
+          landingPage: attribution?.first_landing_page ?? row.source_page ?? "",
+          referrer: attribution?.first_referrer ?? "",
+          legalForm: row.legal_form_interest ?? "À qualifier",
+          activity: row.activity ?? "",
+          message: row.message ?? "",
+          preferredContactChannel: row.preferred_contact_method ?? "",
+          status: row.commercial_status,
+          score: row.commercial_score,
+          advisorId: row.assigned_advisor_id ?? undefined,
+          lastContactAt: row.last_contact_at ?? undefined,
+          nextFollowUpAt: row.next_follow_up_at ?? undefined,
+          qualificationReason: row.qualification_reason ?? "",
+          lostReason: row.lost_reason ?? "",
+          customerWonAt: row.customer_won_at ?? undefined,
+          notes: notesByLead.get(row.id) ?? [],
+          createdAt: row.created_at,
+        };
       }),
       projects,
       requirements: (requirementsResult.data ?? []).map((row) => ({ id: row.id, projectId: row.project_id, projectName: projectById.get(row.project_id)?.displayName ?? "Projet", label: row.label, category: row.category, status: row.status, comment: row.advisor_comment ?? "", dueAt: row.due_at ?? undefined, updatedAt: row.updated_at })),
@@ -109,9 +171,26 @@ export const operationsRepository = {
     return data ?? [];
   },
 
-  async updateLead(id: string, status: string, score: number, advisorId?: string) {
+  async updateLead(id: string, input: {
+    status: string;
+    score: number;
+    advisorId?: string;
+    note?: string;
+    nextFollowUpAt?: string;
+    qualificationReason?: string;
+    lostReason?: string;
+  }) {
     if (!isSupabaseConfigured || !supabase) return;
-    const { error } = await supabase.rpc("ops_update_lead", { p_lead_id: id, p_status: status, p_score: score, p_assigned_advisor_id: advisorId ?? null });
+    const { error } = await supabase.rpc("ops_manage_lead", {
+      p_lead_id: id,
+      p_status: input.status,
+      p_score: input.score,
+      p_assigned_advisor_id: input.advisorId ?? null,
+      p_note: input.note || null,
+      p_next_follow_up_at: input.nextFollowUpAt || null,
+      p_qualification_reason: input.qualificationReason || null,
+      p_lost_reason: input.lostReason || null,
+    });
     ensure(error);
   },
 

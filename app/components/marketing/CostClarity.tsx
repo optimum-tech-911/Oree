@@ -3,25 +3,26 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/marketing/Reveal";
 import { cn } from "@/lib/cn";
+import { commercialOffers } from "@/config/commercial-offers";
 
 const costLayers = [
   {
     icon: CircleDollarSign,
-    title: "Honoraires ORÉE",
-    status: "Devis avant engagement",
-    description: "Le prix du service dépend du périmètre réellement retenu. Il doit être validé avec ses inclusions et exclusions avant toute commande.",
+    title: "Forfait de création",
+    status: commercialOffers.companyCreation.priceLabel,
+    description: "Le même prix fixe s’applique aux créations de SASU, EURL, SAS et SARL prises en charge.",
   },
   {
     icon: Building2,
     title: "Frais légaux",
-    status: "Facturés selon la formalité",
-    description: "Annonce légale, immatriculation et autres frais applicables sont distingués des honoraires de la plateforme.",
+    status: "Inclus dans le forfait",
+    description: `Les frais de greffe et l’annonce légale nécessaires à la création sont compris dans les ${commercialOffers.companyCreation.priceLabel}.`,
   },
   {
     icon: Layers3,
-    title: "Services tiers",
-    status: "Optionnels et identifiés",
-    description: "Domiciliation, compte, dépôt de capital ou autre prestation ne doivent apparaître que s'ils sont utiles et expressément choisis.",
+    title: "Hors périmètre",
+    status: "Toujours identifié",
+    description: "Une modification de société existante n’est pas proposée. Tout autre besoin est vérifié avant engagement.",
   },
 ];
 
@@ -31,10 +32,10 @@ export function CostClarity({ compact = false }: { compact?: boolean }) {
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <Badge>Comprendre le coût</Badge>
-          <h2 className={cn("mt-5 max-w-3xl text-balance font-semibold leading-[1.02] tracking-[-.045em]", compact ? "text-2xl sm:text-3xl" : "text-3xl sm:text-5xl")}>Trois lignes séparées, aucune promesse de prix inventée.</h2>
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-[color:var(--muted)]">Les montants définitifs exigent la validation des tarifs, de la TVA et du périmètre commercial par ORÉE.</p>
+          <h2 className={cn("mt-5 max-w-3xl text-balance font-semibold leading-[1.02] tracking-[-.045em]", compact ? "text-2xl sm:text-3xl" : "text-3xl sm:text-5xl")}>Ce que couvre le prix fixe de création.</h2>
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-[color:var(--muted)]">{commercialOffers.companyCreation.description} {commercialOffers.companyCreation.paymentStage}</p>
         </div>
-        <Link to="/tarifs" className="group inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-[color:var(--blue)]">Voir la méthode tarifaire <ArrowRight className="size-4 transition group-hover:translate-x-1" /></Link>
+        <Link to="/tarifs" className="group inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-[color:var(--blue)]">Voir l’offre complète <ArrowRight className="size-4 transition group-hover:translate-x-1" /></Link>
       </div>
       <div className={cn("mt-7 grid gap-3", compact ? "lg:grid-cols-3" : "sm:mt-9 lg:grid-cols-3")}>
         {costLayers.map((item, index) => {
