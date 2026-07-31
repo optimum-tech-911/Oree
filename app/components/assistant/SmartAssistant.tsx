@@ -50,7 +50,6 @@ export function SmartAssistant() {
   const [input, setInput] = useState("");
   const [listening, setListening] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [homeHeroVisible, setHomeHeroVisible] = useState(false);
   const [consentResolved, setConsentResolved] = useState(() => Boolean(readConsent()));
   const location = useLocation();
   const navigate = useNavigate();
@@ -102,18 +101,6 @@ export function SmartAssistant() {
     };
   });
 
-  useEffect(() => {
-    if (location.pathname !== "/") return;
-    const updatePosition = () => setHomeHeroVisible(window.scrollY < window.innerHeight * .72);
-    const frame = window.requestAnimationFrame(updatePosition);
-    window.addEventListener("scroll", updatePosition, { passive: true });
-    window.addEventListener("resize", updatePosition);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", updatePosition);
-      window.removeEventListener("resize", updatePosition);
-    };
-  }, [location.pathname]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
@@ -196,17 +183,15 @@ export function SmartAssistant() {
         whileHover={reduce ? undefined : { y: -2 }}
         className={cn(
           "fixed right-3 z-[70] flex h-12 items-center gap-2 rounded-full border border-white/14 bg-[var(--ink)] px-4 text-xs font-semibold text-white shadow-[0_12px_34px_rgba(11,18,32,.2)] transition-all duration-300 sm:right-6",
-          location.pathname === "/" && homeHeroVisible
-            ? "bottom-[max(1rem,env(safe-area-inset-bottom))] top-auto sm:bottom-auto sm:top-[7rem]"
-            : hasMobileConversion
-              ? "bottom-[calc(5.75rem+env(safe-area-inset-bottom))] top-auto lg:bottom-6"
-              : "bottom-[max(1rem,env(safe-area-inset-bottom))] top-auto lg:bottom-6",
+          hasMobileConversion
+            ? "bottom-[calc(5.75rem+env(safe-area-inset-bottom))] top-auto lg:bottom-6"
+            : "bottom-[max(1rem,env(safe-area-inset-bottom))] top-auto lg:bottom-6",
           open && "pointer-events-none scale-90 opacity-0",
         )}
         aria-label="Ouvrir le Guide Orée"
       >
         <Search className="size-4" />
-        <span className={cn("assistant-launcher-label hidden sm:block", location.pathname === "/" && homeHeroVisible && "sm:hidden")}>Guide</span>
+        <span className="assistant-launcher-label hidden sm:block">Guide</span>
       </motion.button>
 
       <AnimatePresence>

@@ -64,11 +64,11 @@ export function ContactLauncher() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: .5, duration: .5, ease: [0.16, 1, 0.3, 1] }}
           whileHover={reduce ? undefined : { y: -3 }}
-          className="foreground-on-dark fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-3 z-[69] inline-flex h-12 items-center gap-2 rounded-full border border-white/12 bg-[var(--ink)] px-4 text-xs font-semibold shadow-[0_18px_48px_rgba(11,18,32,.28)] backdrop-blur-xl transition hover:border-[var(--mint)]/70 hover:bg-[var(--ink-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--paper)] sm:left-6 sm:h-13 sm:px-5 lg:bottom-6"
+          className="foreground-on-dark fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-3 z-[69] inline-flex h-12 items-center gap-2 rounded-full border border-white/12 bg-[var(--ink)] px-2 shadow-[0_18px_48px_rgba(11,18,32,.28)] backdrop-blur-xl transition hover:border-[var(--mint)]/70 hover:bg-[var(--ink-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--paper)] sm:left-6 sm:h-13 sm:px-5 lg:bottom-6"
           aria-label="Contacter l’équipe : téléphone, message ou WhatsApp"
         >
-          <span className="grid size-8 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><PhoneCall className="size-4" /></span>
-          <span className="foreground-on-dark relative z-10">Contacter l’équipe</span>
+          <span className="grid size-8 shrink-0 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><PhoneCall className="size-4" /></span>
+          <span className="foreground-on-dark relative z-10 hidden text-xs font-semibold sm:block">Contacter l’équipe</span>
         </motion.button>
       ) : null}
 
