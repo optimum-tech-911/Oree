@@ -40,15 +40,16 @@ type AnalyticsRecord = AnalyticsPayload & {
 };
 
 const ga4EventByInternalEvent: Partial<Record<AnalyticsEvent, string>> = {
-  landing_view: "page_view",
+  landing_view: "landing_view",
   primary_cta_clicked: "select_content",
-  diagnostic_started: "begin_checkout",
-  diagnostic_completed: "diagnostic_completed",
+  diagnostic_started: "diagnostic_start",
+  diagnostic_step_completed: "diagnostic_step",
+  diagnostic_completed: "diagnostic_complete",
   lead_submitted: "generate_lead",
-  callback_requested: "generate_lead",
+  callback_requested: "callback_request",
   appointment_booked: "schedule",
-  phone_click: "click",
-  whatsapp_click: "click",
+  phone_click: "phone_click",
+  whatsapp_click: "whatsapp_click",
   pricing_viewed: "view_item",
   contact_option_selected: "select_content",
   account_created: "sign_up",
@@ -78,6 +79,7 @@ export function analyticsDedupeKey(event: AnalyticsEvent, eventId: string) {
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>;
+    gtag?: (command: "event", eventName: string, payload?: Record<string, unknown>) => void;
   }
 }
 
@@ -85,6 +87,17 @@ export class AnalyticsService {
   private pending: AnalyticsRecord[] = [];
   private listening = false;
   private fired = new Set<string>();
+
+  private emit(record: AnalyticsRecord) {
+    if (typeof window === "undefined") return;
+    const { event, ga4_event: ga4Event, timestamp, ...payload } = record;
+    if (ga4Event && typeof window.gtag === "function") {
+      window.gtag("event", ga4Event, { ...payload, oree_event: event });
+      return;
+    }
+    window.dataLayer = window.dataLayer ?? [];
+    window.dataLayer.push({ ...record, timestamp });
+  }
 
   private listenForConsent() {
     if (this.listening || typeof window === "undefined") return;
@@ -94,8 +107,7 @@ export class AnalyticsService {
       const pending = this.pending;
       this.pending = [];
       if (!consent?.analytics) return;
-      window.dataLayer = window.dataLayer ?? [];
-      pending.forEach((record) => window.dataLayer?.push(record));
+      pending.forEach((record) => this.emit(record));
     });
   }
 
@@ -104,8 +116,7 @@ export class AnalyticsService {
     if (typeof window !== "undefined") {
       const consent = readConsent();
       if (consent?.analytics) {
-        window.dataLayer = window.dataLayer ?? [];
-        window.dataLayer.push(record);
+        this.emit(record);
       } else if (consent === null) {
         this.pending = [...this.pending.slice(-49), record];
         this.listenForConsent();

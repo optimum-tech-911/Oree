@@ -7,7 +7,10 @@ const portalDocumentsMigration = readFileSync(new URL("../supabase/migrations/00
 const operationsSafetyMigration = readFileSync(new URL("../supabase/migrations/0011_operations_workflow_repair.sql", import.meta.url), "utf8");
 const rateLimitMigration = readFileSync(new URL("../supabase/migrations/0012_lead_intake_attempts.sql", import.meta.url), "utf8");
 const offerWorkflowMigration = readFileSync(new URL("../supabase/migrations/0013_offer_and_ads_lead_workflow.sql", import.meta.url), "utf8");
+const callbackVisibilityMigration = readFileSync(new URL("../supabase/migrations/0014_callback_request_visibility.sql", import.meta.url), "utf8");
 const submitLeadFunction = readFileSync(new URL("../supabase/functions/submit-lead/index.ts", import.meta.url), "utf8");
+const operationsRepository = readFileSync(new URL("../app/services/supabase/operations.ts", import.meta.url), "utf8");
+const operationsLeadPage = readFileSync(new URL("../app/pages/ops/OpsSectionPage.tsx", import.meta.url), "utf8");
 
 describe("appointment permission hardening", () => {
   it("removes member writes and leaves authenticated browsers read-only", () => {
@@ -54,6 +57,25 @@ describe("lead intake security", () => {
     expect(offerWorkflowMigration).toMatch(/'projectSummary'/);
     expect(offerWorkflowMigration).toMatch(/create table if not exists public\.lead_lifecycle_events/i);
     expect(offerWorkflowMigration).toMatch(/on conflict \(event_key\) do nothing/i);
+  });
+
+  it("persists callback intent and exposes it as an indexed operations queue", () => {
+    expect(callbackVisibilityMigration).toMatch(/add column if not exists callback_requested boolean not null default false/i);
+    expect(callbackVisibilityMigration).toMatch(/before insert on public\.leads/i);
+    expect(callbackVisibilityMigration).toMatch(/preferred_contact_method = 'phone'/i);
+    expect(callbackVisibilityMigration).toMatch(/create index if not exists leads_callback_queue_idx/i);
+    expect(callbackVisibilityMigration).toMatch(/revoke all on function public\.mark_callback_request\(\) from public, anon, authenticated/i);
+    expect(submitLeadFunction).toMatch(/Demande de rappel/);
+    expect(submitLeadFunction).toMatch(/answers\.wantsCallback === true/);
+  });
+
+  it("shows callback requests in operations without breaking a pre-migration deployment", () => {
+    expect(operationsRepository).toMatch(/select\(leadColumns\)\.order\("callback_requested", \{ ascending: false \}\)/);
+    expect(operationsRepository).toMatch(/error\?\.code === "42703"/);
+    expect(operationsRepository).toMatch(/callbackRequested: row\.callback_requested \?\? row\.preferred_contact_method === "phone"/);
+    expect(operationsLeadPage).toMatch(/À rappeler/);
+    expect(operationsLeadPage).toMatch(/Demande de rappel/);
+    expect(operationsLeadPage).toMatch(/buildPhoneHref\(lead\.phone\)/);
   });
 
   it("routes sensitive operations through permission-checked RPCs", () => {

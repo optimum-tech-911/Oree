@@ -26,7 +26,7 @@ describe("fichiers de découverte publics", () => {
     expect(llms).toContain(commercialOffers.microEnterprise.priceLabel);
     expect(llms).toContain(commercialOffers.companyCreation.restriction);
     expect(llms).toContain("ne constitue pas un conseil juridique automatique définitif");
-    expect(llms).toContain("aucune mention publique HT, TTC ou de TVA supplémentaire n’est configurée");
+    expect(llms).toContain("les 600 € sont annoncés TTC et tout compris");
     for (const location of locations) expect(llms).toContain(location);
   });
 

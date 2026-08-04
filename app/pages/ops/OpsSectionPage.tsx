@@ -10,6 +10,7 @@ import {
   Mail,
   MessageCircle,
   Phone,
+  PhoneIncoming,
   Search,
   ShieldCheck,
   UsersRound,
@@ -81,6 +82,7 @@ function getStatusOptions(section: Section, currentStatus: string) {
 
 function LeadContactDetails({ lead }: { lead: OpsLead }) {
   const context = [
+    ["Demande de rappel", lead.callbackRequested ? "Oui — à rappeler" : ""],
     ["Forme demandée", lead.legalForm],
     ["Activité", lead.activity],
     ["Message", lead.message],
@@ -99,6 +101,7 @@ function LeadContactDetails({ lead }: { lead: OpsLead }) {
 
   return (
     <div className="mt-5 space-y-4">
+      {lead.callbackRequested ? <div className="flex items-start gap-3 rounded-[20px] border border-[var(--mint)] bg-[var(--mint-soft)] p-4"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><PhoneIncoming className="size-4" /></span><div><p className="text-sm font-semibold">Demande de rappel</p><p className="mt-1 text-xs leading-5 text-[color:var(--muted)]">Cette personne a explicitement demandé à être rappelée. Son numéro et les actions de contact sont disponibles ci-dessous.</p></div></div> : null}
       <div className="rounded-[20px] border border-[var(--line)] bg-[var(--paper)] p-4">
         <p className="text-[10px] font-semibold uppercase tracking-[.14em] text-[color:var(--muted)]">Actions de contact</p>
         <div className="mt-3 grid gap-2 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
@@ -153,7 +156,7 @@ export default function OpsSectionPage({ section }: { section: Section }) {
 
   const rows = useMemo<ViewRow[]>(() => {
     if (!data) return [];
-    if (section === "leads") return data.leads.map((row) => ({ id: row.id, title: row.name, meta: `${row.legalForm} · ${row.campaign || row.source} · ${new Date(row.createdAt).toLocaleDateString("fr-FR")}`, status: row.status, raw: row }));
+    if (section === "leads") return data.leads.map((row) => ({ id: row.id, title: row.name, meta: `${row.callbackRequested ? "Rappel demandé · " : ""}${row.legalForm} · ${row.campaign || row.source} · ${new Date(row.createdAt).toLocaleDateString("fr-FR")}`, status: row.status, raw: row }));
     if (section === "projets") return data.projects.map((row) => ({ id: row.id, title: row.displayName, meta: `${row.legalForm} · ${row.department || "département à préciser"} · ${row.progress}%`, status: row.stage, raw: row }));
     if (section === "documents") return data.requirements.map((row) => ({ id: row.id, title: row.label, meta: `${row.projectName} · ${row.category}`, status: row.status, raw: row }));
     if (section === "rendez-vous") return data.appointments.map((row) => ({ id: row.id, title: row.projectName, meta: `${new Date(row.startsAt).toLocaleString("fr-FR")} · ${row.type}`, status: row.status, raw: row }));
@@ -244,7 +247,7 @@ export default function OpsSectionPage({ section }: { section: Section }) {
     <Card className="overflow-hidden"><div className="grid gap-5 p-5 sm:p-6 lg:grid-cols-[1fr_auto] lg:items-center"><div className="flex items-center gap-4"><span className="grid size-14 shrink-0 place-items-center rounded-[20px] bg-[var(--night)] text-white"><Icon className="size-5" /></span><div><p className="text-[10px] font-semibold uppercase tracking-[.15em] text-[color:var(--muted)]">Orée Operations · {data?.demo ? "démo" : "Supabase"}</p><h1 className="mt-1 text-2xl font-semibold tracking-[-.04em] sm:text-3xl">{config.title}</h1><p className="mt-1 text-sm text-[color:var(--muted)]">{config.description}</p></div></div><label className="flex h-12 items-center gap-3 rounded-[17px] border border-[var(--line)] bg-white/80 px-4 text-sm text-[color:var(--muted)]"><Search className="size-4" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Rechercher" className="w-full bg-transparent outline-none lg:w-72" /></label></div><div className="h-1 bg-[var(--mint)]" /></Card>
     {error ? <Card className="p-5 text-sm text-[color:var(--blue)]">{error instanceof Error ? error.message : "Chargement impossible"}</Card> : null}
     <div className="grid gap-5 xl:grid-cols-[1fr_430px]">
-      <Card className="overflow-hidden"><div className="flex items-center justify-between border-b border-[var(--line)] bg-[var(--paper)] px-5 py-4 text-xs text-[color:var(--muted)]"><span>{isLoading ? "Chargement…" : `${filtered.length} élément(s)`}</span><span>Les mutations sensibles sont auditées</span></div><div className="divide-y divide-[var(--line)]">{filtered.map((row, index) => <button key={row.id} type="button" onClick={() => open(row)} className={`flex w-full items-center gap-4 p-5 text-left transition hover:bg-[var(--mint-soft)]/35 ${selectedId === row.id ? "bg-[var(--mint-soft)]/55" : ""}`}><span className="grid size-11 shrink-0 place-items-center rounded-[15px] bg-[var(--night)] text-xs font-semibold text-white">{String(index + 1).padStart(2, "0")}</span><div className="min-w-0 flex-1"><p className="truncate font-semibold">{row.title}</p><p className="mt-1 truncate text-xs text-[color:var(--muted)]">{row.meta}</p></div><span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold shadow-sm">{section === "leads" ? leadStatusLabel(row.status) : row.status}</span></button>)}{!isLoading && filtered.length === 0 ? <p className="p-12 text-center text-sm text-[color:var(--muted)]">Aucun élément accessible.</p> : null}</div></Card>
+      <Card className="overflow-hidden"><div className="flex items-center justify-between border-b border-[var(--line)] bg-[var(--paper)] px-5 py-4 text-xs text-[color:var(--muted)]"><span>{isLoading ? "Chargement…" : `${filtered.length} élément(s)`}</span><span>Les mutations sensibles sont auditées</span></div><div className="divide-y divide-[var(--line)]">{filtered.map((row, index) => { const callbackRequested = section === "leads" && (row.raw as OpsLead).callbackRequested; return <button key={row.id} type="button" onClick={() => open(row)} className={`flex w-full items-center gap-4 p-5 text-left transition hover:bg-[var(--mint-soft)]/35 ${selectedId === row.id ? "bg-[var(--mint-soft)]/55" : ""}`}><span className="grid size-11 shrink-0 place-items-center rounded-[15px] bg-[var(--night)] text-xs font-semibold text-white">{callbackRequested ? <PhoneIncoming className="size-4" /> : String(index + 1).padStart(2, "0")}</span><div className="min-w-0 flex-1"><p className="truncate font-semibold">{row.title}</p><p className="mt-1 truncate text-xs text-[color:var(--muted)]">{row.meta}</p></div><div className="flex shrink-0 flex-col items-end gap-1.5">{callbackRequested ? <span className="rounded-full bg-[var(--mint)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[.08em] text-[color:var(--ink)]">À rappeler</span> : null}<span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold shadow-sm">{section === "leads" ? leadStatusLabel(row.status) : row.status}</span></div></button>; })}{!isLoading && filtered.length === 0 ? <p className="p-12 text-center text-sm text-[color:var(--muted)]">Aucun élément accessible.</p> : null}</div></Card>
       <Card className="h-fit p-5 sm:p-6">{selected ? <><p className="text-[10px] font-semibold uppercase tracking-[.14em] text-[color:var(--muted)]">Action contrôlée</p><h2 className="mt-2 text-2xl font-semibold">{selected.title}</h2><p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">{selected.meta}</p>{section === "leads" ? <LeadContactDetails lead={selected.raw as OpsLead} /> : null}<div className="mt-6 space-y-4">
         {section === "leads" ? <div className="grid grid-cols-2 gap-2">{([
           ["qualified", "Marquer qualifié"],

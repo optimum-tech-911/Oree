@@ -1,6 +1,6 @@
 # État d’implémentation — V3 canonique
 
-Mise à jour : 30 juillet 2026.
+Mise à jour : 4 août 2026.
 
 ## État de livraison
 
@@ -8,16 +8,13 @@ Le dépôt V3 est l’application canonique. Les apports utiles de V4 ont été 
 fonction par fonction ; V4 n’est ni une seconde application ni une cible de déploiement.
 
 Le projet Supabase `sksydcdkliuisaahysya` (`oree`) est lié et actif. Les migrations `0001` à
-`0012` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`
-sont actives, et le lint distant ne remonte aucune erreur de schéma.
-
-La migration locale `0013_offer_and_ads_lead_workflow.sql` et l’évolution de
-`submit-lead` sont prêtes dans le dépôt, mais ne sont pas encore appliquées au projet
-distant.
+`0014` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`
+sont actives, et la version de `submit-lead` qui traite les demandes de rappel est
+déployée.
 
 ## Offre commerciale et acquisition Ads
 
-- source typée unique pour le forfait société à 600 € tout compris et la création de
+- source typée unique pour le forfait société à 600 € TTC tout compris et la création de
   micro-entreprise à 100 € ;
 - offre société active pour SASU, EURL, SAS et SARL, sans supplément selon la forme ;
 - accueil, tarifs, accompagnement, diagnostic et landings de forme alignés ;
@@ -26,6 +23,7 @@ distant.
 - événements de conversion typés, dédupliqués et filtrés contre les données
   personnelles ;
 - file leads enrichie pour l’attribution Ads, les relances, notes, motifs et résultats ;
+- demandes de rappel persistées explicitement, prioritaires et signalées dans `/ops/leads` ;
 - migration additive avec RLS pour les notes et événements lifecycle ;
 - plan de première campagne Search SASU documenté dans `docs/ADS_READINESS_PLAN.md`.
 
@@ -131,10 +129,58 @@ bout nécessite au moins un compte réel.
 - adresse d’envoi et fournisseur d’e-mail transactionnel ;
 - fournisseur de calendrier externe si synchronisation bidirectionnelle souhaitée ;
 - CRM/webhook éventuel ;
-- GTM, GA4, Google Ads et conventions d’import des conversions qualifiées ;
+- validation Tag Assistant sur le domaine déployé et conventions d’import des
+  conversions qualifiées ;
 - identité juridique, mentions légales, libellé fiscal et politique de confidentialité
   validés ;
-- premier compte équipe à promouvoir en administrateur.
 
 Lire aussi `docs/SUPABASE_BACKEND.md`, `docs/FINAL_MERGE_REPORT.md`,
 `docs/UI_UX_SYSTEM.md` et `docs/IMAGE_DIRECTION.md`.
+
+## Vérifications du 4 août 2026 — landing SASU et suivi des appels
+
+- offre centrale harmonisée sur `600 € TTC tout compris` avec les quatre inclusions
+  confirmées ;
+- landing SASU reconstruite autour de l’appel, du rappel et d’un design éditorial plus
+  humain, sans faux témoignage, faux membre d’équipe ou faux horaire ;
+- configuration Google existante réutilisée : un chargeur, GA4 `G-FL6QMMYVLM`, action
+  appel Ads `AW-18362621917/mQHqCLOG6tscEN2__bNE`, numéro `07 87 82 32 08` ;
+- conservation de GCLID/UTM vérifiée et événements diagnostiques `phone_click`,
+  `callback_request` et `whatsapp_click` reliés à l’abstraction analytics existante ;
+- `npm ci`, ESLint, TypeScript strict, 48 tests Vitest et build/prérendu réussis ;
+- crawlabilité réussie sur 19 routes et 6 user-agents ;
+- Playwright complet : 175 tests réussis, 11 scénarios authentifiés ignorés sans comptes
+  réels, aucun échec ;
+- responsive SASU vérifié à 375, 390, 430, 768 et 1 440 px dans Chromium et Mobile
+  Safari, avec contrôles de contraste, débordement, CTA, téléphone et rappel.
+
+Le navigateur intégré n’était pas disponible pendant cette passe. La validation
+visuelle est donc fondée sur les rendus de test et la matrice Playwright ; aucune revue
+interactive via le navigateur intégré n’est revendiquée. Une vérification Tag Assistant
+sur le domaine réellement déployé reste nécessaire avant activation Google Ads.
+
+## Vérifications du 4 août 2026 — visuel SASU et file de rappel
+
+- portrait SASU remplacé par la scène quotidienne `pathway-home-founder`, déjà auditée
+  et optimisée, avec recadrages desktop et mobile ;
+- demande de rappel persistée par la migration additive `0014`, triée en priorité et
+  signalée dans `/ops/leads` avec accès direct au téléphone, WhatsApp et e-mail ;
+- compatibilité vérifiée avec un frontend livré avant la migration `0014` ;
+- Edge Function distante joignable : le smoke test honeypot a répondu `202` sans créer
+  de lead de test ;
+- `npm run check` réussi : ESLint, TypeScript strict, 51 tests Vitest, build et prérendu
+  de 25 routes ;
+- 4 scénarios Playwright ciblés réussis dans Chromium et Mobile Safari pour le visuel
+  SASU et la soumission du formulaire de rappel ;
+- captures locales inspectées pour le héros SASU et la file opérations en mode démo.
+
+## Déploiement Supabase du 4 août 2026
+
+- migrations `0013_offer_and_ads_lead_workflow.sql` et
+  `0014_callback_request_visibility.sql` appliquées et enregistrées dans l’historique ;
+- `submit-lead` redéployée avec la notification explicite « Demande de rappel » ;
+- vérification distante : champ `leads.callback_requested`, procédure
+  `submit_lead_bundle` et un administrateur actif présents ;
+- test transactionnel annulé : une demande SASU avec rappel est marquée
+  `callback_requested = true`, canal `phone`, sans conserver de lead de test ;
+- endpoint public vérifié via honeypot : réponse `202`, sans écriture de données.

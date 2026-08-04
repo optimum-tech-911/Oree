@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Check, LoaderCircle, PhoneCall } from "lucide-react";
 import { z } from "zod";
 import { Button } from "@/components/ui/Button";
-import { commercialOffers, type SupportedCompanyForm } from "@/config/commercial-offers";
+import { buildPhoneHref, commercialOffers, type SupportedCompanyForm } from "@/config/commercial-offers";
 import { leadRepository } from "@/services/supabase/repositories";
 import { analytics } from "@/services/analytics";
 import type { DiagnosticAnswers, DiagnosticRecommendation } from "@/types";
@@ -96,36 +96,37 @@ export function CallbackLeadForm({ legalForm, slug }: { legalForm?: SupportedCom
       });
       setSubmitted(result.demo ? "demo" : "live");
     } catch (cause) {
-      setServerError(cause instanceof Error ? cause.message : "La demande de rappel n’a pas pu être transmise.");
+      if (import.meta.env.DEV) console.error("callback-request", cause);
+      setServerError("Nous n’avons pas pu enregistrer votre demande. Réessayez dans un instant ou appelez-nous directement.");
     }
   }
 
   if (submitted) {
     return (
-      <div id="rappel" data-callback-form className="grid min-h-[420px] place-items-center rounded-[28px] bg-[var(--ink)] p-7 text-center text-white sm:p-10">
+      <div id="rappel" data-callback-form aria-live="polite" className="grid min-h-[360px] scroll-mt-28 place-items-center rounded-[18px] bg-[var(--ink)] p-7 text-center text-white sm:p-10">
         <div>
-          <span className="mx-auto grid size-15 place-items-center rounded-[20px] bg-[var(--mint)] text-[color:var(--ink)]"><Check className="size-6" /></span>
+          <span className="mx-auto grid size-13 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><Check className="size-6" /></span>
           <h2 className="mt-6 text-3xl font-semibold tracking-[-.045em]">Votre demande de rappel est enregistrée.</h2>
           <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-white/72">
             {submitted === "demo"
               ? "Mode démonstration : aucune donnée personnelle n’a quitté votre navigateur."
-              : "L’équipe dispose du contexte transmis. La conversion est dédupliquée à partir de cette demande."}
+              : "L’équipe dispose des informations transmises pour reprendre votre demande avec vous."}
           </p>
         </div>
       </div>
     );
   }
 
-  const fieldClass = "mt-2 h-12 w-full rounded-[16px] border border-[var(--line)] bg-white px-4 font-normal outline-none transition focus:border-[var(--blue)]/45 focus:ring-4 focus:ring-[var(--blue)]/8";
+  const fieldClass = "mt-2 h-12 w-full rounded-[12px] border border-[var(--line-strong)] bg-white px-4 font-normal outline-none transition focus:border-[var(--blue)]/55 focus:ring-4 focus:ring-[var(--blue)]/8";
 
   return (
-    <form id="rappel" data-callback-form onFocusCapture={trackStart} onSubmit={handleSubmit(submit)} className="rounded-[28px] border border-[var(--line)] bg-[var(--paper)] p-5 shadow-[0_22px_68px_rgba(11,18,32,.08)] sm:p-7">
-      <div className="flex items-start gap-4">
-        <span className="grid size-12 shrink-0 place-items-center rounded-[16px] bg-[var(--mint)] text-[color:var(--ink)]"><PhoneCall className="size-5" /></span>
+    <form id="rappel" data-callback-form onFocusCapture={trackStart} onSubmit={handleSubmit(submit)} className="scroll-mt-28 rounded-[18px] border border-[var(--line-strong)] bg-[var(--paper)] p-5 sm:p-7 lg:p-8">
+      <div className="flex items-start gap-3 border-b border-[var(--line)] pb-6">
+        <PhoneCall className="mt-1 size-5 shrink-0 text-[color:var(--blue)]" />
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[.13em] text-[color:var(--muted)]">{commercialOffers.companyCreation.callbackCtaLabel}</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-[-.04em]">Laissez le contexte utile à l’équipe.</h2>
-          <p className="mt-2 text-xs leading-5 text-[color:var(--muted)]">Le numéro est utilisé pour cette demande. Un clic téléphone ou WhatsApp n’est jamais présenté comme une conversation aboutie.</p>
+          <p className="text-sm font-semibold text-[color:var(--blue)]">{commercialOffers.companyCreation.callbackCtaLabel}</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-[-.04em] sm:text-3xl">Demandez à l’équipe de vous rappeler.</h2>
+          <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">Indiquez les coordonnées et le contexte nécessaires pour reprendre votre projet. Vous préférez appeler&nbsp;? <a href={buildPhoneHref()} data-phone-number={commercialOffers.contact.displayPhone} onClick={() => analytics.track("phone_click", { legal_form: legalForm, location: "callback_form" })} className="font-semibold text-[color:var(--blue)]">{commercialOffers.contact.displayPhone}</a>.</p>
         </div>
       </div>
       <label aria-hidden="true" className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">Votre site internet<input type="url" tabIndex={-1} autoComplete="off" {...register("website")} /></label>
@@ -137,7 +138,7 @@ export function CallbackLeadForm({ legalForm, slug }: { legalForm?: SupportedCom
         <label className="text-sm font-semibold sm:col-span-2">Activité<input placeholder="Ex. conseil en stratégie" className={fieldClass} {...register("activity")} />{errors.activity ? <span className="mt-1 block text-xs text-[color:var(--blue)]">{errors.activity.message}</span> : null}</label>
         <label className="text-sm font-semibold sm:col-span-2">Date de création souhaitée<select className={fieldClass} {...register("creationTimeline")}>{Object.entries(timelineLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
       </div>
-      <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-[18px] border border-[var(--line)] bg-white p-4 text-xs leading-5">
+      <label className="mt-5 flex cursor-pointer items-start gap-3 border-t border-[var(--line)] pt-5 text-xs leading-5">
         <input type="checkbox" className="mt-0.5 size-5 accent-[var(--blue)]" {...register("privacyAccepted")} />
         <span>J’accepte le traitement de mes données pour répondre à cette demande de rappel.</span>
       </label>

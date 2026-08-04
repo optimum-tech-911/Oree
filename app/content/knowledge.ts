@@ -78,7 +78,7 @@ export const assistantKnowledge: AssistantKnowledge[] = [
     title: "Comparer SASU et EURL",
     route: "/choisir-statut",
     keywords: ["sasu", "eurl", "seul", "solo", "comparaison", "différence", "president", "gérant"],
-    answer: "SASU et EURL permettent de créer seul, mais leur gouvernance, le régime social du dirigeant, la liberté statutaire et leur évolution diffèrent. La plateforme présente une orientation indicative puis propose une validation humaine.",
+    answer: "SASU et EURL permettent de créer seul, mais leur gouvernance, le régime social du dirigeant, la liberté statutaire et leur évolution diffèrent. La plateforme présente une première recommandation puis propose une validation humaine.",
     actions: [
       { label: "Comparer les statuts", href: "/choisir-statut" },
       { label: "Page SASU", href: "/creation-sasu" },
@@ -218,7 +218,7 @@ export const assistantKnowledge: AssistantKnowledge[] = [
     title: "Portée de l’orientation",
     route: "/accompagnement",
     keywords: ["conseil juridique", "avis définitif", "orientation", "recommandation", "validation humaine", "avocat", "expert", "garantie"],
-    answer: "Le diagnostic fournit une orientation indicative et auditable, pas un conseil juridique automatique définitif. Il formule les structures qui semblent devoir être comparées, les points à valider et l’action suivante. Une validation humaine reste proposée lorsque votre situation l’exige.",
+    answer: "Le diagnostic fournit une première recommandation explicable, pas un conseil juridique automatique définitif. Il présente les structures qui semblent devoir être comparées, les points à valider et l’action suivante. Une validation humaine reste proposée lorsque votre situation l’exige.",
     actions: [
       { label: "Comprendre l’accompagnement", href: "/accompagnement" },
       { label: "Démarrer le diagnostic", href: "/diagnostic" },

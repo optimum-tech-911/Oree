@@ -79,7 +79,7 @@ function llmsTxt() {
 
   return `# Orée Entreprises
 
-> Plateforme française de création de société qui relie une intention précise à un diagnostic adaptatif, une orientation indicative, un dossier structuré et un accompagnement humain lorsque le projet nécessite une validation.
+> Plateforme française de création de société qui relie une intention précise à un diagnostic, une première recommandation, un dossier structuré et un accompagnement humain lorsque le projet nécessite une validation.
 
 Orée Entreprises s’adresse principalement aux personnes qui créent une société en France, seules ou à plusieurs, qui comparent des formes juridiques, préparent une transition depuis le salariat ou la micro-entreprise, ou reprennent un dossier de création bloqué. La langue de référence est le français.
 
@@ -99,7 +99,7 @@ Orée Entreprises s’adresse principalement aux personnes qui créent une soci�
 - Autres formes : ${commercialOffers.companyCreation.otherFormsWording}
 - Micro-entreprise : offre distincte à ${commercialOffers.microEnterprise.priceLabel}. ${commercialOffers.microEnterprise.description}
 - Exclusion : ${commercialOffers.companyCreation.restriction}
-- Fiscalité du prix : aucune mention publique HT, TTC ou de TVA supplémentaire n’est configurée ; ne pas en déduire une.
+- Prix : les 600 € sont annoncés TTC et tout compris pour le périmètre indiqué.
 
 ## Parcours principaux
 
@@ -119,7 +119,7 @@ ${linksFor(referencePaths)}
 
 ## Limites à respecter
 
-- Le diagnostic fournit une orientation indicative et ne constitue pas un conseil juridique automatique définitif.
+- Le diagnostic fournit une première recommandation et ne constitue pas un conseil juridique automatique définitif.
 - Orée ne promet ni délai administratif garanti, ni éligibilité à une aide, ni résultat juridique déterminé.
 - Les modifications d’une société existante ne sont pas prises en charge par l’offre de création.
 - Les paramètres publicitaires internes, les données opérations et les données privées des clients ne sont pas des sources publiques.

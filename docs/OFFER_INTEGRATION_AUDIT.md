@@ -60,6 +60,5 @@ Ce mapping évite deux autorités concurrentes pour l’attribution et l’affec
 - `LEAD_NOTIFICATION_EMAIL` ;
 - `RESEND_API_KEY` et `RESEND_FROM_EMAIL`, si Resend est retenu ;
 - identifiant réel du partenaire affecté ;
-- libellé fiscal : présent dans la configuration mais volontairement masqué ;
-- IDs GTM, GA4 et Google Ads ;
-- budget publicitaire initial.
+- vérification Tag Assistant sur le domaine de production ;
+- budget publicitaire initial et activation manuelle de la campagne.

@@ -47,17 +47,26 @@ const routes = [
   "/ops/profil",
 ];
 
+test.beforeEach(async ({ page }) => {
+  await page.route("https://www.googletagmanager.com/**", (route) => route.abort("blockedbyclient"));
+});
+
 async function skipWhenLoginIsRequired(page: Page, readySurface: Locator, reason: string) {
   const loginHeading = page.getByRole("heading", { name: "Retrouvez votre projet." });
   await expect(readySurface.or(loginHeading)).toBeVisible();
   test.skip(await loginHeading.isVisible(), reason);
 }
 
+async function waitForHydration(page: Page) {
+  await expect(page.locator("#root")).toHaveAttribute("data-oree-hydrated", "true");
+}
+
 for (const route of routes) {
   test(`${route} se charge sans erreur d'exécution`, async ({ page }) => {
     const pageErrors: string[] = [];
     page.on("pageerror", (error) => pageErrors.push(error.message));
-    await page.goto(route);
+    await page.goto(route, { waitUntil: "domcontentloaded" });
+    await waitForHydration(page);
     await expect(page).toHaveTitle(/Orée/);
     await expect(page.locator("body")).toBeVisible();
     await expect(page.locator("h1, h2").filter({ visible: true }).first()).toBeVisible();
@@ -89,18 +98,46 @@ test("une intention SAS ouvre directement le bon embranchement du diagnostic", a
 });
 
 for (const form of ["sasu", "eurl", "sas", "sarl"]) {
-  test(`la landing ${form.toUpperCase()} affiche l’offre et les quatre actions d’acquisition`, async ({ page }) => {
+  test(`la landing ${form.toUpperCase()} affiche l’offre TTC et ses actions d’acquisition`, async ({ page }) => {
     await page.goto(`/creation-${form}`);
-    await expect(page.getByRole("heading", { name: new RegExp(`Créez votre ${form} pour 600 € tout compris`, "i") }).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: new RegExp(`Créez votre ${form} pour 600 € TTC tout compris`, "i") }).first()).toBeVisible();
     const hero = page.locator("main section").first();
-    await expect(hero.getByRole("link", { name: "Commencer ma création" })).toBeVisible();
+    await expect(hero.getByRole("link", { name: form === "sasu" ? "Commencer mon dossier" : "Commencer ma création" })).toBeVisible();
     await expect(hero.getByRole("link", { name: "Être rappelé" })).toHaveAttribute("href", "#rappel");
-    await expect(hero.getByRole("link", { name: "Appeler" })).toHaveAttribute("href", /^tel:\+33787823208/);
+    await expect(hero.getByRole("link", { name: form === "sasu" ? /Appeler maintenant/ : "Appeler" })).toHaveAttribute("href", /^tel:\+33787823208/);
     await expect(hero.getByRole("link", { name: "Écrire sur WhatsApp" })).toHaveAttribute("href", /wa\.me\/33787823208/);
   });
 }
 
+test("la landing SASU conserve l’attribution et initialise le suivi Google des appels une seule fois", async ({ page }) => {
+  await page.goto("/creation-sasu/?gclid=XYZ&utm_source=google&utm_medium=cpc");
+  await expect(page).toHaveURL(/\/creation-sasu\/\?gclid=XYZ&utm_source=google&utm_medium=cpc$/);
+  await expect(page).toHaveTitle(/Création SASU : 600 € TTC tout compris/);
+  await expect(page.locator("link[rel='canonical']")).toHaveAttribute("href", /\/creation-sasu\/$/);
+
+  const tracking = await page.evaluate(() => {
+    const layer = (window as Window & { dataLayer?: unknown[] }).dataLayer ?? [];
+    const commands = layer
+      .filter((entry) => typeof entry === "object" && entry !== null && "length" in entry)
+      .map((entry) => Array.from(entry as unknown as ArrayLike<unknown>));
+    return {
+      loaders: document.querySelectorAll('script[src*="googletagmanager.com/gtag/js"]').length,
+      ga4: commands.filter((entry) => entry[0] === "config" && entry[1] === "G-FL6QMMYVLM").length,
+      adsCall: commands.filter((entry) => entry[0] === "config" && entry[1] === "AW-18362621917/mQHqCLOG6tscEN2__bNE").length,
+    };
+  });
+  expect(tracking).toEqual({ loaders: 1, ga4: 1, adsCall: 1 });
+  await expect(page.locator('[data-phone-number="07 87 82 32 08"]').first()).toHaveAttribute("href", "tel:+33787823208");
+});
+
 test("le formulaire de rappel reste utilisable sur mobile", async ({ page }) => {
+  await page.route(/\/functions\/v1\/submit-lead/, async (route) => {
+    await route.fulfill({
+      status: 201,
+      contentType: "application/json",
+      body: JSON.stringify({ id: "58c55530-9c39-4c52-bf1f-0ad01fbe8844", claimToken: "x".repeat(64) }),
+    });
+  });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/creation-sasu");
   const form = page.locator("[data-callback-form]");
@@ -111,9 +148,46 @@ test("le formulaire de rappel reste utilisable sur mobile", async ({ page }) => 
   await form.getByLabel("E-mail").fill("camille@example.fr");
   await form.getByLabel("Téléphone").fill("06 12 34 56 78");
   await form.getByLabel("Activité").fill("Conseil en stratégie");
+  await form.getByLabel(/J’accepte le traitement/).check();
   await expect(form.getByRole("button", { name: "Être rappelé" })).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
+  await form.getByRole("button", { name: "Être rappelé" }).click();
+  await expect(page.getByRole("heading", { name: /Votre demande de rappel est enregistrée/i })).toBeVisible();
+});
+
+test("la landing SASU utilise la scène de travail naturelle validée", async ({ page }) => {
+  await page.goto("/creation-sasu");
+  const hero = page.locator("main section").first();
+  const image = hero.getByRole("img", { name: /Créatrice travaillant naturellement/i });
+  await expect(image).toBeVisible();
+  await expect(image).toHaveAttribute("src", /pathway-home-founder-1280\.webp$/);
+});
+
+for (const width of [375, 390, 430, 768, 1440]) {
+  test(`la landing SASU reste lisible et sans débordement à ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width < 800 ? 900 : 1000 });
+    await page.goto("/creation-sasu/?gclid=RESPONSIVE-CHECK", { waitUntil: "domcontentloaded" });
+    await waitForHydration(page);
+    const hero = page.locator("main section").first();
+    await expect(hero.getByRole("heading", { name: /Créez votre SASU pour 600 € TTC tout compris/i })).toBeVisible();
+    await expect(hero.getByRole("link", { name: /Appeler maintenant/i })).toBeVisible();
+    await expect(hero.getByRole("link", { name: "Être rappelé" })).toBeVisible();
+    await expect(hero.getByRole("link", { name: "Commencer mon dossier" })).toBeVisible();
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    if (width < 1024) {
+      await expect(page.getByLabel(/Appeler Orée au 07 87 82 32 08/)).toBeVisible();
+    }
+  });
+}
+
+test("le diagnostic présente une progression unique et un accès direct à l’équipe", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/diagnostic?intent=creation_sasu");
+  await expect(page.getByText(/Question 2 sur 9/)).toBeVisible();
+  await expect(page.getByRole("link", { name: /Besoin d’aide.*Appeler/i })).toHaveAttribute("href", "tel:+33787823208");
+  await expect(page.locator("main")).not.toContainText(/Parcours adaptatif|Projet en direct|Lecture actuelle|Orientation indicative/i);
 });
 
 test("la récupération du mot de passe confirme la demande", async ({ page }) => {
@@ -216,6 +290,7 @@ for (const width of [390, 768, 1280, 1440, 1728]) {
 test("l'identité Orée et les métadonnées d'installation utilisent les nouveaux fichiers", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
+  await waitForHydration(page);
   const logo = page.locator("[data-brand-logo='horizontal'] img").first();
   await expect(logo).toBeVisible();
   await expect(logo).toHaveAttribute("src", "/assets/brand/oree-entreprises-horizontal.webp");
@@ -230,6 +305,7 @@ test("l'identité Orée et les métadonnées d'installation utilisent les nouvea
 test("le ruban de formalités défile, reste exact et se suspend au survol", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
+  await waitForHydration(page);
   const rail = page.locator("[data-ecosystem-rail]");
   await expect(rail.getByRole("heading", { name: /organismes et prestataires qui peuvent jalonner une création/i })).toBeVisible();
   await expect(rail.getByRole("img", { name: "INPI et République française" })).toBeVisible();
@@ -247,6 +323,7 @@ test("le ruban de formalités défile, reste exact et se suspend au survol", asy
 test("le ruban reste animé et contrôlable sur mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
+  await waitForHydration(page);
   const rail = page.locator("[data-ecosystem-rail]");
   await expect(rail.locator(".ecosystem-viewport")).toBeHidden();
   await expect(rail.locator("[data-ecosystem-mobile]").getByRole("img", { name: "URSSAF" })).toBeVisible();
@@ -364,7 +441,7 @@ test("le héros d'accueil présente une proposition stable et un aperçu produit
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   const hero = page.locator("[data-home-conversion-hero]");
-  await expect(hero.getByRole("heading", { name: /Créez votre société pour 600 € tout compris/i })).toBeVisible();
+  await expect(hero.getByRole("heading", { name: /Créez votre société pour 600 € TTC tout compris/i })).toBeVisible();
   await expect(hero.getByRole("link", { name: /Commencer ma création/i })).toBeVisible();
   await expect(hero.getByText("Studio Horizon", { exact: true }).filter({ visible: true })).toBeVisible();
   await expect(hero.getByRole("tab")).toHaveCount(0);
@@ -378,7 +455,7 @@ test("le héros d'accueil ne change pas automatiquement son message", async ({ p
   const heading = hero.getByRole("heading").first();
   const copy = await heading.textContent();
   await expect(hero.getByText("Studio Horizon", { exact: true }).filter({ visible: true })).toBeVisible();
-  await expect(hero.getByText("Lecture du projet", { exact: true }).filter({ visible: true })).toBeVisible();
+  await expect(hero.getByText("À vérifier", { exact: true }).filter({ visible: true })).toBeVisible();
   await page.waitForTimeout(3800);
   await expect(heading).toHaveText(copy ?? "");
 });
@@ -476,9 +553,11 @@ test("le chargement direct réutilise le HTML prérendu sans écran vide", async
 });
 
 test("les contrôles à fond plein conservent un contraste lisible sur toutes les routes", async ({ page }) => {
+  test.slow();
   const violations: string[] = [];
   for (const route of routes) {
     await page.goto(route);
+    await waitForHydration(page);
     const routeViolations = await page.locator("button, a").evaluateAll((elements) => {
       const parseColor = (value: string) => {
         const values = value.match(/[\d.]+/g)?.map(Number) ?? [];

@@ -81,6 +81,17 @@ export const imagery = {
     intendedRoutes: ["/"],
     hero: true,
   }),
+  sasuHumanHero: asset({
+    base: `${imageryRoot}/pathways/pathway-home-founder`,
+    mobileBase: `${imageryRoot}/mobile/pathway-home-founder-mobile`,
+    widths: [480, 720, 960, 1280],
+    width: 1280,
+    height: 801,
+    alt: "Créatrice travaillant naturellement sur son projet de société depuis sa table de cuisine.",
+    focalPosition: "right center",
+    intendedRoutes: ["/creation-sasu"],
+    hero: true,
+  }),
   sasuHero: asset({
     base: `${imageryRoot}/landing/hero-sasu-solo-founder`,
     mobileBase: `${imageryRoot}/mobile/hero-sasu-solo-founder-mobile`,
@@ -89,7 +100,7 @@ export const imagery = {
     height: 992,
     alt: "Créateur seul relisant les éléments de son projet de société près de son ordinateur.",
     focalPosition: "76% center",
-    intendedRoutes: ["/creation-sasu", "/creer-entreprise-seul"],
+    intendedRoutes: ["/creer-entreprise-seul"],
     hero: true,
   }),
   eurlHero: asset({
@@ -291,7 +302,7 @@ export const imagery = {
 } satisfies Record<string, ImageryAsset>;
 
 export const landingHeroBySlug: Record<string, ImageryAsset> = {
-  "creation-sasu": imagery.sasuHero,
+  "creation-sasu": imagery.sasuHumanHero,
   "creation-eurl": imagery.eurlHero,
   "creation-sas": imagery.sasHero,
   "creation-sarl": imagery.sarlHero,

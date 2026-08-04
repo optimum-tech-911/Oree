@@ -4,8 +4,10 @@ import { mobileConversionForPath } from "@/components/layout/MobileConversionBar
 describe("barre de conversion mobile", () => {
   it("conserve l'intention de chaque page d'acquisition", () => {
     expect(mobileConversionForPath("/creation-sasu")).toMatchObject({
-      href: "/diagnostic?intent=creation_sasu",
+      href: "tel:+33787823208",
       intent: "creation_sasu",
+      action: "call",
+      label: "07 87 82 32 08",
     });
     expect(mobileConversionForPath("/dossier-creation-entreprise-bloque/")).toMatchObject({
       href: "/diagnostic?intent=blocked_dossier",

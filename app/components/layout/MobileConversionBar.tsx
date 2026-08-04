@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { PhoneCall } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
 import { landingPages } from "@/content/landingPages";
+import { buildPhoneHref, commercialOffers } from "@/config/commercial-offers";
 import { readConsent } from "@/features/consent/consent";
 import { analytics } from "@/services/analytics";
 
@@ -10,6 +12,7 @@ export type MobileConversionConfig = {
   eyebrow: string;
   label: string;
   intent?: string;
+  action?: "navigate" | "call";
 };
 
 const hiddenPrefixes = [
@@ -38,7 +41,7 @@ const contextualRoutes: Record<string, MobileConversionConfig> = {
   },
   "/choisir-statut": {
     href: "/diagnostic",
-    eyebrow: "Orientation indicative",
+    eyebrow: "Choisir votre statut",
     label: "Comparer selon mon projet",
   },
 };
@@ -49,6 +52,16 @@ export function mobileConversionForPath(pathname: string): MobileConversionConfi
   const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
   if (hiddenRoutes.has(normalizedPath) || hiddenPrefixes.some((prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`))) return null;
 
+  if (normalizedPath === "/creation-sasu") {
+    return {
+      href: buildPhoneHref(),
+      eyebrow: "SASU · 600 € TTC",
+      label: commercialOffers.contact.displayPhone,
+      intent: "creation_sasu",
+      action: "call",
+    };
+  }
+
   const landing = landingPages[normalizedPath.slice(1)];
   if (landing) {
     return {
@@ -56,6 +69,7 @@ export function mobileConversionForPath(pathname: string): MobileConversionConfi
       eyebrow: landing.eyebrow,
       label: landing.primaryCta,
       intent: landing.searchIntent,
+      action: "navigate",
     };
   }
 
@@ -79,7 +93,7 @@ export function MobileConversionBar() {
     };
   }, []);
 
-  if (!config || !consentResolved || assistantOpen) return null;
+  if (!config || assistantOpen || (config.action !== "call" && !consentResolved)) return null;
 
   return (
     <div className="sticky-mobile-cta fixed inset-x-0 bottom-0 z-[58] border-t border-white/10 bg-[var(--ink)]/96 px-3 pt-3 shadow-[0_-14px_40px_rgba(11,18,32,.18)] backdrop-blur-2xl lg:hidden" aria-label="Prochaine étape">
@@ -88,17 +102,25 @@ export function MobileConversionBar() {
           <p className="truncate text-[10px] font-semibold uppercase tracking-[.12em] text-white/72">{config.eyebrow}</p>
           <p className="truncate text-sm font-semibold text-white">{config.label}</p>
         </div>
-        <ButtonLink
-          to={config.href}
-          variant="dark"
-          size="sm"
-          className="h-11"
-          arrow
-          aria-label={`${config.label} — ouvrir le diagnostic`}
-          onClick={() => analytics.track("primary_cta_clicked", { path: pathname, intent: config.intent, location: "mobile_sticky" })}
+        {config.action === "call" ? <a
+          href={config.href}
+          data-phone-number={config.label}
+          aria-label={`Appeler Orée au ${config.label}`}
+          onClick={() => analytics.track("phone_click", { path: pathname, legal_form: "SASU", location: "mobile_sticky" })}
+          className="button-on-action inline-flex h-12 items-center justify-center gap-2 rounded-[13px] bg-[var(--blue)] px-5 text-sm font-semibold text-white shadow-[0_10px_26px_rgba(36,87,255,.24)]"
         >
-          Démarrer
-        </ButtonLink>
+          <PhoneCall className="size-4" />Appeler
+        </a> : <ButtonLink
+            to={config.href}
+            variant="dark"
+            size="sm"
+            className="h-11"
+            arrow
+            aria-label={`${config.label} — ouvrir le diagnostic`}
+            onClick={() => analytics.track("primary_cta_clicked", { path: pathname, intent: config.intent, location: "mobile_sticky" })}
+          >
+            Démarrer
+          </ButtonLink>}
       </div>
     </div>
   );

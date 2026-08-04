@@ -76,14 +76,14 @@ export function HeroCockpit({ compact = false }: { compact?: boolean }) {
             <div className={`flex flex-col gap-3 ${compact ? "min-h-[230px]" : "min-h-[278px]"}`}>
               <div className="relative flex-1 overflow-hidden rounded-[24px] border border-white/8 bg-white/[.045] p-5 pb-17">
                 <div className="absolute inset-x-5 top-0 h-px kinetic-line bg-white/8" />
-                <div className="flex items-center justify-between"><span className="text-[9px] font-extrabold uppercase tracking-[.16em] text-white/72">Lecture du projet</span><ShieldCheck className="size-4 text-[color:var(--mint)]" /></div>
+                <div className="flex items-center justify-between"><span className="text-[9px] font-extrabold uppercase tracking-[.16em] text-white/72">À vérifier</span><ShieldCheck className="size-4 text-[color:var(--mint)]" /></div>
                 <AnimatePresence mode="wait">
                   <motion.div key={active} initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={reduce ? undefined : { opacity: 0, y: -8 }} transition={{ duration: .28 }} className="mt-5">
                     <span className="inline-flex rounded-full border border-[var(--blue)]/28 bg-[var(--blue)]/12 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[.12em] text-white/66">{insights[active]?.title}</span>
                     <p className="mt-4 text-balance text-lg font-extrabold leading-[1.18] tracking-[-.04em] text-white sm:text-xl">{insights[active]?.copy}</p>
                   </motion.div>
                 </AnimatePresence>
-                <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between border-t border-white/8 pt-4"><span className="text-[10px] text-white/72">Orientation indicative</span><ArrowUpRight className="size-4 text-white/72" /></div>
+                <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between border-t border-white/8 pt-4"><span className="text-[10px] text-white/72">Première recommandation</span><ArrowUpRight className="size-4 text-white/72" /></div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -98,7 +98,7 @@ export function HeroCockpit({ compact = false }: { compact?: boolean }) {
       </motion.div>
 
       <motion.div initial={reduce ? false : { opacity: 0, x: -20, y: 18 }} animate={{ opacity: 1, x: 0, y: 0 }} transition={{ duration: .72, delay: .72 }} className="absolute -bottom-8 -left-4 z-20 hidden w-[250px] rounded-[22px] border border-[var(--line)] bg-white p-4 text-[color:var(--ink)] shadow-[0_24px_70px_rgba(11,18,32,.18)] sm:block lg:-left-10">
-        <div className="flex items-start gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><Check className="size-4" /></span><div><p className="text-xs font-extrabold">Aucune décision masquée</p><p className="mt-1 text-[10px] leading-4 text-[color:var(--muted)]">Les points à confirmer restent visibles dans le parcours.</p></div></div>
+        <div className="flex items-start gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><Check className="size-4" /></span><div><p className="text-xs font-extrabold">Vous gardez la main</p><p className="mt-1 text-[10px] leading-4 text-[color:var(--muted)]">Les points à vérifier restent clairement indiqués.</p></div></div>
       </motion.div>
     </div>
   );

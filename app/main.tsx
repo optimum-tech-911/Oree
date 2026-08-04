@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { StrictMode } from "react";
+import { StrictMode, useEffect } from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -29,8 +29,17 @@ const initialEntries = useMemoryRouter
   : undefined;
 
 const root = document.getElementById("root")!;
+
+function HydrationMarker() {
+  useEffect(() => {
+    root.dataset.oreeHydrated = "true";
+  }, []);
+  return null;
+}
+
 const app = (
   <StrictMode>
+    <HydrationMarker />
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <AppErrorBoundary>

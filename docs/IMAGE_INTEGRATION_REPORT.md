@@ -10,7 +10,7 @@ L'intégration conserve le diagnostic, le cockpit React, le Guide Orée, les esp
 - Sélecteur de parcours : six intentions utilisent une image dédiée et ne chargent que la scène active.
 - Activités : un sélecteur interactif n'affiche qu'une scène active parmi artisanat, commerce, services terrain, restauration et logistique ; il évite de charger une galerie complète sur mobile.
 - Parcours accueil : les scènes « projet chez soi » et « associés en discussion » remplacent les visuels génériques des entrées solo et équipe.
-- Landing pages : images distinctes pour SASU, EURL, SAS, SARL, salarié, activité existante et dossier bloqué.
+- Landing pages : images distinctes pour SASU, EURL, SAS, SARL, salarié, activité existante et dossier bloqué. La SASU réutilise la scène quotidienne `pathway-home-founder`, plus spontanée que le portrait institutionnel initial.
 - Choix du statut : scène de décision derrière le comparateur React.
 - Processus : `process-project-organisation` forme un fond documentaire lisible dans le rail des six étapes, avec un dégradé dérivé de la palette pour préserver le texte.
 - Offres : la scène d'accompagnement donne un contexte humain au choix du niveau de service, sans être présentée comme une photo d'équipe réelle.

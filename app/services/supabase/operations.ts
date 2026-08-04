@@ -11,7 +11,7 @@ export type OpsLead = {
   legalForm: string; activity: string; message: string; preferredContactChannel: string; status: string; score: number;
   advisorId?: string; lastContactAt?: string; nextFollowUpAt?: string; qualificationReason: string;
   lostReason: string; customerWonAt?: string; notes: Array<{ id: string; body: string; createdAt: string }>;
-  createdAt: string;
+  callbackRequested: boolean; createdAt: string;
 };
 
 export type OpsProject = {
@@ -62,6 +62,7 @@ function demoDashboard(): OpsDashboard {
       activity: lead.project,
       message: "",
       preferredContactChannel: index === 2 ? "phone" : "email",
+      callbackRequested: index === 2,
       status: index === 0 ? "appointment_booked" : index === 1 ? "qualified" : index === 2 ? "to_contact" : "new",
       score: lead.score,
       qualificationReason: index === 1 ? "Projet de société identifié et calendrier cohérent." : "",
@@ -76,13 +77,26 @@ function demoDashboard(): OpsDashboard {
 export const operationsRepository = {
   async getDashboard(): Promise<OpsDashboard> {
     if (!isSupabaseConfigured || !supabase) return demoDashboard();
-    const [leadsResult, projectsResult, requirementsResult, appointmentsResult, rolesResult] = await Promise.all([
-      supabase.from("leads").select("id,first_name,last_name,email,phone,preferred_contact_method,project_stage,desired_creation_window,source_page,legal_form_interest,activity,message,creation_timeline,commercial_status,commercial_score,assigned_advisor_id,last_contact_at,next_follow_up_at,qualification_reason,lost_reason,customer_won_at,created_at").order("created_at", { ascending: false }).limit(500),
+    const leadColumns = "id,first_name,last_name,email,phone,preferred_contact_method,callback_requested,project_stage,desired_creation_window,source_page,legal_form_interest,activity,message,creation_timeline,commercial_status,commercial_score,assigned_advisor_id,last_contact_at,next_follow_up_at,qualification_reason,lost_reason,customer_won_at,created_at";
+    const legacyLeadColumns = "id,first_name,last_name,email,phone,preferred_contact_method,project_stage,desired_creation_window,source_page,legal_form_interest,activity,message,creation_timeline,commercial_status,commercial_score,assigned_advisor_id,last_contact_at,next_follow_up_at,qualification_reason,lost_reason,customer_won_at,created_at";
+    const [primaryLeadResult, projectsResult, requirementsResult, appointmentsResult, rolesResult] = await Promise.all([
+      supabase.from("leads").select(leadColumns).order("callback_requested", { ascending: false }).order("created_at", { ascending: false }).limit(500),
       supabase.from("projects").select("id,display_name,project_stage,progress,current_legal_form,department,owner_user_id,assigned_advisor_id,created_at").order("created_at", { ascending: false }).limit(500),
       supabase.from("document_requirements").select("id,project_id,label,category,status,advisor_comment,due_at,updated_at").order("updated_at", { ascending: false }).limit(500),
       supabase.from("appointments").select("id,project_id,starts_at,ends_at,status,appointment_type,advisor_id,notes").order("starts_at", { ascending: true }).limit(500),
       supabase.from("staff_roles").select("user_id,role,active").order("created_at"),
     ]);
+    let leadRows = primaryLeadResult.data;
+    let leadError = primaryLeadResult.error;
+    if (primaryLeadResult.error?.code === "42703") {
+      const legacyLeadResult = await supabase.from("leads").select(legacyLeadColumns).order("created_at", { ascending: false }).limit(500);
+      leadError = legacyLeadResult.error;
+      leadRows = legacyLeadResult.data?.map((row) => ({
+        ...row,
+        callback_requested: row.preferred_contact_method === "phone",
+      })) ?? null;
+    }
+    const leadsResult = { data: leadRows, error: leadError };
     [leadsResult.error, projectsResult.error, requirementsResult.error, appointmentsResult.error, rolesResult.error].forEach(ensure);
 
     const leadIds = (leadsResult.data ?? []).map((row) => row.id);
@@ -128,6 +142,7 @@ export const operationsRepository = {
           activity: row.activity ?? "",
           message: row.message ?? "",
           preferredContactChannel: row.preferred_contact_method ?? "",
+          callbackRequested: row.callback_requested ?? row.preferred_contact_method === "phone",
           status: row.commercial_status,
           score: row.commercial_score,
           advisorId: row.assigned_advisor_id ?? undefined,

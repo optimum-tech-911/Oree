@@ -156,6 +156,7 @@ async function deliverLeadNotification(
   const activity = answers.activityDetails ?? answers.activity ?? "À préciser";
   const timeline = answers.creationTimeline ?? answers.timeline ?? "À préciser";
   const source = attribution?.utm_campaign ?? attribution?.utm_source ?? attribution?.landing_page ?? "Accès direct";
+  const callbackRequested = answers.wantsCallback === true;
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -165,9 +166,10 @@ async function deliverLeadNotification(
     body: JSON.stringify({
       from,
       to: [recipient],
-      subject: `Nouvelle demande Orée · ${legalForm}`,
+      subject: `${callbackRequested ? "Demande de rappel" : "Nouvelle demande"} Orée · ${legalForm}`,
       html: [
-        "<h1>Nouvelle demande de création</h1>",
+        `<h1>${callbackRequested ? "Nouvelle demande de rappel" : "Nouvelle demande de création"}</h1>`,
+        callbackRequested ? "<p><strong>Rappel demandé :</strong> oui</p>" : "",
         `<p><strong>Forme :</strong> ${escapeHtml(legalForm)}</p>`,
         `<p><strong>Activité :</strong> ${escapeHtml(activity)}</p>`,
         `<p><strong>Calendrier :</strong> ${escapeHtml(timeline)}</p>`,

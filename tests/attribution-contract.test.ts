@@ -72,6 +72,24 @@ describe("lead attribution contract", () => {
     expect(body).not.toHaveProperty("honeypot");
   });
 
+  it("keeps explicit callback intent in the Edge Function payload", () => {
+    const body = buildLeadSubmissionBody({
+      firstName: "Lina",
+      lastName: "Martin",
+      email: "lina@example.fr",
+      phone: "06 12 34 56 78",
+      preferredContactChannel: "phone",
+      privacyAccepted: true,
+      wantsCallback: true,
+    }, null);
+
+    expect(body.answers).toMatchObject({
+      preferredContactChannel: "phone",
+      wantsCallback: true,
+      phone: "06 12 34 56 78",
+    });
+  });
+
   it("rejects deceptive honeypot or malformed server responses", () => {
     expect(() => parseLeadSubmissionResponse({ ok: true })).toThrow(/pas été confirmée/i);
     expect(() => parseLeadSubmissionResponse({ id: "not-a-uuid", claimToken: "x".repeat(64) })).toThrow(/pas été confirmée/i);

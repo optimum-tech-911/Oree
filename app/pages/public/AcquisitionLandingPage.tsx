@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Check, ChevronRight, CircleAlert, Clock3, FileText, ListChecks, LockKeyhole, ReceiptText, ShieldCheck } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { landingPages } from "@/content/landingPages";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
@@ -14,11 +14,13 @@ import { ServiceScope } from "@/components/marketing/ServiceScope";
 import { AcquisitionContactActions } from "@/components/marketing/AcquisitionContactActions";
 import { CallbackLeadForm } from "@/components/marketing/CallbackLeadForm";
 import { CompanyOfferCard } from "@/components/marketing/CommercialOfferCard";
+import { SasuHumanContact, SasuOfferReceipt } from "@/components/marketing/SasuConversionSections";
 import { HeroMedia } from "@/components/media/HeroMedia";
 import { imagery, landingHeroBySlug } from "@/content/imagery";
 import { commercialOffers, isSupportedCompanyForm } from "@/config/commercial-offers";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { analytics } from "@/services/analytics";
+import { cn } from "@/lib/cn";
 
 type OperationalModule = {
   quickAnswer: string;
@@ -96,12 +98,12 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
   const content = landingPages[slug] ?? landingPages["creation-sasu"]!;
   const operational = operationalBySlug[slug] ?? operationalBySlug["creation-sasu"]!;
   const heroImage = landingHeroBySlug[slug] ?? imagery.sasuHero;
-  const reduce = useReducedMotion();
   const diagnosticHref = `/diagnostic?intent=${content.searchIntent}`;
   const requestedForm = slug.startsWith("creation-") ? slug.slice("creation-".length).toUpperCase() : undefined;
   const legalForm = isSupportedCompanyForm(requestedForm) ? requestedForm : undefined;
   const showCompanyOffer = slug !== "dossier-creation-entreprise-bloque";
-  usePageMeta(content.eyebrow, content.description);
+  const isSasu = slug === "creation-sasu";
+  usePageMeta(isSasu ? "Création SASU : 600 € TTC tout compris" : content.eyebrow, content.description);
 
   useEffect(() => {
     analytics.track("landing_view", { path: `/${slug}`, slug, intent: content.searchIntent, pageType: "acquisition" });
@@ -109,66 +111,85 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
 
   return (
     <>
-      <section className="hero-grid surface-noise relative overflow-hidden bg-[var(--ink)] pb-16 pt-32 text-white sm:pb-22 sm:pt-40 lg:min-h-[735px] lg:pb-24 lg:pt-40">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(36,87,255,.2),transparent_31%),radial-gradient(circle_at_82%_32%,rgba(70,214,166,.1),transparent_30%)]" />
-        <div className="container-shell relative grid items-center gap-12 lg:grid-cols-[1.04fr_.96fr]">
+      <section className="hero-grid surface-noise relative overflow-hidden bg-[var(--ink)] pb-14 pt-30 text-white sm:pb-20 sm:pt-40 lg:min-h-[735px] lg:pb-24 lg:pt-40">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(36,87,255,.18),transparent_32%)]" />
+        <div className={cn("container-shell relative grid items-center gap-10 lg:gap-14", isSasu ? "lg:grid-cols-[1.12fr_.88fr]" : "lg:grid-cols-[1.04fr_.96fr]") }>
           <div>
-            <motion.div initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}><Badge className="border-white/12 bg-white/[.06] text-white/72"><span className="size-1.5 rounded-full bg-[var(--mint)]" />{content.eyebrow}</Badge></motion.div>
-            <motion.h1 initial={reduce ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .06, duration: .7, ease: [0.22, 1, 0.36, 1] }} className="mt-6 max-w-[850px] text-balance text-[clamp(2.65rem,5.55vw,5.9rem)] font-semibold leading-[.92] tracking-[-.06em]">{content.title} <span className="editorial-mark text-[color:var(--mint)]">{content.highlight}</span></motion.h1>
-            <motion.p initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15, duration: .58 }} className="mt-6 max-w-2xl text-pretty text-base leading-8 text-white/72 sm:text-lg">{content.description}</motion.p>
-            <motion.div initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .22, duration: .58 }} className="mt-7">
-              <AcquisitionContactActions diagnosticHref={diagnosticHref} legalForm={legalForm} location="acquisition_hero" dark />
+            <motion.div initial={false} animate={{ opacity: 1, y: 0 }}><p className="text-sm font-semibold text-[color:var(--mint)]">{content.eyebrow}</p></motion.div>
+            <motion.h1 initial={false} animate={{ opacity: 1, y: 0 }} className={cn("mt-5 max-w-[850px] text-balance font-semibold tracking-[-.06em]", isSasu ? "text-[clamp(2.65rem,5.25vw,5.7rem)]" : "text-[clamp(2.65rem,5.55vw,5.9rem)]", "leading-[.94]") }>
+              {isSasu ? <>Créez votre SASU<br />pour <span className="editorial-mark text-[color:var(--mint)]">600 € TTC</span><br /><span className="text-[.72em] tracking-[-.035em]">tout compris</span></> : <>{content.title} <span className="editorial-mark text-[color:var(--mint)]">{content.highlight}</span></>}
+            </motion.h1>
+            <motion.p initial={false} animate={{ opacity: 1, y: 0 }} className="mt-6 max-w-2xl text-pretty text-base leading-8 text-white/72 sm:text-lg">{content.description}</motion.p>
+            {isSasu ? <p className="mt-4 max-w-xl text-sm leading-6 text-white/82">Une question avant de commencer&nbsp;? Notre équipe peut vous répondre directement.</p> : null}
+            <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="mt-7">
+              <AcquisitionContactActions diagnosticHref={diagnosticHref} legalForm={legalForm} location="acquisition_hero" dark phoneFirst={isSasu} />
             </motion.div>
             <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2.5 text-[11px] font-semibold text-white/72 sm:text-xs">{content.proofPoints.map((point) => <span key={point} className="flex items-center gap-2"><span className="grid size-4 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><Check className="size-2.5" /></span>{point}</span>)}</div>
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs"><Link to="/tarifs" className="inline-flex items-center gap-1.5 text-[color:var(--mint)]">Comprendre les coûts <ChevronRight className="size-3.5" /></Link><a href="#perimetre" className="inline-flex items-center gap-1.5 text-white/72">Voir qui fait quoi <ChevronRight className="size-3.5" /></a></div>
           </div>
 
-          <HeroMedia asset={heroImage} contentClassName="pb-2 sm:pb-3">
-            <div className="w-full origin-bottom scale-[.91] sm:scale-[.84] lg:scale-[.8]">
+          <HeroMedia asset={heroImage} compact={isSasu} contentClassName={isSasu ? undefined : "pb-2 sm:pb-3"}>
+            {isSasu ? (
+              <div className="w-full border-t border-white/16 bg-[var(--ink)]/94 px-5 py-5 backdrop-blur-md sm:px-7 sm:py-6">
+                <p className="text-sm font-semibold text-white">Ce qui se passe ensuite</p>
+                <ol className="mt-3 divide-y divide-white/10 border-y border-white/10">
+                  {["Vous échangez avec l’équipe ou commencez en ligne", "Nous préparons les éléments de votre dossier", "Vous suivez le dépôt et les éventuelles corrections"].map((label, index) => <li key={label} className="flex items-center gap-3 py-3 text-xs leading-5 text-white/76 sm:text-sm"><span className="text-[color:var(--mint)]">0{index + 1}</span>{label}</li>)}
+                </ol>
+              </div>
+            ) : <div className="w-full origin-bottom scale-[.91] sm:scale-[.84] lg:scale-[.8]">
               <div className="relative overflow-hidden rounded-[28px] border border-white/12 bg-white/[.05] p-3 shadow-[0_38px_110px_rgba(11,18,32,.3)] backdrop-blur-2xl sm:p-4">
                 <div className="relative rounded-[22px] border border-white/8 bg-[var(--ink)] p-5 sm:p-6">
-                  <div className="flex items-start justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-[.13em] text-white/72">Votre prochain parcours</p><p className="mt-2 text-xl font-semibold tracking-[-.035em]">Orientation indicative</p></div><span className="grid size-11 place-items-center rounded-[14px] border border-white/10 bg-white/[.05] text-white"><ListChecks className="size-4.5" /></span></div>
+                  <div className="flex items-start justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-[.13em] text-white/72">Votre projet</p><p className="mt-2 text-xl font-semibold tracking-[-.035em]">Première recommandation</p></div><span className="grid size-11 place-items-center rounded-[14px] border border-white/10 bg-white/[.05] text-white"><ListChecks className="size-4.5" /></span></div>
                   <div className="mt-6 space-y-2.5">{["Situation et niveau d'avancement", "Associés et organisation", "Activité, clients et calendrier", "Priorités et points à valider"].map((label, index) => <div key={label} className={`flex items-center gap-3 rounded-[15px] border p-3 ${index === 0 ? "border-[var(--blue)]/35 bg-[var(--blue)]/12" : "border-white/7 bg-white/[.035]"}`}><span className={`grid size-8 place-items-center rounded-full text-[10px] font-semibold ${index === 0 ? "bg-[var(--blue)] text-white" : "bg-white/7 text-white/72"}`}>0{index + 1}</span><span className="text-xs font-semibold text-white/72 sm:text-sm">{label}</span></div>)}</div>
                   <div className="mt-3 grid gap-2.5 sm:grid-cols-2"><div className="rounded-[15px] border border-white/7 bg-white/[.035] p-3.5"><ListChecks className="size-4 text-[color:var(--blue)]" /><p className="mt-3 text-xs font-semibold">Étapes courtes</p><p className="mt-1 text-[10px] leading-4 text-white/72">Retour possible sans perdre les choix non sensibles.</p></div><div className="rounded-[15px] border border-white/7 bg-white/[.035] p-3.5"><LockKeyhole className="size-4 text-[color:var(--mint)]" /><p className="mt-3 text-xs font-semibold">Sans document au départ</p><p className="mt-1 text-[10px] leading-4 text-white/72">Commencez par décrire le projet.</p></div></div>
-                  <div className="mt-3 rounded-[15px] bg-[var(--paper)] p-4 text-[color:var(--ink)]"><div className="flex items-start gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--mint-soft)]"><ShieldCheck className="size-4" /></span><div><p className="text-xs font-semibold">Orientation prudente</p><p className="mt-1 text-[11px] leading-5 text-[color:var(--muted)]">Les validations professionnelles ou officielles restent signalées.</p></div></div></div>
+                  <div className="mt-3 rounded-[15px] bg-[var(--paper)] p-4 text-[color:var(--ink)]"><div className="flex items-start gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--mint-soft)]"><ShieldCheck className="size-4" /></span><div><p className="text-xs font-semibold">À confirmer avec vous</p><p className="mt-1 text-[11px] leading-5 text-[color:var(--muted)]">Les validations professionnelles ou officielles restent clairement indiquées.</p></div></div></div>
                 </div>
               </div>
-            </div>
+            </div>}
           </HeroMedia>
         </div>
       </section>
 
-      <Section className="pt-14 sm:pt-18">
-        <div className={`container-shell grid items-start gap-5 ${showCompanyOffer ? "lg:grid-cols-2" : ""}`}>
-          {showCompanyOffer ? <CompanyOfferCard form={legalForm} compact trackingLocation={`landing_${slug}`} ctaHref={diagnosticHref} /> : null}
-          <CallbackLeadForm legalForm={legalForm} slug={slug} />
-        </div>
-      </Section>
+      {isSasu ? <>
+        <Section className="py-12 sm:py-16"><div className="container-shell"><SasuOfferReceipt /></div></Section>
+        <Section className="bg-white/55 py-14 sm:py-18"><div className="container-shell grid items-start gap-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-14"><SasuHumanContact /><CallbackLeadForm legalForm={legalForm} slug={slug} /></div></Section>
+      </> : <Section className="pt-14 sm:pt-18">
+          <div className={`container-shell grid items-start gap-5 ${showCompanyOffer ? "lg:grid-cols-2" : ""}`}>
+            {showCompanyOffer ? <CompanyOfferCard form={legalForm} compact trackingLocation={`landing_${slug}`} ctaHref={diagnosticHref} /> : null}
+            <CallbackLeadForm legalForm={legalForm} slug={slug} />
+          </div>
+        </Section>}
 
       <Section className="pt-0 sm:pt-2">
         <div className="container-shell">
-          <SectionHeader eyebrow="Réponse directe" title={<>Ce qu’il faut savoir <span className="editorial-mark text-[color:var(--blue)]">pour cette situation.</span></>} description={operational.quickAnswer} />
-          <div className="grid gap-4 lg:grid-cols-3">
-            <Reveal><article className="h-full rounded-[20px] border border-[var(--line)] bg-white p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--ink)] text-white"><ReceiptText className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">{legalForm ? commercialOffers.companyCreation.priceLabel : "Un coût expliqué avant engagement"}</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{legalForm ? commercialOffers.companyCreation.description : operational.costContext}</p><Link to="/tarifs" className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--blue)]">Voir le détail de l’offre <ChevronRight className="size-4" /></Link></article></Reveal>
-            <Reveal delay={.05}><article className="h-full rounded-[20px] border border-[var(--line)] bg-white p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--mint-soft)]"><Clock3 className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">Calendrier sans garantie artificielle</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{operational.timing}</p></article></Reveal>
-            <Reveal delay={.1}><article className="h-full rounded-[20px] border border-[var(--line)] bg-[var(--paper)] p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--blue)] text-white"><FileText className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">Informations à anticiper</h2><ul className="mt-4 space-y-2.5">{operational.documents.map((item) => <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--muted)]"><Check className="mt-1 size-3.5 shrink-0 text-[color:var(--success)]" />{item}</li>)}</ul></article></Reveal>
-          </div>
+          <SectionHeader eyebrow={isSasu ? undefined : "Réponse directe"} title={isSasu ? <>Les informations utiles <span className="editorial-mark text-[color:var(--blue)]">avant de créer votre SASU.</span></> : <>Ce qu’il faut savoir <span className="editorial-mark text-[color:var(--blue)]">pour cette situation.</span></>} description={operational.quickAnswer} />
+          {isSasu ? <div className="grid border-y border-[var(--line-strong)] lg:grid-cols-3 lg:divide-x lg:divide-[var(--line)]">
+            <article className="border-b border-[var(--line)] py-7 lg:border-b-0 lg:px-7 lg:first:pl-0"><p className="text-sm font-semibold text-[color:var(--blue)]">Prix annoncé</p><h2 className="mt-3 text-2xl font-semibold">{commercialOffers.companyCreation.totalLabel}</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">Accompagnement, greffe, annonce légale et corrections du dossier inclus.</p><Link to="/tarifs" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--blue)]">Voir l’offre complète <ChevronRight className="size-4" /></Link></article>
+            <article className="border-b border-[var(--line)] py-7 lg:border-b-0 lg:px-7"><p className="text-sm font-semibold text-[color:var(--blue)]">Calendrier</p><h2 className="mt-3 text-2xl font-semibold">Un dossier complet d’abord</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{operational.timing}</p></article>
+            <article className="py-7 lg:px-7 lg:last:pr-0"><p className="text-sm font-semibold text-[color:var(--blue)]">À préparer</p><h2 className="mt-3 text-2xl font-semibold">Les premières informations</h2><ul className="mt-3 space-y-2">{operational.documents.map((item) => <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--muted)]"><Check className="mt-1 size-3.5 shrink-0 text-[color:var(--success)]" />{item}</li>)}</ul></article>
+          </div> : <div className="grid gap-4 lg:grid-cols-3">
+              <Reveal><article className="h-full rounded-[20px] border border-[var(--line)] bg-white p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--ink)] text-white"><ReceiptText className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">{legalForm ? commercialOffers.companyCreation.priceLabel : "Un coût expliqué avant engagement"}</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{legalForm ? commercialOffers.companyCreation.description : operational.costContext}</p><Link to="/tarifs" className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--blue)]">Voir le détail de l’offre <ChevronRight className="size-4" /></Link></article></Reveal>
+              <Reveal delay={.05}><article className="h-full rounded-[20px] border border-[var(--line)] bg-white p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--mint-soft)]"><Clock3 className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">Un calendrier expliqué</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{operational.timing}</p></article></Reveal>
+              <Reveal delay={.1}><article className="h-full rounded-[20px] border border-[var(--line)] bg-[var(--paper)] p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--blue)] text-white"><FileText className="size-4.5" /></span><h2 className="mt-6 text-xl font-semibold">Informations à anticiper</h2><ul className="mt-4 space-y-2.5">{operational.documents.map((item) => <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--muted)]"><Check className="mt-1 size-3.5 shrink-0 text-[color:var(--success)]" />{item}</li>)}</ul></article></Reveal>
+            </div>}
         </div>
       </Section>
 
       <Section className="bg-white/55">
         <div className="container-shell">
-          <SectionHeader eyebrow="Points d'attention" title={<>Les décisions à examiner <span className="editorial-mark text-[color:var(--blue)]">avant de constituer le dossier.</span></>} description="Le parcours explique les conséquences pratiques et signale les sujets qui nécessitent une validation complémentaire." />
-          <div className="grid gap-4 lg:grid-cols-3">{content.painPoints.map((item, index) => <Reveal key={item.title} delay={index * .05}><article className="h-full rounded-[20px] border border-[var(--line)] bg-[var(--paper)] p-6"><span className="grid size-11 place-items-center rounded-[14px] bg-[var(--blue)]/8 text-[color:var(--blue)]"><CircleAlert className="size-5" /></span><h3 className="mt-5 text-xl font-semibold tracking-[-.03em]">{item.title}</h3><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{item.description}</p></article></Reveal>)}</div>
+          <SectionHeader eyebrow={isSasu ? undefined : "Points d'attention"} title={<>Les décisions à examiner <span className="editorial-mark text-[color:var(--blue)]">avant de constituer le dossier.</span></>} description="Le parcours explique les conséquences pratiques et indique clairement les sujets qui doivent encore être confirmés." />
+          <div className={cn("grid lg:grid-cols-3", isSasu ? "border-t border-[var(--line-strong)]" : "gap-4")}>{content.painPoints.map((item, index) => <Reveal key={item.title} delay={index * .05}><article className={cn("h-full", isSasu ? "border-b border-[var(--line)] py-7 lg:border-b-0 lg:border-r lg:px-7 lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0" : "rounded-[20px] border border-[var(--line)] bg-[var(--paper)] p-6")}>
+            {!isSasu ? <span className="grid size-11 place-items-center rounded-[14px] bg-[var(--blue)]/8 text-[color:var(--blue)]"><CircleAlert className="size-5" /></span> : <p className="text-sm font-semibold text-[color:var(--blue)]">0{index + 1}</p>}
+            <h3 className={cn("text-xl font-semibold tracking-[-.03em]", isSasu ? "mt-3" : "mt-5")}>{item.title}</h3><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{item.description}</p></article></Reveal>)}</div>
         </div>
       </Section>
 
-      {content.legalForms?.length ? <Section><div className="container-shell"><SectionHeader eyebrow="Comparaison contextuelle" title={<>Les pistes principales, <span className="editorial-mark text-[color:var(--blue)]">sans raccourci.</span></>} description="La comparaison explique les différences et les points à confirmer au lieu d'afficher un gagnant automatique." /><LegalFormCards codes={content.legalForms} /></div></Section> : null}
+      {content.legalForms?.length ? <Section><div className="container-shell"><SectionHeader eyebrow={isSasu ? undefined : "Comparaison contextuelle"} title={<>SASU ou EURL&nbsp;: <span className="editorial-mark text-[color:var(--blue)]">les différences à vérifier.</span></>} description="La comparaison tient compte de votre rémunération, de la protection recherchée et de l’évolution prévue du projet." /><LegalFormCards codes={content.legalForms} /></div></Section> : null}
 
       <Section className="bg-white/55">
         <div className="container-shell">
-          <SectionHeader eyebrow="Parcours guidé" title={<>Quatre temps pour passer de l'intention <span className="editorial-mark text-[color:var(--blue)]">au projet organisé.</span></>} />
-          <div className="grid gap-4 lg:grid-cols-4">{content.steps.map((item, index) => <Reveal key={item.number} delay={index * .05}><article className="group h-full rounded-[20px] border border-[var(--line)] bg-[var(--paper)] p-6"><div className="flex items-center justify-between"><span className="text-4xl font-semibold tracking-[-.06em] text-[color:var(--ink)]/12">{item.number}</span><ChevronRight className="size-5 text-[color:var(--muted)] transition group-hover:translate-x-1 group-hover:text-[color:var(--blue)]" /></div><h3 className="mt-7 text-lg font-semibold tracking-[-.03em]">{item.title}</h3><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{item.description}</p></article></Reveal>)}</div>
+          <SectionHeader eyebrow={isSasu ? undefined : "Parcours guidé"} title={<>Quatre étapes pour passer de l’intention <span className="editorial-mark text-[color:var(--blue)]">au dossier suivi.</span></>} />
+          <div className={cn("grid lg:grid-cols-4", isSasu ? "border-y border-[var(--line-strong)]" : "gap-4")}>{content.steps.map((item, index) => <Reveal key={item.number} delay={index * .05}><article className={cn("group h-full", isSasu ? "border-b border-[var(--line)] py-7 lg:border-b-0 lg:border-r lg:px-6 lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0" : "rounded-[20px] border border-[var(--line)] bg-[var(--paper)] p-6")}><div className="flex items-center justify-between"><span className={cn("text-4xl font-semibold tracking-[-.06em]", isSasu ? "text-[color:var(--blue)]" : "text-[color:var(--ink)]/12")}>{item.number}</span>{!isSasu ? <ChevronRight className="size-5 text-[color:var(--muted)] transition group-hover:translate-x-1 group-hover:text-[color:var(--blue)]" /> : null}</div><h3 className="mt-6 text-lg font-semibold tracking-[-.03em]">{item.title}</h3><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{item.description}</p></article></Reveal>)}</div>
         </div>
       </Section>
 
@@ -176,11 +197,11 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
 
       <Section id="perimetre"><div className="container-shell"><ServiceScope compact /></div></Section>
 
-      <Section className="overflow-hidden bg-[var(--ink)] text-white"><div className="absolute inset-0 hero-grid opacity-40" /><div className="container-shell relative grid items-center gap-12 lg:grid-cols-[.72fr_1.28fr]"><div><Badge className="border-white/12 bg-white/[.06] text-white/72">Après le diagnostic</Badge><h2 className="mt-6 text-balance text-[clamp(2.6rem,4.7vw,5.2rem)] font-semibold leading-[.98] tracking-[-.055em]">Une synthèse qui peut ouvrir <span className="editorial-mark text-[color:var(--mint)]">un projet structuré.</span></h2><p className="mt-6 text-base leading-8 text-white/72">La démonstration illustre la fiche projet, les documents, les messages et la prochaine action. Les données réelles relèvent ensuite du mode connecté sécurisé.</p><ButtonLink to="/app" variant="dark" className="mt-8" arrow>Explorer l'espace démo</ButtonLink></div><DashboardPreview /></div></Section>
+      {!isSasu ? <Section className="overflow-hidden bg-[var(--ink)] text-white"><div className="absolute inset-0 hero-grid opacity-40" /><div className="container-shell relative grid items-center gap-12 lg:grid-cols-[.72fr_1.28fr]"><div><Badge className="border-white/12 bg-white/[.06] text-white/72">Après le diagnostic</Badge><h2 className="mt-6 text-balance text-[clamp(2.6rem,4.7vw,5.2rem)] font-semibold leading-[.98] tracking-[-.055em]">Une synthèse qui peut ouvrir <span className="editorial-mark text-[color:var(--mint)]">un projet structuré.</span></h2><p className="mt-6 text-base leading-8 text-white/72">La démonstration illustre la fiche projet, les documents, les messages et la prochaine action. Les données réelles relèvent ensuite du mode connecté sécurisé.</p><ButtonLink to="/app" variant="dark" className="mt-8" arrow>Explorer l'espace démo</ButtonLink></div><DashboardPreview /></div></Section> : null}
 
       <Section><div className="container-shell grid gap-12 lg:grid-cols-[.72fr_1.28fr]"><div className="lg:sticky lg:top-28 lg:self-start"><Badge>Questions fréquentes</Badge><h2 className="mt-6 text-4xl font-semibold leading-[1] tracking-[-.05em] sm:text-5xl">Les réponses essentielles avant de commencer.</h2><p className="mt-5 text-base leading-7 text-[color:var(--muted)]">Le fonctionnement général, les limites de l'orientation et les validations qui peuvent rester nécessaires.</p></div><Faq items={content.faq} /></div></Section>
 
-      <Section className="pt-0"><div className="container-shell"><div className="relative overflow-hidden rounded-[26px] bg-[var(--ink)] px-6 py-12 text-white sm:px-10 lg:px-14 lg:py-16"><div className="relative"><div><Badge className="border-white/10 bg-white/[.06] text-white/72">Votre prochaine étape</Badge><h2 className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1] tracking-[-.05em] sm:text-5xl">Choisissez la manière la plus simple de commencer.</h2></div><div className="mt-8"><AcquisitionContactActions diagnosticHref={diagnosticHref} legalForm={legalForm} location="acquisition_final" dark /></div></div></div></div></Section>
+      <Section className="pt-0"><div className="container-shell"><div className="relative overflow-hidden rounded-[18px] bg-[var(--ink)] px-6 py-12 text-white sm:px-10 lg:px-14 lg:py-16"><div className="relative"><div><p className="text-sm font-semibold text-[color:var(--mint)]">{isSasu ? "Votre SASU" : "Votre prochaine étape"}</p><h2 className="mt-4 max-w-4xl text-balance text-4xl font-semibold leading-[1] tracking-[-.05em] sm:text-5xl">{isSasu ? "Appelez-nous, demandez un rappel ou commencez votre dossier en ligne." : "Choisissez la manière la plus simple de commencer."}</h2></div><div className="mt-8"><AcquisitionContactActions diagnosticHref={diagnosticHref} legalForm={legalForm} location="acquisition_final" dark phoneFirst={isSasu} /></div></div></div></div></Section>
     </>
   );
 }

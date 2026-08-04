@@ -38,7 +38,7 @@ Les personnes représentées sont générées et ne doivent jamais être présen
 | 30 | `17_31_42 (9).png` | `hero-existing-business-transition.webp` | Paysage · 4:3 | Indépendant au téléphone en activité | Très bon | Bon | Bon | Passage micro vers société | **Sélectionné** | Évoque une activité existante sans afficher de données commerciales. |
 | 31 | `17_42_58 (1).png` | `hero-employee-transition.webp` | Large · 8:5 | Créateur préparant son projet au calme | Très bon | Bon | Très bon | Salarié en transition | **Sélectionné** | Préparation progressive, sans cliché de démission. |
 | 32 | `17_42_58 (2).png` | `hero-eurl-structured-founder.webp` | Large · 8:5 | Entrepreneur seul structurant son activité | Très bon | Bon | Très bon | EURL | **Sélectionné** | Organisation et contrôle ; documents suffisamment discrets. |
-| 33 | `17_42_58 (3).png` | `hero-sasu-solo-founder.webp` | Large · 8:5 | Fondateur seul relisant son projet | Très bon | Bon | Très bon | SASU | **Sélectionné** | Sérieux, structuré, bon espace négatif pour le message. |
+| 33 | `17_42_58 (3).png` | `hero-sasu-solo-founder.webp` | Large · 8:5 | Fondateur seul relisant son projet | Très bon | Bon | Très bon | Parcours solo et carrousel | **Sélectionné** | Visuel structuré conservé hors du héros SASU, où son rendu paraissait trop publicitaire. |
 | 34 | `17_42_58 (4).png` | `hero-home-company-journey.webp` | Large · 8:5 | Trois porteurs de projet travaillant ensemble | Très bon | Bon | Bon | Accueil, parcours à plusieurs | **Sélectionné** | Meilleure composition large pour une couche humaine derrière le cockpit React. |
 | 35 | `17_42_58 (5).png` | `hero-choose-status-decision.webp` | Large · 8:5 | Créateur prenant du recul avant une décision | Très bon | Bon | Très bon | Choisir son statut | **Sélectionné** | Intention de comparaison claire et large zone de respiration. |
 
@@ -58,7 +58,7 @@ Les personnes représentées sont générées et ne doivent jamais être présen
 | `11_01_10 (3).png` | `activity-field-service` | Professionnelle préparant une intervention | Sélecteur d'activités de l'accueil | **Sélectionné** |
 | `11_01_10 (4).png` | `activity-restaurant-owner` | Restaurateur préparant sa salle | Sélecteur d'activités de l'accueil | **Sélectionné** |
 | `11_01_13 (5).png` | `activity-logistics` | Professionnel préparant une livraison | Sélecteur d'activités de l'accueil | **Sélectionné** |
-| `11_01_13 (6).png` | `pathway-home-founder` | Créatrice structurant son projet chez elle | Parcours « Je crée seul » | **Sélectionné** |
+| `11_01_13 (6).png` | `pathway-home-founder` | Créatrice structurant son projet chez elle | Héros SASU et parcours « Je crée seul » | **Sélectionné** |
 | `11_01_14 (7).png` | `pathway-founders-discussion` | Trois porteurs discutant d'un projet | Parcours « Nous créons à plusieurs » | **Sélectionné** |
 | `11_01_14 (8).png` | `process-project-organisation` | Dossier de travail, carnet et calculatrice | Rail du processus | **Sélectionné** |
 

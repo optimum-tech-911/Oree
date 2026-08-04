@@ -14,16 +14,60 @@ export function AcquisitionContactActions({
   legalForm,
   location,
   dark = false,
+  phoneFirst = false,
 }: {
   diagnosticHref: string;
   legalForm?: SupportedCompanyForm;
   location: string;
   dark?: boolean;
+  phoneFirst?: boolean;
 }) {
   const offer = commercialOffers.companyCreation;
   const whatsappMessage = legalForm
     ? `Bonjour, je souhaite créer une ${legalForm} avec Orée Entreprises.`
     : "Bonjour, je souhaite échanger au sujet de la création de mon entreprise.";
+
+  if (phoneFirst) {
+    return (
+      <div aria-label="Options de contact">
+        <div className="grid gap-2.5 sm:grid-cols-3">
+          <a
+            href={buildPhoneHref()}
+            data-phone-number={commercialOffers.contact.displayPhone}
+            onClick={() => analytics.track("phone_click", { legal_form: legalForm, location })}
+            className="button-on-action inline-flex min-h-14 flex-col items-center justify-center rounded-[14px] bg-[var(--blue)] px-5 py-2 text-sm font-semibold text-white shadow-[0_14px_36px_rgba(36,87,255,.25)] transition hover:-translate-y-0.5 hover:brightness-95"
+          >
+            <span className="inline-flex items-center gap-2"><PhoneCall className="size-4" />Appeler maintenant</span>
+            <span className="mt-0.5 text-[11px] text-white/78">{commercialOffers.contact.displayPhone}</span>
+          </a>
+          <a
+            href="#rappel"
+            onClick={() => analytics.track("primary_cta_clicked", { legal_form: legalForm, location, intent: "callback" })}
+            className={cn("inline-flex min-h-14 items-center justify-center gap-2 rounded-[14px] border px-5 text-sm font-semibold transition hover:-translate-y-0.5", dark ? "border-white/24 bg-white text-[color:var(--ink)] hover:bg-[var(--paper)]" : "border-[var(--line-strong)] bg-white text-[color:var(--ink)] hover:border-[var(--blue)]/45")}
+          >
+            <RotateCcw className="size-4" />{offer.callbackCtaLabel}
+          </a>
+          <ButtonLink
+            to={diagnosticHref}
+            variant="ghost"
+            className={cn("min-h-14 w-full rounded-[14px]", dark && "border border-white/18 bg-transparent text-white hover:bg-white/[.08]")}
+            onClick={() => analytics.track("primary_cta_clicked", { legal_form: legalForm, location, intent: "company_creation" })}
+          >
+            Commencer mon dossier<ArrowRight className="size-4" />
+          </ButtonLink>
+        </div>
+        <a
+          href={buildWhatsAppHref(undefined, whatsappMessage)}
+          target="_blank"
+          rel="noreferrer"
+          onClick={() => analytics.track("whatsapp_click", { legal_form: legalForm, location })}
+          className={cn("mt-4 inline-flex items-center gap-2 text-xs font-semibold transition", dark ? "text-white/68 hover:text-white" : "text-[color:var(--muted)] hover:text-[color:var(--ink)]")}
+        >
+          <MessageCircle className="size-3.5" />Écrire sur WhatsApp
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4" aria-label="Options de contact">

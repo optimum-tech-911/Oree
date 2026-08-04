@@ -11,10 +11,10 @@ export const publicRoutes = [
   },
   {
     path: "/creation-sasu/",
-    title: "Création de SASU - Orée",
+    title: "Création SASU à 600 € TTC tout compris - Orée",
     description:
-      "Vérifiez si la SASU correspond à votre projet, comparez les points essentiels avec l'EURL et préparez un dossier de création organisé.",
-    h1: "Créer une SASU",
+      "Créez votre SASU pour 600 € TTC tout compris : accompagnement, frais de greffe, annonce légale et corrections du dossier inclus.",
+    h1: "Créez votre SASU pour 600 € TTC tout compris",
     kind: "landing",
   },
   {
@@ -109,7 +109,7 @@ export const publicRoutes = [
     path: "/tarifs/",
     title: "Tarifs et coûts - Orée",
     description:
-      "Créez une SASU, EURL, SAS ou SARL pour 600 € tout compris, avec accompagnement, frais de greffe et annonce légale inclus.",
+      "Créez une SASU, EURL, SAS ou SARL pour 600 € TTC tout compris, avec accompagnement, frais de greffe et annonce légale inclus.",
     h1: "Tarifs et coûts",
     kind: "pricing",
   },
@@ -125,7 +125,7 @@ export const publicRoutes = [
     path: "/diagnostic/",
     title: "Diagnostic de création de société - Orée",
     description:
-      "Décrivez votre situation et obtenez une orientation indicative avant de constituer votre dossier de création de société.",
+      "Décrivez votre situation et obtenez une première recommandation avant de constituer votre dossier de création de société.",
     h1: "Diagnostic de création de société",
     kind: "diagnostic",
   },

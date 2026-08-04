@@ -107,7 +107,7 @@ async function assertStaticFiles() {
   if (!robots.includes("Sitemap: https://oree.optimutech.fr/sitemap.xml")) fail("robots.txt points to the wrong sitemap.");
   if (!robots.includes("https://oree.optimutech.fr/llms.txt")) fail("robots.txt does not disclose the AI-readable overview.");
   if (!llms.startsWith("# Orée Entreprises\n\n> ")) fail("llms.txt does not follow the expected title and summary structure.");
-  if (!llms.includes("600 € tout compris") || !llms.includes("100 €")) fail("llms.txt is missing the confirmed offer.");
+  if (!llms.includes("600 € TTC tout compris") || !llms.includes("100 €")) fail("llms.txt is missing the confirmed offer.");
   if (!llms.includes("ne constitue pas un conseil juridique automatique définitif")) fail("llms.txt is missing the legal-guidance boundary.");
 
   const sitemapRoutes = new Set(

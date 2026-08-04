@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 import { directContact, directContactOptions, type DirectContactOption } from "@/content/contact";
 
 const icons: Record<DirectContactOption["id"], typeof PhoneCall> = { call: PhoneCall, sms: MessageSquareText, email: Mail, whatsapp: MessageCircle, "whatsapp-business": Send };
-const tones: Record<DirectContactOption["id"], string> = { call: "bg-[var(--action)] text-white shadow-[0_14px_34px_rgba(36,87,255,.2)]", sms: "bg-white text-[color:var(--ink)]", email: "bg-white text-[color:var(--ink)]", whatsapp: "bg-[var(--mint-soft)] text-[color:var(--ink)]", "whatsapp-business": "bg-[var(--ink)] text-white" };
+const tones: Record<DirectContactOption["id"], string> = { call: "bg-[var(--action)] text-white shadow-[0_14px_34px_rgba(36,87,255,.2)]", sms: "bg-white text-[color:var(--ink)]", email: "bg-white text-[color:var(--ink)]", whatsapp: "bg-white text-[color:var(--ink)]", "whatsapp-business": "bg-[var(--ink)] text-white" };
 
 export function DirectContactPanel() {
   const reduce = useReducedMotion();

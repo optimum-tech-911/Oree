@@ -13,6 +13,7 @@ const darkHeroRoutes = new Set(["/", "/creation-sasu", "/creation-eurl", "/creat
 export function PublicLayout() {
   const location = useLocation();
   const reduce = useReducedMotion();
+  const normalizedPath = location.pathname.length > 1 ? location.pathname.replace(/\/+$/, "") : location.pathname;
   const hasMobileConversion = Boolean(mobileConversionForPath(location.pathname));
   // Le rendu initial doit correspondre au HTML prérendu : on n'anime qu'à partir
   // du premier changement de route. React Router marque l'entrée initiale de
@@ -23,7 +24,7 @@ export function PublicLayout() {
     <div className={`relative min-h-screen bg-[var(--paper)] text-[color:var(--ink)] ${hasMobileConversion ? "pb-[calc(5.75rem+env(safe-area-inset-bottom))] lg:pb-0" : ""}`}>
       <ScrollToTop />
       <AmbientPointer />
-      <PublicHeader transparent={darkHeroRoutes.has(location.pathname)} />
+      <PublicHeader transparent={darkHeroRoutes.has(normalizedPath)} />
       {/* Frontière locale : les pages publiques sont chargées en lazy. Sans elle, la
           suspension remonte jusqu'au Suspense de App et affiche le PageLoader plein
           écran à chaque navigation. Ici, l'en-tête reste en place et React conserve

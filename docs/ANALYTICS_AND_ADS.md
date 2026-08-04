@@ -50,7 +50,20 @@ customer_won
 
 ## Architecture
 
-Les composants appellent une interface analytics, jamais directement `gtag`. Les adaptateurs futurs pourront écrire vers `dataLayer`, un journal interne et les conversions serveur.
+Les composants appellent l’interface analytics, jamais directement `gtag`. Après accord
+analytics, cette interface réutilise le Google tag existant pour émettre les événements
+GA4. `landing_view` reste un événement distinct et ne crée pas un second `page_view`.
+
+Noms GA4 émis pour le parcours publicitaire :
+
+```text
+phone_click
+whatsapp_click
+callback_request
+diagnostic_start
+diagnostic_step
+diagnostic_complete
+```
 
 ## Données personnelles
 
@@ -58,8 +71,17 @@ Ne jamais envoyer à GA4 : nom, email, téléphone, texte libre du projet, nom d
 
 ## Google Ads
 
-Le premier lancement peut compter `lead_submitted`, `callback_requested` et une véritable
-`appointment_booked`. La démonstration de calendrier n’est pas une conversion.
+Le Google tag existant charge la destination GA4 `G-FL6QMMYVLM`. La configuration
+`AW-18362621917/mQHqCLOG6tscEN2__bNE` active le remplacement du numéro
+`07 87 82 32 08` pour les appels depuis le site. Il n’existe qu’un seul chargeur
+`gtag.js`.
+
+Les conversions principales du premier lancement sont les appels directs depuis les
+annonces et les appels depuis le site qualifiés par leur durée. `phone_click` reste un
+événement de diagnostic, jamais une conversation qualifiée.
+
+`callback_request`, `lead_submitted` et une véritable `appointment_booked` peuvent être
+analysés séparément. La démonstration de calendrier n’est pas une conversion.
 
 Les changements opérations `qualified` et `won` préparent respectivement
 `qualify_lead` et `close_convert_lead`. Chaque événement serveur possède une clé

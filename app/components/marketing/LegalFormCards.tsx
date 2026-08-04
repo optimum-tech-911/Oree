@@ -16,7 +16,7 @@ export function LegalFormCards({ codes = ["SASU", "EURL", "SAS", "SARL"] }: { co
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
       {forms.map((form, index) => (
         <Reveal key={form.code} delay={index * .055}>
-          <Link to={`/creation-${form.code.toLowerCase()}`} className="interactive-card group relative flex h-full flex-col overflow-hidden rounded-[30px] border border-[var(--line)] bg-white/88 p-5 backdrop-blur-xl sm:p-6">
+          <Link to={`/creation-${form.code.toLowerCase()}`} className="interactive-card group relative flex h-full flex-col overflow-hidden rounded-[30px] border border-[var(--line)] bg-white p-5 sm:p-6">
             <span className={`absolute inset-x-0 top-0 h-1 ${index % 2 === 0 ? "bg-[var(--blue)]" : "bg-[var(--mint)]"}`} />
             <div className="flex items-start justify-between gap-4">
               <div><span className="rounded-full bg-[var(--paper)] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[.1em] text-[color:var(--muted)]">{form.founderCount === "solo" ? "Créer seul" : "Créer à plusieurs"}</span><h3 className="mt-5 text-[2.65rem] font-extrabold leading-none tracking-[-.075em]">{form.label}</h3></div>

@@ -48,6 +48,7 @@ Appliquer dans l'ordre :
 11. `0011_operations_workflow_repair.sql`
 12. `0012_lead_intake_attempts.sql`
 13. `0013_offer_and_ads_lead_workflow.sql`
+14. `0014_callback_request_visibility.sql`
 
 Avec le CLI :
 
@@ -94,11 +95,14 @@ centraliser mapping, erreurs, cache, contrôle du mode démonstration et mutatio
 
 Les opérations créant plusieurs objets doivent finir dans une fonction SQL transactionnelle ou une Edge Function : création de projet, création des tâches initiales, conversation, checklist et événement d'ouverture.
 
-## État distant au 22 juillet 2026
+## État distant au 4 août 2026
 
 - projet lié : `sksydcdkliuisaahysya` (`oree`) ;
-- migrations `0001` à `0012` appliquées ;
+- migrations `0001` à `0014` appliquées ;
 - `submit-lead`, `claim-lead` et `create-project` actives ;
+- `submit-lead` redéployée après l’ajout de la file de demandes de rappel ;
+- une demande transactionnelle de rappel a été vérifiée puis annulée : elle est visible
+  avec `callback_requested = true` et un canal téléphone ;
 - la procédure transactionnelle `submit_lead_bundle` a été vérifiée sur le projet
   distant dans une transaction annulée, sans conserver de lead de test ;
 - `db lint --linked --level warning` : aucune erreur de schéma ;

@@ -231,6 +231,15 @@ try {
   const port = await listen(server);
   browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
   const page = await browser.newPage();
+  await page.setRequestInterception(true);
+  page.on("request", (request) => {
+    const hostname = new URL(request.url()).hostname;
+    if (hostname === "www.googletagmanager.com" || hostname === "www.google-analytics.com" || hostname === "www.gstatic.com") {
+      request.abort();
+      return;
+    }
+    request.continue();
+  });
   await page.setViewport({ width: 1440, height: 1100, deviceScaleFactor: 1 });
   await renderRoutes(page, port);
   await verifyHydration(page, port);
