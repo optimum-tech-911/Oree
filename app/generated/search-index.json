@@ -7880,207 +7880,212 @@
     "file": "docs/IMAGE_INVENTORY.md"
   },
   {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1695",
+    "text": "`0014_callback_request_visibility.sql` appliquées et enregistrées dans l’historique ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
     "id": "docs/IMPLEMENTATION_STATUS.md:1581",
-    "text": "`0012` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`",
+    "text": "`0014` sont appliquées, les fonctions `submit-lead`, `claim-lead` et `create-project`",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1583",
-    "text": "`0014_callback_request_visibility.sql`, ainsi que l’évolution de `submit-lead`, sont",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1679",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1673",
     "text": "`callback_request` et `whatsapp_click` reliés à l’abstraction analytics existante ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1680",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1674",
     "text": "`npm ci`, ESLint, TypeScript strict, 48 tests Vitest et build/prérendu réussis ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1697",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1691",
     "text": "`npm run check` réussi : ESLint, TypeScript strict, 51 tests Vitest, build et prérendu",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
     "id": "docs/IMPLEMENTATION_STATUS.md:1698",
-    "text": "4 scénarios Playwright ciblés réussis dans Chromium et Mobile Safari pour le visuel",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1591",
-    "text": "accueil, tarifs, accompagnement, diagnostic et landings de forme alignés ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1677",
-    "text": "appel Ads `AW-18362621917/mQHqCLOG6tscEN2__bNE`, numéro `07 87 82 32 08` ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1586",
-    "text": "authentifiée ; aucun état distant plus récent n’est donc revendiqué.",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1651",
-    "text": "bout nécessite au moins un compte réel.",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1656",
-    "text": "build et prérendu : 47 routes réussies ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1642",
-    "text": "build Vite de production : réussi ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1616",
-    "text": "calendrier mensuel et demandes de rendez-vous ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1699",
-    "text": "captures locales inspectées pour le héros SASU et la file opérations en mode démo.",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1609",
-    "text": "centre de pilotage, projet et progression réels ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1612",
-    "text": "checklist documentaire, upload privé et téléchargement par URL signée courte ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1663",
-    "text": "client ou opérations réelle ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1695",
-    "text": "compatibilité vérifiée avec un frontend livré avant la migration `0014` ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1665",
-    "text": "Configuration externe restant à fournir",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1676",
-    "text": "configuration Google existante réutilisée : un chargeur, GA4 `G-FL6QMMYVLM`, action",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1678",
-    "text": "conservation de GCLID/UTM vérifiée et événements diagnostiques `phone_click`,",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1621",
-    "text": "contrôle documentaire ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1658",
-    "text": "contrôlées et tests de routage par intention ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1669",
-    "text": "conversions qualifiées ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1659",
-    "text": "crawlabilité : 19 routes publiques contrôlées avec 6 user-agents ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1681",
-    "text": "crawlabilité réussie sur 19 routes et 6 user-agents ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1667",
-    "text": "CRM/webhook éventuel ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1647",
-    "text": "de test n’a été conservé. L’endpoint `submit-lead` accepte désormais les demandes",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1693",
-    "text": "demande de rappel persistée par la migration additive `0014`, triée en priorité et",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1596",
-    "text": "demandes de rappel persistées explicitement, prioritaires et signalées dans `/ops/leads` ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1631",
-    "text": "Design et accessibilité",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1600",
-    "text": "diagnostic adaptatif, déterministe, versionné et explicable ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1636",
-    "text": "document, faux écran produit, témoignage ou partenariat.",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1702",
-    "text": "doit pas conserver le jeton de gestion dans le dépôt ou dans une variable frontend.",
+    "text": "`submit_lead_bundle` et un administrateur actif présents ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
     "id": "docs/IMPLEMENTATION_STATUS.md:1696",
-    "text": "Edge Function distante joignable : le smoke test honeypot a répondu `202` sans créer",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1701",
-    "text": "effectuer dès qu’une session CLI Supabase authentifiée est disponible. Cette session ne",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1624",
-    "text": "équipe et rôles administrés par RPC contrôlée ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1654",
-    "text": "ESLint et TypeScript strict : réussis ;",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1608",
-    "text": "Espace client connecté",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1619",
-    "text": "Espace opérations connecté",
+    "text": "`submit-lead` redéployée avec la notification explicite « Demande de rappel » ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
     "id": "docs/IMPLEMENTATION_STATUS.md:1692",
+    "text": "4 scénarios Playwright ciblés réussis dans Chromium et Mobile Safari pour le visuel",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1586",
+    "text": "accueil, tarifs, accompagnement, diagnostic et landings de forme alignés ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1671",
+    "text": "appel Ads `AW-18362621917/mQHqCLOG6tscEN2__bNE`, numéro `07 87 82 32 08` ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1646",
+    "text": "bout nécessite au moins un compte réel.",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1651",
+    "text": "build et prérendu : 47 routes réussies ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1637",
+    "text": "build Vite de production : réussi ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1611",
+    "text": "calendrier mensuel et demandes de rendez-vous ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1693",
+    "text": "captures locales inspectées pour le héros SASU et la file opérations en mode démo.",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1604",
+    "text": "centre de pilotage, projet et progression réels ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1607",
+    "text": "checklist documentaire, upload privé et téléchargement par URL signée courte ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1658",
+    "text": "client ou opérations réelle ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1689",
+    "text": "compatibilité vérifiée avec un frontend livré avant la migration `0014` ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1660",
+    "text": "Configuration externe restant à fournir",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1670",
+    "text": "configuration Google existante réutilisée : un chargeur, GA4 `G-FL6QMMYVLM`, action",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1672",
+    "text": "conservation de GCLID/UTM vérifiée et événements diagnostiques `phone_click`,",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1616",
+    "text": "contrôle documentaire ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1653",
+    "text": "contrôlées et tests de routage par intention ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1664",
+    "text": "conversions qualifiées ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1654",
+    "text": "crawlabilité : 19 routes publiques contrôlées avec 6 user-agents ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1675",
+    "text": "crawlabilité réussie sur 19 routes et 6 user-agents ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1662",
+    "text": "CRM/webhook éventuel ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1642",
+    "text": "de test n’a été conservé. L’endpoint `submit-lead` accepte désormais les demandes",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1687",
+    "text": "demande de rappel persistée par la migration additive `0014`, triée en priorité et",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1591",
+    "text": "demandes de rappel persistées explicitement, prioritaires et signalées dans `/ops/leads` ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1694",
+    "text": "Déploiement Supabase du 4 août 2026",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1626",
+    "text": "Design et accessibilité",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1595",
+    "text": "diagnostic adaptatif, déterministe, versionné et explicable ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1631",
+    "text": "document, faux écran produit, témoignage ou partenariat.",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1690",
+    "text": "Edge Function distante joignable : le smoke test honeypot a répondu `202` sans créer",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1700",
+    "text": "endpoint public vérifié via honeypot : réponse `202`, sans écriture de données.",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1619",
+    "text": "équipe et rôles administrés par RPC contrôlée ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1649",
+    "text": "ESLint et TypeScript strict : réussis ;",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1603",
+    "text": "Espace client connecté",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1614",
+    "text": "Espace opérations connecté",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1686",
     "text": "et optimisée, avec recadrages desktop et mobile ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
@@ -8090,22 +8095,22 @@
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1634",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1629",
     "text": "états vide, chargement, erreur et succès sur les parcours connectés ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1638",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1633",
     "text": "étincelles, baguette magique, halo pulsant ou promesse d’intelligence artificielle.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1594",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1589",
     "text": "événements de conversion typés, dédupliqués et filtrés contre les données",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1595",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1590",
     "text": "file leads enrichie pour l’attribution Ads, les relances, notes, motifs et résultats ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
@@ -8115,103 +8120,98 @@
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1611",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1606",
     "text": "fondateurs et répartition du capital enregistrés dans le dossier ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1613",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1608",
     "text": "formalités dérivées du stade, des pièces et des tâches réelles ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1593",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1588",
     "text": "formulaire de rappel court soumis par l’Edge Function sécurisée existante ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1666",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1661",
     "text": "fournisseur de calendrier externe si synchronisation bidirectionnelle souhaitée ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1622",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1617",
     "text": "gestion des demandes de rendez-vous ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1657",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1652",
     "text": "Guide Orée : 1 931 entrées issues de 96 fichiers, avec réponses commerciales",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1605",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1600",
     "text": "Guide Orée local, vocal lorsque disponible, indexé depuis les contenus versionnés ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1637",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1632",
     "text": "Guide Orée présenté comme un outil sobre de recherche et de navigation, sans robot,",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1643",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1638",
     "text": "historique distant : migrations `0001` à `0012` synchronisées ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1675",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1669",
     "text": "humain, sans faux témoignage, faux membre d’équipe ou faux horaire ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1670",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1665",
     "text": "identité juridique, mentions légales, libellé fiscal et politique de confidentialité",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1635",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1630",
     "text": "imagerie centralisée dans `app/content/imagery.ts`, optimisée AVIF/WebP et sans faux",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1641",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1636",
     "text": "index Guide Orée : 1 685 entrées issues de 84 fichiers ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1653",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1648",
     "text": "installation propre `npm ci` : réussie ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1688",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1682",
     "text": "interactive via le navigateur intégré n’est revendiquée. Une vérification Tag Assistant",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1633",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1628",
     "text": "interfaces mobile-first, navigation dédiée et barre de conversion sans chevauchement ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1629",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1624",
     "text": "l’affectation. Un client ne peut pas se promouvoir, valider ses propres documents ou",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1645",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1640",
     "text": "La procédure d’intake `submit_lead_bundle` a aussi été exécutée dans une",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1674",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1668",
     "text": "landing SASU reconstruite autour de l’appel, du rappel et d’un design éditorial plus",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1700",
-    "text": "Le déploiement de `0013`, `0014` et de la nouvelle version de `submit-lead` reste à",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
@@ -8220,7 +8220,7 @@
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1686",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1680",
     "text": "Le navigateur intégré n’était pas disponible pendant cette passe. La validation",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
@@ -8230,1802 +8230,1807 @@
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1649",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1644",
     "text": "Le runtime de navigateur intégré n’était pas disponible pendant cette passe : aucune",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1623",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1618",
     "text": "messagerie client et notes internes ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1615",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1610",
     "text": "messagerie projet avec état de lecture par utilisateur ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1589",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1584",
     "text": "micro-entreprise à 100 € ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1597",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1592",
     "text": "migration additive avec RLS pour les notes et événements lifecycle ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1607",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1602",
     "text": "mode démonstration complet lorsque Supabase n’est pas configuré.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1630",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1625",
     "text": "modifier directement le stade opérationnel de son projet.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1617",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1612",
     "text": "notifications calculées depuis les données du dossier ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1673",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1667",
     "text": "offre centrale harmonisée sur `600 € TTC tout compris` avec les quatre inclusions",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1587",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1582",
     "text": "Offre commerciale et acquisition Ads",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1590",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1585",
     "text": "offre société active pour SASU, EURL, SAS et SARL, sans supplément selon la forme ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1610",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1605",
     "text": "orientation issue du projet et du diagnostic lié ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1599",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1594",
     "text": "pages d’acquisition par intention, contenus SEO et sitemap cohérents ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1632",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1627",
     "text": "palette limitée à l’encre, au blanc, au bleu électrique et à la menthe ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1628",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1623",
     "text": "passent par des fonctions SQL contrôlées qui vérifient l’utilisateur, le rôle et/ou",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1620",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1615",
     "text": "pilotage des projets et changements de stade contrôlés ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1598",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1593",
     "text": "plan de première campagne Search SASU documenté dans `docs/ADS_READINESS_PLAN.md`.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1661",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1656",
     "text": "Playwright ciblé Guide Orée et compositions mobiles : 7 scénarios réussis dans",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1660",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1655",
     "text": "Playwright ciblé offre et rappel mobile : 12 tests réussis sur 12 dans Chromium et",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1662",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1657",
     "text": "Playwright complet : 159 tests réussis et 11 scénarios connectés ignorés sans session",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1682",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1676",
     "text": "Playwright complet : 175 tests réussis, 11 scénarios authentifiés ignorés sans comptes",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1691",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1685",
     "text": "portrait SASU remplacé par la scène quotidienne `pathway-home-founder`, déjà auditée",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1671",
-    "text": "premier compte équipe à promouvoir en administrateur.",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1584",
-    "text": "prêtes dans le dépôt, mais ne sont pas encore appliquées au projet distant. La dernière",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1625",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1620",
     "text": "profil opérationnel réel, séparé du rôle interne.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1618",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1613",
     "text": "profil, disponibilités, préférences et demandes relatives aux données.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1592",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1587",
     "text": "quatre actions d’acquisition : démarrage, rappel, téléphone et WhatsApp ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1626",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1621",
     "text": "rafraîchissement de la file des demandes et du cockpit toutes les 15 secondes pour",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1683",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1677",
     "text": "réels, aucun échec ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1602",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1597",
     "text": "reprise sécurisée du lead après authentification ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1684",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1678",
     "text": "responsive SASU vérifié à 375, 390, 430, 768 et 1 440 px dans Chromium et Mobile",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1650",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1645",
     "text": "revue visuelle manuelle supplémentaire n’est revendiquée. Le test authentifié de bout en",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1685",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1679",
     "text": "Safari, avec contrôles de contraste, débordement, CTA, téléphone et rappel.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1694",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1688",
     "text": "signalée dans `/ops/leads` avec accès direct au téléphone, WhatsApp et e-mail ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1606",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1601",
     "text": "sitemap, robots et `llms.txt` générés depuis les routes canoniques et l’offre centrale ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1582",
-    "text": "sont actives, et le lint distant ne remonte aucune erreur de schéma.",
-    "file": "docs/IMPLEMENTATION_STATUS.md"
-  },
-  {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1604",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1599",
     "text": "soumission sans captcha externe, protégée par honeypot invisible et rate limiting",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1588",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1583",
     "text": "source typée unique pour le forfait société à 600 € TTC tout compris et la création de",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1614",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1609",
     "text": "suivi chronologique ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1689",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1683",
     "text": "sur le domaine réellement déployé reste nécessaire avant activation Google Ads.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1603",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1598",
     "text": "téléphone facultatif sauf demande de rappel ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1585",
-    "text": "tentative de vérification distante a été refusée faute de session CLI Supabase",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1699",
+    "text": "test transactionnel annulé : une demande SASU avec rappel est marquée",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1664",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1659",
     "text": "tests authentifiés réels : toujours conditionnés à la fourniture de comptes client et",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1627",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1622",
     "text": "Toutes les lectures restent filtrées par RLS. Les changements opérationnels sensibles",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1646",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1641",
     "text": "transaction annulée sur le projet distant : l’écriture est valide et aucun lead",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1644",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1639",
     "text": "trois Edge Functions : état `ACTIVE`.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1601",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1596",
     "text": "valeur fournie avant création de compte ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1668",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1663",
     "text": "validation Tag Assistant sur le domaine déployé et conventions d’import des",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1648",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1643",
     "text": "valides sans variable captcha, tout en rejetant les honeypots et les envois répétés.",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1639",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1697",
+    "text": "vérification distante : champ `leads.callback_requested`, procédure",
+    "file": "docs/IMPLEMENTATION_STATUS.md"
+  },
+  {
+    "id": "docs/IMPLEMENTATION_STATUS.md:1634",
     "text": "Vérifications du 22 juillet 2026",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1652",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1647",
     "text": "Vérifications du 30 juillet 2026",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1672",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1666",
     "text": "Vérifications du 4 août 2026 — landing SASU et suivi des appels",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1690",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1684",
     "text": "Vérifications du 4 août 2026 — visuel SASU et file de rappel",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1687",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1681",
     "text": "visuelle est donc fondée sur les rendus de test et la matrice Playwright ; aucune revue",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1640",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1635",
     "text": "Vitest : 26 tests réussis sur 26 ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/IMPLEMENTATION_STATUS.md:1655",
+    "id": "docs/IMPLEMENTATION_STATUS.md:1650",
     "text": "Vitest : 47 tests réussis sur 47 ;",
     "file": "docs/IMPLEMENTATION_STATUS.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1707",
+    "id": "docs/MASTER_ARCHITECTURE.md:1705",
     "text": "└─ opérations sensibles ────────── Supabase Edge Functions",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1706",
+    "id": "docs/MASTER_ARCHITECTURE.md:1704",
     "text": "├─ documents ───────────────────── Supabase Storage privé",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1705",
+    "id": "docs/MASTER_ARCHITECTURE.md:1703",
     "text": "├─ données autorisées ──────────── Supabase Data API + RLS",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1704",
+    "id": "docs/MASTER_ARCHITECTURE.md:1702",
     "text": "├─ pages publiques / diagnostic ── Cloudflare Pages",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1703",
+    "id": "docs/MASTER_ARCHITECTURE.md:1701",
     "text": "Architecture technique maître",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1715",
+    "id": "docs/MASTER_ARCHITECTURE.md:1713",
     "text": "bucket `project-documents` privé ;",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1709",
+    "id": "docs/MASTER_ARCHITECTURE.md:1707",
     "text": "Cloudflare sert vite un frontend statique mondial. Supabase reste l'unique autorité backend, ce qui évite de disperser secrets, validations et règles métier entre plusieurs runtimes.",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1711",
+    "id": "docs/MASTER_ARCHITECTURE.md:1709",
     "text": "code splitting par route à renforcer lors de l'intégration finale ;",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1716",
+    "id": "docs/MASTER_ARCHITECTURE.md:1714",
     "text": "Edge Functions pour lead public, création transactionnelle, liaison de lead, notifications, CRM et conversions ;",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1720",
+    "id": "docs/MASTER_ARCHITECTURE.md:1718",
     "text": "Frontière de confiance",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1712",
+    "id": "docs/MASTER_ARCHITECTURE.md:1710",
     "text": "pas de dépendance à un CMS pour la première version.",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1713",
+    "id": "docs/MASTER_ARCHITECTURE.md:1711",
     "text": "PostgreSQL comme source de vérité ;",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1708",
+    "id": "docs/MASTER_ARCHITECTURE.md:1706",
     "text": "Pourquoi cette séparation",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1718",
+    "id": "docs/MASTER_ARCHITECTURE.md:1716",
     "text": "Projet Supabase distinct, fausses données, Cloudflare branch `develop`.",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1719",
+    "id": "docs/MASTER_ARCHITECTURE.md:1717",
     "text": "Projet Supabase européen, données réelles, branche `main`, secrets dédiés, sauvegardes et monitoring.",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1710",
+    "id": "docs/MASTER_ARCHITECTURE.md:1708",
     "text": "Radix/shadcn à ajouter sélectivement si un composant complexe le justifie ;",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1714",
+    "id": "docs/MASTER_ARCHITECTURE.md:1712",
     "text": "RLS pour chaque table exposée ;",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MASTER_ARCHITECTURE.md:1717",
+    "id": "docs/MASTER_ARCHITECTURE.md:1715",
     "text": "staging et production séparés.",
     "file": "docs/MASTER_ARCHITECTURE.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1739",
+    "id": "docs/MERGE_AUDIT.md:1737",
     "text": "**Le système visuel V3 est conservé** : il applique déjà exactement la palette cible,",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1733",
+    "id": "docs/MERGE_AUDIT.md:1731",
     "text": "**V3 reste l’autorité** pour Supabase, Auth, RLS, Storage, Edge Functions,",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1736",
+    "id": "docs/MERGE_AUDIT.md:1734",
     "text": "**V4 est retenue comme référence sélective** pour le démarrage du diagnostic par la",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1724",
+    "id": "docs/MERGE_AUDIT.md:1722",
     "text": "`_merge_reference/` comme l’indique le brief). Elle est traitée uniquement comme une",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1738",
+    "id": "docs/MERGE_AUDIT.md:1736",
     "text": "`/tarifs`, les événements de conversion et le filtrage de l’intention",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1732",
+    "id": "docs/MERGE_AUDIT.md:1730",
     "text": "`app/components/marketing/DynamicHeroCarousel.tsx` corrige le défilement des onglets",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1728",
+    "id": "docs/MERGE_AUDIT.md:1726",
     "text": "| Base | Commande | Résultat |",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1730",
+    "id": "docs/MERGE_AUDIT.md:1728",
     "text": "| Référence V4 | `npm run check` | Vérification de 44 assets, ESLint, TypeScript, 8 tests et build : réussis ; index Guide : 1 698 entrées / 71 fichiers. |",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1729",
+    "id": "docs/MERGE_AUDIT.md:1727",
     "text": "| V3 canonique | `npm run check` | ESLint, TypeScript, 6 tests et build : réussis ; index Guide : 1 400 entrées / 71 fichiers. |",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1745",
+    "id": "docs/MERGE_AUDIT.md:1743",
     "text": "changement de table, enum, policy RLS, bucket, trigger ou Edge Function n’est nécessaire",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1734",
+    "id": "docs/MERGE_AUDIT.md:1732",
     "text": "configuration de déploiement, mode démonstration, images optimisées, navigation app",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1721",
+    "id": "docs/MERGE_AUDIT.md:1719",
     "text": "Date : 20 juillet 2026. Dépôt canonique : `oree-company-platform-v3`.",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1726",
+    "id": "docs/MERGE_AUDIT.md:1724",
     "text": "déployable. Aucun fichier d’environnement, lockfile, migration, fonction Edge ou",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1731",
+    "id": "docs/MERGE_AUDIT.md:1729",
     "text": "Deux changements locaux préexistants sont conservés sans écrasement :",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1742",
+    "id": "docs/MERGE_AUDIT.md:1740",
     "text": "doublons moins optimisés.",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1735",
+    "id": "docs/MERGE_AUDIT.md:1733",
     "text": "et opérations, récupération de mot de passe et écrans Notifications/Aide/Profil.",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1747",
+    "id": "docs/MERGE_AUDIT.md:1745",
     "text": "événements analytics ne contiennent ni e-mail, ni téléphone, ni contenu libre.",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1723",
+    "id": "docs/MERGE_AUDIT.md:1721",
     "text": "La référence V4 est présente localement dans `oree-company-platform-v4/` (et non dans",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1748",
+    "id": "docs/MERGE_AUDIT.md:1746",
     "text": "La référence V4 ne doit pas être publiée, installée ou fusionnée en bloc. Elle demeure",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1727",
+    "id": "docs/MERGE_AUDIT.md:1725",
     "text": "Les deux applications ont été contrôlées avant toute modification :",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1743",
+    "id": "docs/MERGE_AUDIT.md:1741",
     "text": "Les migrations V3 et V4 ont les mêmes familles `0001` à `0004`. V3 contient en plus la",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1740",
+    "id": "docs/MERGE_AUDIT.md:1738",
     "text": "Onest/Newsreader, le header flottant, les composants média art-directed et les",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1722",
+    "id": "docs/MERGE_AUDIT.md:1720",
     "text": "Périmètre et méthode",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1746",
+    "id": "docs/MERGE_AUDIT.md:1744",
     "text": "pour les améliorations retenues : elles consomment les contrats frontend existants. Les",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1737",
+    "id": "docs/MERGE_AUDIT.md:1735",
     "text": "situation, la branche dossier bloqué, la route demandeur d’emploi, l’alias SEO",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1725",
+    "id": "docs/MERGE_AUDIT.md:1723",
     "text": "source de comparaison : elle n’est ni importée par Vite, ni utilisée comme application",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1744",
+    "id": "docs/MERGE_AUDIT.md:1742",
     "text": "surface applicative et les protections opérationnelles actuellement utilisées. Aucun",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1749",
+    "id": "docs/MERGE_AUDIT.md:1747",
     "text": "un dossier de travail local à conserver jusqu’à validation complète de la fusion.",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_AUDIT.md:1741",
+    "id": "docs/MERGE_AUDIT.md:1739",
     "text": "variantes mobile AVIF/WebP. Les assets WebP V4 sont donc rejetés pour éviter des",
     "file": "docs/MERGE_AUDIT.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1752",
+    "id": "docs/MERGE_PLAN.md:1750",
     "text": "`/creer-entreprise-demandeur-emploi`, contenu dédié, parcours diagnostic",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1760",
+    "id": "docs/MERGE_PLAN.md:1758",
     "text": "| Audit | Documents de décision et baseline | Aucun | Les deux `npm run check` réussissent. |",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1763",
+    "id": "docs/MERGE_PLAN.md:1761",
     "text": "| Conversion | Événements sans PII et sortie micro-entreprise officielle | Aucun | Tests TypeScript et inspection des appels. |",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1762",
+    "id": "docs/MERGE_PLAN.md:1760",
     "text": "| Diagnostic | Situation initiale, branche bloquée, résultat prudent et reprise locale | Faible : stockage navigateur seulement | Tests unitaires de l’ordre des étapes et du moteur. |",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1759",
+    "id": "docs/MERGE_PLAN.md:1757",
     "text": "| Phase | Travail | Risque backend | Vérification |",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1764",
+    "id": "docs/MERGE_PLAN.md:1762",
     "text": "| Régression | Contrôle final de V3 | Aucun | `npm run check`, puis E2E si exécutable. |",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1761",
+    "id": "docs/MERGE_PLAN.md:1759",
     "text": "| Routage/SEO | Alias tarifs et landing demandeur d’emploi, sitemap et index Guide | Aucun | Test des routes, métadonnées uniques. |",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1751",
+    "id": "docs/MERGE_PLAN.md:1749",
     "text": "2. Ajouter les éléments V4 qui complètent réellement V3 : routes `/tarifs` et",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1753",
+    "id": "docs/MERGE_PLAN.md:1751",
     "text": "3. Réemployer les primitives, styles et images V3 ; aucune copie de composants ou",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1755",
+    "id": "docs/MERGE_PLAN.md:1753",
     "text": "4. Mettre à jour le sitemap, l’index Guide et les tests route/diagnostic.",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1756",
+    "id": "docs/MERGE_PLAN.md:1754",
     "text": "5. Vérifier lint, TypeScript, tests, build et les tests E2E disponibles. Les inspections",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1766",
+    "id": "docs/MERGE_PLAN.md:1764",
     "text": "canonique possède une intégration visuelle et média plus riche, déjà cohérente.",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1767",
+    "id": "docs/MERGE_PLAN.md:1765",
     "text": "Copie des images V4 : V3 propose les mêmes intentions avec variants responsive,",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1754",
+    "id": "docs/MERGE_PLAN.md:1752",
     "text": "d’assets V4 ne sera faite lorsqu’un équivalent V3 est plus complet.",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1757",
+    "id": "docs/MERGE_PLAN.md:1755",
     "text": "de navigateur locales restent à rejouer si les binaires Playwright ne sont pas",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1750",
+    "id": "docs/MERGE_PLAN.md:1748",
     "text": "Décisions exécutables",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1765",
+    "id": "docs/MERGE_PLAN.md:1763",
     "text": "Éléments explicitement non retenus",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1768",
+    "id": "docs/MERGE_PLAN.md:1766",
     "text": "manifest centralisé et disclosure illustratif.",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1758",
+    "id": "docs/MERGE_PLAN.md:1756",
     "text": "Phases et critères de validation",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1769",
+    "id": "docs/MERGE_PLAN.md:1767",
     "text": "Simplifications V4 d’Auth, Notifications et opérations : elles feraient perdre des",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/MERGE_PLAN.md:1770",
+    "id": "docs/MERGE_PLAN.md:1768",
     "text": "Toute migration ou dépendance V4 : aucune ne résout un besoin que V3 ne couvre pas.",
     "file": "docs/MERGE_PLAN.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1798",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1796",
     "text": "`submit_lead_bundle` reste exécutable uniquement par `service_role` ;",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1792",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1790",
     "text": "| `assigned_partner_id` | `leads.assigned_advisor_id`, relié aux rôles internes contrôlés |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1786",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1784",
     "text": "| Analytics | Service typé et consentement déjà présents | Ajouter les événements Ads manquants, filtrage PII et déduplication |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1791",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1789",
     "text": "| Besoin commercial | Autorité V3 |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1788",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1786",
     "text": "| Consentement | Choix nécessaire/analytics/marketing versionné | Conserver tel quel |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1781",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1779",
     "text": "| Contact | Téléphone, SMS, e-mail et WhatsApp déjà centralisés | Dériver les liens de la configuration commerciale et ajouter les quatre actions acquisition |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1794",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1792",
     "text": "| Événements qualifié/gagné | `lead_lifecycle_events`, clé d’idempotence unique |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1782",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1780",
     "text": "| Formulaire public | Diagnostic complet sécurisé | Le conserver et ajouter un formulaire de rappel court utilisant le même repository |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1783",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1781",
     "text": "| Leads Supabase | Contacts, attribution normalisée, statut, score, affectation | Étendre par migration additive pour forme, activité, relance, motifs, notes et résultat |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1793",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1791",
     "text": "| Notes | `lead_notes`, lecture RLS et écriture via RPC |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1787",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1785",
     "text": "| Notifications | Outbox `notification_jobs` existante | Enrichir le payload et tenter l’envoi après persistance, sans faire échouer le lead |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1785",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1783",
     "text": "| Opérations | Qualification, score et affectation | Ajouter mot-clé, GCLID, landing, actions directes, notes, relance et résultats |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1780",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1778",
     "text": "| Pages SASU/EURL/SAS/SARL | Intention SEO correcte, offre absente | Titre spécifique + même forfait central |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1779",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1777",
     "text": "| Routes publiques | `/tarifs`, les quatre pages de forme, l’accompagnement et le diagnostic existaient | Conserver les routes et adapter le contenu |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1784",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1782",
     "text": "| Sécurité lead | Edge Function, service role serveur, RLS, honeypot, rate limiting et idempotence | Conserver sans policy d’insert anonyme |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1778",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1776",
     "text": "| Surface | Avant l’intégration | Décision |",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1776",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1774",
     "text": "actions prévues pour le trafic payant, et le modèle opérations utilisait une nomenclature",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1797",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1795",
     "text": "aucune clé `service_role` n’est utilisée par le navigateur ;",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1771",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1769",
     "text": "Audit d’intégration de l’offre commerciale",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1795",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1793",
     "text": "Ce mapping évite deux autorités concurrentes pour l’attribution et l’affectation.",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1777",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1775",
     "text": "commerciale antérieure.",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1803",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1801",
     "text": "identifiant réel du partenaire affecté ;",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1774",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1772",
     "text": "L’écart principal était éditorial : `/tarifs` et plusieurs composants indiquaient encore",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1800",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1798",
     "text": "l’envoi d’e-mail intervient après la transaction de création du lead ;",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1772",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1770",
     "text": "Le dépôt V3 disposait déjà des fondations nécessaires : routes d’acquisition, diagnostic",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1802",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1800",
     "text": "le mode démonstration ne transmet aucune donnée personnelle.",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1790",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1788",
     "text": "Le schéma reste normalisé. Les noms demandés sont pris en charge ainsi :",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1801",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1799",
     "text": "les événements analytics ne reçoivent ni nom, ni e-mail, ni téléphone, ni message libre ;",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1799",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1797",
     "text": "les notes et événements lifecycle ont RLS activée et aucun droit d’écriture navigateur ;",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1789",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1787",
     "text": "Mapping du modèle existant",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1773",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1771",
     "text": "mode démonstration et espace opérations. L’intégration ne nécessite ni reconstruction ni",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1796",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1794",
     "text": "Points de sécurité confirmés",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1775",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1773",
     "text": "que le montant n’était pas validé. Les landing pages n’exposaient pas non plus les quatre",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1804",
+    "id": "docs/OFFER_INTEGRATION_AUDIT.md:1802",
     "text": "vérification Tag Assistant sur le domaine de production ;",
     "file": "docs/OFFER_INTEGRATION_AUDIT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1815",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1813",
     "text": "→ coordonnées / rendez-vous / sauvegarde",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1816",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1814",
     "text": "→ création du compte",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1814",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1812",
     "text": "→ diagnostic sans compte",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1817",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1815",
     "text": "→ documents et échanges",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1818",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1816",
     "text": "→ résultat commercial qualifié",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1821",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1819",
     "text": "activité existante : planifier la transition ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1823",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1821",
     "text": "blocage : faire vérifier le dossier.",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1835",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1833",
     "text": "calendrier tiers réel ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1836",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1834",
     "text": "comptabilité et facturation ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1828",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1826",
     "text": "connexion/inscription démo ou Supabase ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1812",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1810",
     "text": "création à plusieurs ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1826",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1824",
     "text": "diagnostic adaptatif ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1831",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1829",
     "text": "données réalistes ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1829",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1827",
     "text": "espace client complet ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1830",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1828",
     "text": "espace opérations ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1824",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1822",
     "text": "expérience publique complète ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1833",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1831",
     "text": "génération juridique automatique définitive ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1808",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1806",
     "text": "Google Search est le moteur commercial initial. Chaque groupe d'intention reçoit une page dédiée :",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1834",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1832",
     "text": "intégration CRM précise ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1813",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1811",
     "text": "La page doit reprendre exactement le vocabulaire de la recherche et conduire au bon état du diagnostic.",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1806",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1804",
     "text": "La promesse centrale est la clarté et le suivi, pas un simple formulaire administratif.",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1811",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1809",
     "text": "micro-entrepreneur qui passe en société ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1807",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1805",
     "text": "Modèle d'acquisition",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1825",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1823",
     "text": "neuf entrées d'acquisition ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1805",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1803",
     "text": "Orée est le centre de contrôle d'un projet de création de société : comprendre, choisir les structures à comparer, préparer les informations, centraliser les documents, échanger avec un conseiller et suivre les formalités.",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1822",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1820",
     "text": "plusieurs fondateurs : inviter les associés ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1819",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1817",
     "text": "projet sous 30 jours : commencer le dossier ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1827",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1825",
     "text": "réservation de démonstration ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1820",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1818",
     "text": "salarié : sauvegarder la feuille de route ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1810",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1808",
     "text": "salarié qui prépare une transition ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1809",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1807",
     "text": "SASU ou EURL / choix du statut ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/PRODUCT_BLUEPRINT.md:1832",
+    "id": "docs/PRODUCT_BLUEPRINT.md:1830",
     "text": "transmission réelle au Guichet unique ;",
     "file": "docs/PRODUCT_BLUEPRINT.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1853",
+    "id": "docs/QA_CHECKLIST.md:1851",
     "text": "attribution stockée ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1847",
+    "id": "docs/QA_CHECKLIST.md:1845",
     "text": "aucun rôle admin auto-attribué.",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1852",
+    "id": "docs/QA_CHECKLIST.md:1850",
     "text": "bundles app/ops séparés à optimiser ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1845",
+    "id": "docs/QA_CHECKLIST.md:1843",
     "text": "client incapable de valider un document ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1846",
+    "id": "docs/QA_CHECKLIST.md:1844",
     "text": "conseiller incapable d'accéder à un projet non attribué ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1840",
+    "id": "docs/QA_CHECKLIST.md:1838",
     "text": "coordonnées validées ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1838",
+    "id": "docs/QA_CHECKLIST.md:1836",
     "text": "diagnostic complet sur mobile ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1855",
+    "id": "docs/QA_CHECKLIST.md:1853",
     "text": "durées de conservation configurées.",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1850",
+    "id": "docs/QA_CHECKLIST.md:1848",
     "text": "état synchronisé dans la timeline.",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1841",
+    "id": "docs/QA_CHECKLIST.md:1839",
     "text": "Guide Orée retrouve pages et actions.",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1842",
+    "id": "docs/QA_CHECKLIST.md:1840",
     "text": "mode démo client ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1843",
+    "id": "docs/QA_CHECKLIST.md:1841",
     "text": "mode démo ops avec email contenant `ops` ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1849",
+    "id": "docs/QA_CHECKLIST.md:1847",
     "text": "nouvelle version sans écraser l'ancienne ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1837",
+    "id": "docs/QA_CHECKLIST.md:1835",
     "text": "page Google cohérente avec son intention ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1851",
+    "id": "docs/QA_CHECKLIST.md:1849",
     "text": "pas de vidéo lourde obligatoire ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1854",
+    "id": "docs/QA_CHECKLIST.md:1852",
     "text": "politique de confidentialité finale ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1839",
+    "id": "docs/QA_CHECKLIST.md:1837",
     "text": "retour navigateur conservé ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1848",
+    "id": "docs/QA_CHECKLIST.md:1846",
     "text": "types et tailles limités ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/QA_CHECKLIST.md:1844",
+    "id": "docs/QA_CHECKLIST.md:1842",
     "text": "utilisateur réel limité à ses projets ;",
     "file": "docs/QA_CHECKLIST.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1863",
+    "id": "docs/SECURITY_AND_RGPD.md:1861",
     "text": "Avant choix : analytics et publicité refusées par défaut. Après choix : mise à jour Consent Mode selon la décision. Le refus doit être aussi simple que l'acceptation.",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1856",
+    "id": "docs/SECURITY_AND_RGPD.md:1854",
     "text": "clé service role uniquement côté serveur ;",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1864",
+    "id": "docs/SECURITY_AND_RGPD.md:1862",
     "text": "Créer des durées par finalité : diagnostic abandonné, prospect non qualifié, prospect actif, client, obligations légales, compte supprimé. Ne pas conserver « pour toujours ».",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1859",
+    "id": "docs/SECURITY_AND_RGPD.md:1857",
     "text": "CSP à déployer d'abord en Report-Only ;",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1866",
+    "id": "docs/SECURITY_AND_RGPD.md:1864",
     "text": "Faire valider les textes juridiques, la base légale, les sous-traitants, les durées, les transferts éventuels, les mesures de sécurité et le cadre professionnel de l'accompagnement.",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1857",
+    "id": "docs/SECURITY_AND_RGPD.md:1855",
     "text": "honeypot invisible sur les entrées publiques ;",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1862",
+    "id": "docs/SECURITY_AND_RGPD.md:1860",
     "text": "La demande de service et le marketing sont séparés. La case marketing est facultative et décochée par défaut. Le formulaire affiche l'identité du responsable, la finalité, les destinataires, la durée, les droits et le contact.",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1865",
+    "id": "docs/SECURITY_AND_RGPD.md:1863",
     "text": "Prévoir : accès, export, rectification, suppression, limitation, opposition et retrait du consentement marketing.",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1861",
+    "id": "docs/SECURITY_AND_RGPD.md:1859",
     "text": "sauvegardes et procédure de restauration.",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1860",
+    "id": "docs/SECURITY_AND_RGPD.md:1858",
     "text": "séparation staging/production ;",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SECURITY_AND_RGPD.md:1858",
+    "id": "docs/SECURITY_AND_RGPD.md:1856",
     "text": "URLs signées courtes ;",
     "file": "docs/SECURITY_AND_RGPD.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1882",
+    "id": "docs/SMART_ASSISTANT.md:1880",
     "text": "1. générer un index structuré à chaque build ;",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1883",
+    "id": "docs/SMART_ASSISTANT.md:1881",
     "text": "2. publier les contenus approuvés dans une table de connaissance ;",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1884",
+    "id": "docs/SMART_ASSISTANT.md:1882",
     "text": "3. créer des embeddings ;",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1885",
+    "id": "docs/SMART_ASSISTANT.md:1883",
     "text": "5. appeler une Edge Function qui contrôle le contexte ;",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1886",
+    "id": "docs/SMART_ASSISTANT.md:1884",
     "text": "6. renvoyer réponse, sources et actions autorisées.",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1868",
+    "id": "docs/SMART_ASSISTANT.md:1866",
     "text": "base contrôlée : `app/content/knowledge.ts` ;",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1873",
+    "id": "docs/SMART_ASSISTANT.md:1871",
     "text": "fonctionnement dans les espaces public, client et opérations.",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1869",
+    "id": "docs/SMART_ASSISTANT.md:1867",
     "text": "index généré : `app/generated/search-index.json` ;",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1877",
+    "id": "docs/SMART_ASSISTANT.md:1875",
     "text": "La base contrôlée reprend uniquement les informations commerciales confirmées et",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1867",
+    "id": "docs/SMART_ASSISTANT.md:1865",
     "text": "Le Guide Orée est un moteur local de recherche et de navigation. Il ne dépend d'aucune API payante et ne fabrique pas de réponses juridiques.",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1871",
+    "id": "docs/SMART_ASSISTANT.md:1869",
     "text": "Le script analyse les fichiers du projet, extrait des chaînes françaises utiles et les associe à des routes. Il s'exécute avant `dev` et `build`.",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1875",
+    "id": "docs/SMART_ASSISTANT.md:1873",
     "text": "moment du paiement, les exclusions, l’offre micro-entreprise et les moyens de",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1887",
+    "id": "docs/SMART_ASSISTANT.md:1885",
     "text": "Ne jamais envoyer l'ensemble des documents d'autres clients au modèle. Toute récupération doit être filtrée avant l'appel.",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1870",
+    "id": "docs/SMART_ASSISTANT.md:1868",
     "text": "offre commerciale de référence : `app/config/commercial-offers.ts`.",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1880",
+    "id": "docs/SMART_ASSISTANT.md:1878",
     "text": "pas d'accès à des documents privés en dehors des permissions de l'utilisateur ;",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1881",
+    "id": "docs/SMART_ASSISTANT.md:1879",
     "text": "pas de garantie de compréhension sémantique équivalente à un LLM.",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1879",
+    "id": "docs/SMART_ASSISTANT.md:1877",
     "text": "qualifications opérations et les données privées ne font pas partie des réponses",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1872",
+    "id": "docs/SMART_ASSISTANT.md:1870",
     "text": "recherche tolérante par mots-clés ;",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1876",
+    "id": "docs/SMART_ASSISTANT.md:1874",
     "text": "réponse de prudence dédiée lorsqu’une mention HT, TTC ou TVA non configurée est",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1874",
+    "id": "docs/SMART_ASSISTANT.md:1872",
     "text": "réponses contrôlées sur le prix, les formes prises en charge, les inclusions, le",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SMART_ASSISTANT.md:1878",
+    "id": "docs/SMART_ASSISTANT.md:1876",
     "text": "utiles au visiteur. Les paramètres internes de campagnes publicitaires, les",
     "file": "docs/SMART_ASSISTANT.md"
   },
   {
-    "id": "docs/SUPABASE_BACKEND.md:1897",
+    "id": "docs/SUPABASE_BACKEND.md:1895",
     "text": "`app/services/supabase/operations.ts` pour l’espace équipe, et les repositories",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
-    "id": "docs/SUPABASE_BACKEND.md:1906",
+    "id": "docs/SUPABASE_BACKEND.md:1907",
     "text": "`db lint --linked --level warning` : aucune erreur de schéma ;",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
-    "id": "docs/SUPABASE_BACKEND.md:1899",
-    "text": "centraliser mapping, erreurs, cache, contrôle du mode démonstration et mutations.",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1889",
-    "text": "Ces valeurs sont publiques. La sécurité repose sur RLS.",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1892",
-    "text": "Configurer les redirect URLs locales, staging, previews nécessaires et production. Pour les previews, préférer une stratégie contrôlée afin de ne pas autoriser des domaines arbitraires.",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1905",
-    "text": "distant dans une transaction annulée, sans conserver de lead de test ;",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1901",
-    "text": "État distant au 22 juillet 2026",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1910",
-    "text": "frontend ou dans Git. Il sert uniquement aux opérations CLI ponctuelles. L’origine de",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1898",
-    "text": "génériques de `app/services/supabase/repositories.ts`. Conserver cette couche afin de",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1888",
-    "text": "Intégration Supabase",
+    "id": "docs/SUPABASE_BACKEND.md:1902",
+    "text": "`submit-lead` redéployée après l’ajout de la file de demandes de rappel ;",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
     "id": "docs/SUPABASE_BACKEND.md:1904",
-    "text": "la procédure transactionnelle `submit_lead_bundle` a été vérifiée sur le projet",
+    "text": "avec `callback_requested = true` et un canal téléphone ;",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
-    "id": "docs/SUPABASE_BACKEND.md:1894",
-    "text": "Le bucket `project-documents` est privé. Les chemins sont :",
+    "id": "docs/SUPABASE_BACKEND.md:1897",
+    "text": "centraliser mapping, erreurs, cache, contrôle du mode démonstration et mutations.",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1887",
+    "text": "Ces valeurs sont publiques. La sécurité repose sur RLS.",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
     "id": "docs/SUPABASE_BACKEND.md:1890",
-    "text": "Le formulaire de diagnostic ne dépend d'aucune configuration captcha externe. La",
+    "text": "Configurer les redirect URLs locales, staging, previews nécessaires et production. Pour les previews, préférer une stratégie contrôlée afin de ne pas autoriser des domaines arbitraires.",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
-    "id": "docs/SUPABASE_BACKEND.md:1891",
-    "text": "le honeypot invisible et un rate limiting serveur fondé sur des empreintes hachées",
+    "id": "docs/SUPABASE_BACKEND.md:1906",
+    "text": "distant dans une transaction annulée, sans conserver de lead de test ;",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
-    "id": "docs/SUPABASE_BACKEND.md:1909",
-    "text": "Le jeton de gestion Supabase ne doit jamais être placé dans un fichier `.env`, dans le",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1896",
-    "text": "Les composants appellent `app/services/supabase/portal.ts` pour l’espace client,",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1900",
-    "text": "Les opérations créant plusieurs objets doivent finir dans une fonction SQL transactionnelle ou une Edge Function : création de projet, création des tâches initiales, conversation, checklist et événement d'ouverture.",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1895",
-    "text": "Les policies vérifient l'appartenance au projet. Les validations de document restent réservées au staff.",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1893",
-    "text": "Les rôles internes sont dans `staff_roles`. L'utilisateur ne peut pas écrire cette table. Un profil public ne contient pas de rôle administrateur éditable.",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1903",
-    "text": "migrations `0001` à `0012` appliquées ;",
-    "file": "docs/SUPABASE_BACKEND.md"
-  },
-  {
-    "id": "docs/SUPABASE_BACKEND.md:1908",
-    "text": "origine locale autorisée pour le développement.",
+    "id": "docs/SUPABASE_BACKEND.md:1899",
+    "text": "État distant au 4 août 2026",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
     "id": "docs/SUPABASE_BACKEND.md:1911",
+    "text": "frontend ou dans Git. Il sert uniquement aux opérations CLI ponctuelles. L’origine de",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1896",
+    "text": "génériques de `app/services/supabase/repositories.ts`. Conserver cette couche afin de",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1886",
+    "text": "Intégration Supabase",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1905",
+    "text": "la procédure transactionnelle `submit_lead_bundle` a été vérifiée sur le projet",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1892",
+    "text": "Le bucket `project-documents` est privé. Les chemins sont :",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1888",
+    "text": "Le formulaire de diagnostic ne dépend d'aucune configuration captcha externe. La",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1889",
+    "text": "le honeypot invisible et un rate limiting serveur fondé sur des empreintes hachées",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1910",
+    "text": "Le jeton de gestion Supabase ne doit jamais être placé dans un fichier `.env`, dans le",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1894",
+    "text": "Les composants appellent `app/services/supabase/portal.ts` pour l’espace client,",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1898",
+    "text": "Les opérations créant plusieurs objets doivent finir dans une fonction SQL transactionnelle ou une Edge Function : création de projet, création des tâches initiales, conversation, checklist et événement d'ouverture.",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1893",
+    "text": "Les policies vérifient l'appartenance au projet. Les validations de document restent réservées au staff.",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1891",
+    "text": "Les rôles internes sont dans `staff_roles`. L'utilisateur ne peut pas écrire cette table. Un profil public ne contient pas de rôle administrateur éditable.",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1901",
+    "text": "migrations `0001` à `0014` appliquées ;",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1909",
+    "text": "origine locale autorisée pour le développement.",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/SUPABASE_BACKEND.md:1912",
     "text": "production et les URLs Auth doivent encore être configurées avec le domaine définitif.",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
-    "id": "docs/SUPABASE_BACKEND.md:1902",
+    "id": "docs/SUPABASE_BACKEND.md:1900",
     "text": "projet lié : `sksydcdkliuisaahysya` (`oree`) ;",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
-    "id": "docs/SUPABASE_BACKEND.md:1907",
+    "id": "docs/SUPABASE_BACKEND.md:1908",
     "text": "secret de revendication de lead généré et configuré côté Edge ;",
     "file": "docs/SUPABASE_BACKEND.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1917",
+    "id": "docs/SUPABASE_BACKEND.md:1903",
+    "text": "une demande transactionnelle de rappel a été vérifiée puis annulée : elle est visible",
+    "file": "docs/SUPABASE_BACKEND.md"
+  },
+  {
+    "id": "docs/UI_UX_SYSTEM.md:1918",
     "text": "`--font-editorial` : **Newsreader Variable**, livrée localement avec le build. Réservée à une courte expression éditoriale dans certains grands titres.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1916",
+    "id": "docs/UI_UX_SYSTEM.md:1917",
     "text": "`--font-sans` : **Onest Variable**, livrée localement avec le build. Utilisée pour toute l'interface, les formulaires, la navigation, les chiffres et les textes.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1978",
+    "id": "docs/UI_UX_SYSTEM.md:1979",
     "text": "`AppPageHero` : continuité des pages client ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1981",
+    "id": "docs/UI_UX_SYSTEM.md:1982",
     "text": "`ArtDirectedPicture` : source et ratio mobiles dédiés ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1979",
+    "id": "docs/UI_UX_SYSTEM.md:1980",
     "text": "`Button` : variantes limitées et sheen réservé aux CTA forts.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1977",
+    "id": "docs/UI_UX_SYSTEM.md:1978",
     "text": "`DashboardPage` : centre de pilotage du projet ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1976",
+    "id": "docs/UI_UX_SYSTEM.md:1977",
     "text": "`DynamicHeroCarousel` : cinq intentions, scènes responsives, zoom lent, fondu, onglets et pause ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1985",
+    "id": "docs/UI_UX_SYSTEM.md:1986",
     "text": "`EditorialMediaCard`, `TestimonialIllustration` et `AppEmptyState` : usages secondaires et encadrés.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1975",
+    "id": "docs/UI_UX_SYSTEM.md:1976",
     "text": "`HeroCockpit` : état vivant du projet ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1982",
+    "id": "docs/UI_UX_SYSTEM.md:1983",
     "text": "`HeroMedia` : photographie environnementale et preuve produit React superposée ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1984",
+    "id": "docs/UI_UX_SYSTEM.md:1985",
     "text": "`HumanTrustPanel` : scène d'accompagnement avec statut illustratif explicite ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1983",
+    "id": "docs/UI_UX_SYSTEM.md:1984",
     "text": "`ProcessRail` : image documentaire en fond contextualisé, avec l'information et les contrôles toujours construits en React ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1980",
+    "id": "docs/UI_UX_SYSTEM.md:1981",
     "text": "`ResponsiveImage` : AVIF/WebP, dimensions intrinsèques, priorité et chargement contrôlés ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1914",
+    "id": "docs/UI_UX_SYSTEM.md:1915",
     "text": "1. **Encre profonde** — `#0B1220` : confiance, navigation, espaces projet et contrastes forts.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1915",
+    "id": "docs/UI_UX_SYSTEM.md:1916",
     "text": "3. **Menthe de signal** — `#46D6A6` : validation, progression et sécurité.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1942",
+    "id": "docs/UI_UX_SYSTEM.md:1943",
     "text": "animation permanente de tous les éléments ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1972",
+    "id": "docs/UI_UX_SYSTEM.md:1973",
     "text": "aperçus contextuels dans le diagnostic ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1958",
+    "id": "docs/UI_UX_SYSTEM.md:1959",
     "text": "Au sommet de l'accueil, le header est une barre sombre superposée à l'image. Après le premier défilement, il devient une surface blanc chaud flottante afin de rester lisible sur les sections éditoriales.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1965",
+    "id": "docs/UI_UX_SYSTEM.md:1966",
     "text": "aucune collision entre l'action principale, le Guide Orée, le contrôle de pause et les onglets du héros ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1989",
+    "id": "docs/UI_UX_SYSTEM.md:1990",
     "text": "aucune information essentielle intégrée dans une image.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1966",
+    "id": "docs/UI_UX_SYSTEM.md:1967",
     "text": "aucune interaction critique dépendante du hover.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1941",
+    "id": "docs/UI_UX_SYSTEM.md:1942",
     "text": "blobs néon aléatoires ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1922",
+    "id": "docs/UI_UX_SYSTEM.md:1923",
     "text": "Capitales espacées limitées aux statuts et micro-libellés réellement utiles.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1936",
+    "id": "docs/UI_UX_SYSTEM.md:1937",
     "text": "changement d'étape ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1937",
+    "id": "docs/UI_UX_SYSTEM.md:1938",
     "text": "changement de parcours dans le diagnostic ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1970",
+    "id": "docs/UI_UX_SYSTEM.md:1971",
     "text": "cockpit et compositions asymétriques ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1974",
+    "id": "docs/UI_UX_SYSTEM.md:1975",
     "text": "Composants de référence",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1967",
+    "id": "docs/UI_UX_SYSTEM.md:1968",
     "text": "compositions dédiées, pas un desktop simplement réduit ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1954",
+    "id": "docs/UI_UX_SYSTEM.md:1955",
     "text": "contextes sombres : version monochrome inversée du même lock-up, jamais un symbole concurrent ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1987",
+    "id": "docs/UI_UX_SYSTEM.md:1988",
     "text": "contrastes vérifiés avec les contenus définitifs ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1930",
+    "id": "docs/UI_UX_SYSTEM.md:1931",
     "text": "Distinguer une orientation indicative, une validation professionnelle et une décision définitive.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1926",
+    "id": "docs/UI_UX_SYSTEM.md:1927",
     "text": "Employer un français écrit, précis et professionnel, avec des phrases complètes.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1988",
+    "id": "docs/UI_UX_SYSTEM.md:1989",
     "text": "état jamais communiqué uniquement par la couleur ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1928",
+    "id": "docs/UI_UX_SYSTEM.md:1929",
     "text": "Éviter les fragments de phrase, les formules orales, les anglicismes non nécessaires et les oppositions artificielles du type « pas seulement » ou « jamais opaque ».",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1955",
+    "id": "docs/UI_UX_SYSTEM.md:1956",
     "text": "favicon, Apple Touch et manifeste installable utilisent les icônes dédiées fournies avec l'identité.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1920",
+    "id": "docs/UI_UX_SYSTEM.md:1921",
     "text": "Graisses 800 et 900 interdites dans l'interface courante ; les anciennes classes `font-extrabold` sont normalisées à 650 pendant la migration.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1968",
+    "id": "docs/UI_UX_SYSTEM.md:1969",
     "text": "grilles deux colonnes lorsque la largeur réelle le permet ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1962",
+    "id": "docs/UI_UX_SYSTEM.md:1963",
     "text": "Guide Orée toujours visible sans masquer l'action principale ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1973",
+    "id": "docs/UI_UX_SYSTEM.md:1974",
     "text": "hover précis, jamais décoratif.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1949",
+    "id": "docs/UI_UX_SYSTEM.md:1950",
     "text": "le changement de route affiche l'identité Orée, une progression courte et un retour lisible même quand les images se chargent encore ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1948",
+    "id": "docs/UI_UX_SYSTEM.md:1949",
     "text": "le contenu du héros peut accompagner le premier défilement par une translation inférieure à 52 px et une variation d'opacité limitée ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1960",
+    "id": "docs/UI_UX_SYSTEM.md:1961",
     "text": "Le glassmorphism est réservé au header flottant, au cockpit et à quelques contrôles sur fond sombre.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1957",
+    "id": "docs/UI_UX_SYSTEM.md:1958",
     "text": "Le héros d'accueil utilise un carrousel plein cadre : photographie immersive, voile de contraste, message à gauche, CTA larges, onglets narratifs renseignés et contrôle de pause.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1950",
+    "id": "docs/UI_UX_SYSTEM.md:1951",
     "text": "le ruban de formalités effectue une boucle linéaire de 38 secondes et se suspend au survol, au focus et en reduced motion ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1947",
+    "id": "docs/UI_UX_SYSTEM.md:1948",
     "text": "les CTA forts utilisent une élévation nette, un reflet bref et un feedback d'appui ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1956",
+    "id": "docs/UI_UX_SYSTEM.md:1957",
     "text": "Les fichiers web optimisés vivent dans `public/assets/brand/`. Les sources maîtres restent dans `oree logos/` et sont traitées par `npm run brand:optimize`.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1959",
+    "id": "docs/UI_UX_SYSTEM.md:1960",
     "text": "Les héros sombres servent à focaliser une intention ; les surfaces blanc chaud servent à lire, comparer et agir.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1933",
+    "id": "docs/UI_UX_SYSTEM.md:1934",
     "text": "Les limites du mode démonstration doivent être formulées sobrement et au moment où elles affectent réellement une action.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1946",
+    "id": "docs/UI_UX_SYSTEM.md:1947",
     "text": "les révélations imbriquées peuvent être légèrement décalées, sans retarder la lecture ni animer chaque mot ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1945",
+    "id": "docs/UI_UX_SYSTEM.md:1946",
     "text": "les sections entrent dans le viewport par une translation verticale courte, une opacité progressive et un flou léger ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1940",
+    "id": "docs/UI_UX_SYSTEM.md:1941",
     "text": "micro-scan sur une étape active.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1934",
+    "id": "docs/UI_UX_SYSTEM.md:1935",
     "text": "Mouvements autorisés :",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1952",
+    "id": "docs/UI_UX_SYSTEM.md:1953",
     "text": "navigation : lock-up horizontal « Orée Entreprises » ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1963",
+    "id": "docs/UI_UX_SYSTEM.md:1964",
     "text": "navigation client inférieure ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1939",
+    "id": "docs/UI_UX_SYSTEM.md:1940",
     "text": "navigation et ouverture du Guide Orée ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1961",
+    "id": "docs/UI_UX_SYSTEM.md:1962",
     "text": "navigation publique plein écran ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1932",
+    "id": "docs/UI_UX_SYSTEM.md:1933",
     "text": "Ne jamais inventer un nom de conseiller, une citation, un délai moyen, une disponibilité ou une preuve sociale. Employer une désignation fonctionnelle tant que l'identité réelle n'est pas validée.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1918",
+    "id": "docs/UI_UX_SYSTEM.md:1919",
     "text": "Ne pas ajouter une troisième police. L'éditorial ne doit jamais être utilisé pour les libellés, formulaires ou tableaux.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1931",
+    "id": "docs/UI_UX_SYSTEM.md:1932",
     "text": "Ne pas exposer au public les détails d'implémentation tels que les noms de services, les fonctions serveur ou les règles de base de données, sauf dans une documentation technique destinée à cet usage.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1929",
+    "id": "docs/UI_UX_SYSTEM.md:1930",
     "text": "Nommer clairement l'objet de l'action : « Transmettre un justificatif conforme » plutôt que « Débloquer la suite ».",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1964",
+    "id": "docs/UI_UX_SYSTEM.md:1965",
     "text": "onglets du héros lisibles, défilables horizontalement et centrés sur l'intention active ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1923",
+    "id": "docs/UI_UX_SYSTEM.md:1924",
     "text": "Paragraphes limités en largeur et rédigés en français direct.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1953",
+    "id": "docs/UI_UX_SYSTEM.md:1954",
     "text": "pied de page : lock-up complet avec le descriptif « Création & accompagnement d'entreprise » ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1927",
+    "id": "docs/UI_UX_SYSTEM.md:1928",
     "text": "Préférer les faits, les conditions et les conséquences pratiques aux slogans ou aux métaphores publicitaires.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1935",
+    "id": "docs/UI_UX_SYSTEM.md:1936",
     "text": "progression d'un dossier ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1925",
+    "id": "docs/UI_UX_SYSTEM.md:1926",
     "text": "Rédaction d'interface",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1938",
+    "id": "docs/UI_UX_SYSTEM.md:1939",
     "text": "révélation au scroll ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1971",
+    "id": "docs/UI_UX_SYSTEM.md:1972",
     "text": "sidebars persistantes client/opérations ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1951",
+    "id": "docs/UI_UX_SYSTEM.md:1952",
     "text": "sur mobile, ce ruban devient une grille statique afin que la compréhension ne dépende jamais du mouvement.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1912",
+    "id": "docs/UI_UX_SYSTEM.md:1913",
     "text": "Système UI/UX — référence V3",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1943",
+    "id": "docs/UI_UX_SYSTEM.md:1944",
     "text": "texte essentiel dépendant d'une animation ;",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1969",
+    "id": "docs/UI_UX_SYSTEM.md:1970",
     "text": "titres et espacements intermédiaires.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1919",
+    "id": "docs/UI_UX_SYSTEM.md:1920",
     "text": "Titres principaux en graisse 600 à 700, tracking négatif modéré et interlignage maîtrisé.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1913",
+    "id": "docs/UI_UX_SYSTEM.md:1914",
     "text": "Toute l'interface dérive de quatre couleurs de base seulement :",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1924",
+    "id": "docs/UI_UX_SYSTEM.md:1925",
     "text": "Un CTA dominant par écran ; les actions secondaires restent visibles sans concurrencer la principale.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1921",
+    "id": "docs/UI_UX_SYSTEM.md:1922",
     "text": "Un seul geste éditorial par bloc, généralement avec `.editorial-mark`.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1986",
+    "id": "docs/UI_UX_SYSTEM.md:1987",
     "text": "Une seule image de héros par route reçoit `fetchPriority=\"high\"`. Toute image sous la ligne de flottaison reste lazy. Les transitions média sont des fondus ou des variations de profondeur inférieures à 1.025 et s'arrêtent en reduced motion.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/UI_UX_SYSTEM.md:1944",
+    "id": "docs/UI_UX_SYSTEM.md:1945",
     "text": "vidéo de fond qui retarde la compréhension du mot-clé Google.",
     "file": "docs/UI_UX_SYSTEM.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:2001",
+    "id": "docs/V3_REBUILD.md:2002",
     "text": "1. où il se trouve ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:2002",
+    "id": "docs/V3_REBUILD.md:2003",
     "text": "2. ce que la plateforme sait de son projet ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:2005",
+    "id": "docs/V3_REBUILD.md:2006",
     "text": "architecture prête pour un LLM serveur Supabase avec permissions.",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:2004",
+    "id": "docs/V3_REBUILD.md:2005",
     "text": "base de connaissances métier ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1999",
+    "id": "docs/V3_REBUILD.md:2000",
     "text": "Critère de qualité",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1994",
+    "id": "docs/V3_REBUILD.md:1995",
     "text": "dashboard transformé en centre de pilotage ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1995",
+    "id": "docs/V3_REBUILD.md:1996",
     "text": "diagnostic enrichi d'une feuille de route en direct ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1998",
+    "id": "docs/V3_REBUILD.md:1999",
     "text": "documentation image et règles de continuité ajoutées.",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1997",
+    "id": "docs/V3_REBUILD.md:1998",
     "text": "états mobile/tablette/desktop harmonisés ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1996",
+    "id": "docs/V3_REBUILD.md:1997",
     "text": "Guide Orée restauré comme fonctionnalité globale et visible ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1992",
+    "id": "docs/V3_REBUILD.md:1993",
     "text": "homepage reconstruite autour de l'intention Google et du projet vivant ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:2003",
+    "id": "docs/V3_REBUILD.md:2004",
     "text": "Le Guide est injecté globalement hors écrans d'authentification. Il possède :",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:2006",
+    "id": "docs/V3_REBUILD.md:2007",
     "text": "Le prototype ne prétend pas remplacer un modèle de langage : il fournit immédiatement une recherche intelligente locale, rapide et auditable, puis documente le branchement IA sécurisé futur.",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1991",
+    "id": "docs/V3_REBUILD.md:1992",
     "text": "palette réduite et contrôlée à quatre couleurs ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1993",
+    "id": "docs/V3_REBUILD.md:1994",
     "text": "processus animé par étapes ;",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:1990",
+    "id": "docs/V3_REBUILD.md:1991",
     "text": "Refonte V3 — reconstruction de l'expérience",
     "file": "docs/V3_REBUILD.md"
   },
   {
-    "id": "docs/V3_REBUILD.md:2000",
+    "id": "docs/V3_REBUILD.md:2001",
     "text": "Un écran ne doit pas seulement être « beau ». En moins de quelques secondes, l'utilisateur doit comprendre :",
     "file": "docs/V3_REBUILD.md"
   }

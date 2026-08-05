@@ -9,6 +9,7 @@ const rateLimitMigration = readFileSync(new URL("../supabase/migrations/0012_lea
 const offerWorkflowMigration = readFileSync(new URL("../supabase/migrations/0013_offer_and_ads_lead_workflow.sql", import.meta.url), "utf8");
 const callbackVisibilityMigration = readFileSync(new URL("../supabase/migrations/0014_callback_request_visibility.sql", import.meta.url), "utf8");
 const submitLeadFunction = readFileSync(new URL("../supabase/functions/submit-lead/index.ts", import.meta.url), "utf8");
+const corsHelper = readFileSync(new URL("../supabase/functions/_shared/cors.ts", import.meta.url), "utf8");
 const operationsRepository = readFileSync(new URL("../app/services/supabase/operations.ts", import.meta.url), "utf8");
 const operationsLeadPage = readFileSync(new URL("../app/pages/ops/OpsSectionPage.tsx", import.meta.url), "utf8");
 
@@ -32,6 +33,12 @@ describe("lead intake security", () => {
     expect(rateLimitMigration).toMatch(/alter table public\.lead_intake_attempts enable row level security/i);
     expect(rateLimitMigration).toMatch(/revoke all on table public\.lead_intake_attempts from public, anon, authenticated/i);
     expect(rateLimitMigration).toMatch(/grant select, insert on table public\.lead_intake_attempts to service_role/i);
+  });
+
+  it("never returns a different allowed origin when CORS rejects a request", () => {
+    expect(corsHelper).toMatch(/const allowed = configuredOrigins\.includes\(origin\) \? origin : ""/);
+    expect(corsHelper).toMatch(/if \(allowed\) headers\["Access-Control-Allow-Origin"\] = allowed/);
+    expect(corsHelper).not.toMatch(/configuredOrigins\[0\]/);
   });
 
   it("keeps intake atomic, idempotent and strips duplicated contact data", () => {

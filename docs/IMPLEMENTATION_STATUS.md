@@ -184,3 +184,16 @@ sur le domaine réellement déployé reste nécessaire avant activation Google A
 - test transactionnel annulé : une demande SASU avec rappel est marquée
   `callback_requested = true`, canal `phone`, sans conserver de lead de test ;
 - endpoint public vérifié via honeypot : réponse `202`, sans écriture de données.
+
+## Correction CORS du 5 août 2026
+
+- cause observée en production : l’Edge Function renvoyait `Access-Control-Allow-Origin:
+  http://localhost:5173` à l’origine `https://oree.optimutech.fr`, ce qui bloquait le
+  formulaire de rappel avant toute écriture ;
+- secret `ALLOWED_ORIGINS` mis à jour pour inclure localhost et le domaine de production ;
+- `submit-lead`, `claim-lead` et `create-project` redéployées avec un helper CORS qui ne
+  renvoie jamais une origine différente lorsqu’une requête est refusée ;
+- préflight production confirmé avec l’origine attendue ;
+- soumission réelle de vérification confirmée : réponse `201`, claim token émis et lead
+  SASU créé avec `callback_requested = true`, puis suppression vérifiée du seul lead
+  synthétique (`0` restant).
