@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { Check, LoaderCircle, PhoneCall } from "lucide-react";
 import { z } from "zod";
 import { Button } from "@/components/ui/Button";
-import { buildPhoneHref, commercialOffers, type SupportedCompanyForm } from "@/config/commercial-offers";
+import { commercialOffers, type SupportedCompanyForm } from "@/config/commercial-offers";
+import { useCompanyContact } from "@/services/phone-conversion";
 import { leadRepository } from "@/services/supabase/repositories";
 import { analytics } from "@/services/analytics";
 import type { DiagnosticAnswers, DiagnosticRecommendation } from "@/types";
@@ -43,6 +44,7 @@ function callbackRecommendation(legalForm?: SupportedCompanyForm): DiagnosticRec
 }
 
 export function CallbackLeadForm({ legalForm, slug }: { legalForm?: SupportedCompanyForm; slug: string }) {
+  const contact = useCompanyContact();
   const [submitted, setSubmitted] = useState<"live" | "demo" | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
   const started = useRef(false);
@@ -126,7 +128,7 @@ export function CallbackLeadForm({ legalForm, slug }: { legalForm?: SupportedCom
         <div>
           <p className="text-sm font-semibold text-[color:var(--blue)]">{commercialOffers.companyCreation.callbackCtaLabel}</p>
           <h2 className="mt-2 text-2xl font-semibold tracking-[-.04em] sm:text-3xl">Demandez à l’équipe de vous rappeler.</h2>
-          <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">Indiquez les coordonnées et le contexte nécessaires pour reprendre votre projet. Vous préférez appeler&nbsp;? <a href={buildPhoneHref()} data-phone-number={commercialOffers.contact.displayPhone} onClick={() => analytics.track("phone_click", { legal_form: legalForm, location: "callback_form" })} className="font-semibold text-[color:var(--blue)]">{commercialOffers.contact.displayPhone}</a>.</p>
+          <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">Indiquez les coordonnées et le contexte nécessaires pour reprendre votre projet. Vous préférez appeler&nbsp;? <a href={contact.phoneHref} data-phone-number={contact.displayPhone} aria-label={`Appeler Orée au ${contact.displayPhone}`} onClick={() => analytics.track("phone_click", { legal_form: legalForm, location: "callback_form", cta_location: "callback_form" })} className="font-semibold text-[color:var(--blue)]">{contact.displayPhone}</a>.</p>
         </div>
       </div>
       <label aria-hidden="true" className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">Votre site internet<input type="url" tabIndex={-1} autoComplete="off" {...register("website")} /></label>

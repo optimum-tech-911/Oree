@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Mail, MessageCircle, MessageSquareText, PhoneCall, Send, X } from "lucide-react";
 import { useLocation } from "react-router-dom";
-import { directContact, directContactOptions } from "@/content/contact";
+import { directContactOptions } from "@/content/contact";
+import { useCompanyContact } from "@/services/phone-conversion";
 import { analytics } from "@/services/analytics";
 import { cn } from "@/lib/cn";
 
@@ -18,23 +19,24 @@ export function ContactLauncher() {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const location = useLocation();
+  const contact = useCompanyContact();
   const closeRef = useRef<HTMLButtonElement>(null);
   const onHome = location.pathname === "/";
 
   function trackContact(optionId: keyof typeof icons) {
     analytics.track("contact_option_selected", { channel: optionId, location: "contact_sheet" });
-    if (optionId === "call") analytics.track("phone_click", { location: "contact_sheet" });
+    if (optionId === "call") analytics.track("phone_click", { location: "contact_sheet", cta_location: "contact_sheet" });
     if (optionId === "whatsapp" || optionId === "whatsapp-business") analytics.track("whatsapp_click", { location: "contact_sheet", channel: optionId });
   }
 
-  function openContact() {
+  const openContact = useCallback(() => {
     setOpen(true);
     analytics.track("primary_cta_clicked", { path: location.pathname, location: "contact_launcher", intent: "direct_contact" });
-  }
+  }, [location.pathname]);
 
-  function closeContact() {
+  const closeContact = useCallback(() => {
     setOpen(false);
-  }
+  }, []);
 
   useEffect(() => {
     const onOpen = () => openContact();
@@ -47,10 +49,10 @@ export function ContactLauncher() {
       window.removeEventListener("oree:contact-open", onOpen);
       window.removeEventListener("keydown", onKey);
     };
-  });
+  }, [openContact, closeContact]);
 
   useEffect(() => {
-    if (open) window.setTimeout(() => closeRef.current?.focus(), 120);
+    if (open) closeRef.current?.focus();
   }, [open]);
 
   return (
@@ -75,7 +77,14 @@ export function ContactLauncher() {
       <AnimatePresence>
         {open ? (
           <>
-            <motion.button type="button" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={closeContact} className="fixed inset-0 z-[85] bg-[var(--ink)]/55 backdrop-blur-[5px]" aria-label="Fermer les options de contact" />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeContact}
+              className="fixed inset-0 z-[89] bg-[var(--ink)]/55 backdrop-blur-sm"
+              aria-hidden="true"
+            />
             <motion.aside
               data-contact-sheet
               role="dialog"
@@ -95,10 +104,11 @@ export function ContactLauncher() {
                 {directContactOptions.map((option, index) => {
                   const Icon = icons[option.id];
                   const primary = option.id === "call";
-                  return <motion.a key={option.id} href={option.href} target={option.external ? "_blank" : undefined} rel={option.external ? "noreferrer" : undefined} onClick={() => trackContact(option.id)} initial={reduce ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduce ? 0 : .08 + index * .045, duration: .35 }} className={cn("group flex min-h-20 items-center gap-3 rounded-[18px] border p-4 transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--action)] focus-visible:ring-offset-2", primary ? "border-[var(--action)] bg-[var(--action)] text-white shadow-[0_12px_30px_rgba(36,87,255,.2)] sm:col-span-2" : "border-[var(--line)] bg-white text-[color:var(--ink)] hover:border-[var(--action)]/35")}><span className={cn("grid size-10 shrink-0 place-items-center rounded-[13px]", primary ? "bg-white text-[color:var(--ink)]" : "bg-[var(--mint-soft)]")}><Icon className="size-4" /></span><span><span className="block text-sm font-semibold">{option.label}</span><span className={cn("mt-0.5 block text-xs", primary ? "text-white/72" : "text-[color:var(--muted)]")}>{option.description}</span></span></motion.a>;
+                  const optionHref = primary ? contact.phoneHref : option.href;
+                  return <motion.a key={option.id} href={optionHref} data-phone-number={primary ? contact.displayPhone : undefined} aria-label={primary ? `Appeler Orée au ${contact.displayPhone}` : undefined} target={option.external ? "_blank" : undefined} rel={option.external ? "noreferrer" : undefined} onClick={() => trackContact(option.id)} initial={reduce ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduce ? 0 : .08 + index * .045, duration: .35 }} className={cn("group flex min-h-20 items-center gap-3 rounded-[18px] border p-4 transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--action)] focus-visible:ring-offset-2", primary ? "border-[var(--action)] bg-[var(--action)] text-white shadow-[0_12px_30px_rgba(36,87,255,.2)] sm:col-span-2" : "border-[var(--line)] bg-white text-[color:var(--ink)] hover:border-[var(--action)]/35")}><span className={cn("grid size-10 shrink-0 place-items-center rounded-[13px]", primary ? "bg-white text-[color:var(--ink)]" : "bg-[var(--mint-soft)]")}><Icon className="size-4" /></span><span><span className="block text-sm font-semibold">{option.label}</span><span className={cn("mt-0.5 block text-xs", primary ? "text-white/72" : "text-[color:var(--muted)]")}>{option.description}</span></span></motion.a>;
                 })}
               </div>
-              <p className="mt-4 px-1 text-xs leading-5 text-[color:var(--muted)]">{directContact.displayPhone} · {directContact.email}<br />{directContact.availability}</p>
+              <p className="mt-4 px-1 text-xs leading-5 text-[color:var(--muted)]">{contact.displayPhone} · {contact.email}<br />{contact.availability}</p>
             </motion.aside>
           </>
         ) : null}

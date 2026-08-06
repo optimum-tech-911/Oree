@@ -62,6 +62,10 @@ export default function App() {
           <Route path="creation-eurl" element={<AcquisitionLandingPage slug="creation-eurl" />} />
           <Route path="creation-sas" element={<AcquisitionLandingPage slug="creation-sas" />} />
           <Route path="creation-sarl" element={<AcquisitionLandingPage slug="creation-sarl" />} />
+          <Route path="creation/sasu" element={<Navigate to="/creation-sasu" replace />} />
+          <Route path="creation/eurl" element={<Navigate to="/creation-eurl" replace />} />
+          <Route path="creation/sas" element={<Navigate to="/creation-sas" replace />} />
+          <Route path="creation/sarl" element={<Navigate to="/creation-sarl" replace />} />
           <Route path="creer-entreprise-seul" element={<AcquisitionLandingPage slug="creer-entreprise-seul" />} />
           <Route path="creer-entreprise-a-plusieurs" element={<AcquisitionLandingPage slug="creer-entreprise-a-plusieurs" />} />
           <Route path="creer-entreprise-en-etant-salarie" element={<AcquisitionLandingPage slug="creer-entreprise-en-etant-salarie" />} />

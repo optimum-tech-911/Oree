@@ -1,9 +1,9 @@
 import { Check, MessageCircle, PhoneCall, RotateCcw } from "lucide-react";
 import {
-  buildPhoneHref,
   buildWhatsAppHref,
   commercialOffers,
 } from "@/config/commercial-offers";
+import { useCompanyContact } from "@/services/phone-conversion";
 import { analytics } from "@/services/analytics";
 
 const includedRows = [
@@ -56,7 +56,7 @@ export function SasuOfferReceipt() {
 }
 
 export function SasuHumanContact() {
-  const contact = commercialOffers.contact;
+  const contact = useCompanyContact();
   const whatsappMessage = "Bonjour, je souhaite créer une SASU avec Orée Entreprises.";
 
   return (
@@ -70,9 +70,10 @@ export function SasuHumanContact() {
       </p>
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <a
-          href={buildPhoneHref()}
+          href={contact.phoneHref}
           data-phone-number={contact.displayPhone}
-          onClick={() => analytics.track("phone_click", { legal_form: "SASU", location: "sasu_human_contact" })}
+          aria-label={`Appeler Orée au ${contact.displayPhone}`}
+          onClick={() => analytics.track("phone_click", { legal_form: "SASU", location: "sasu_human_contact", cta_location: "sasu_human_contact" })}
           className="button-on-action inline-flex min-h-14 items-center justify-center gap-3 rounded-[14px] bg-[var(--blue)] px-6 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(36,87,255,.2)] transition hover:-translate-y-0.5 hover:brightness-95"
         >
           <PhoneCall className="size-4" aria-hidden="true" />

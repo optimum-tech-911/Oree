@@ -1,18 +1,20 @@
 import { motion, useReducedMotion } from "motion/react";
 import { Mail, MessageCircle, MessageSquareText, PhoneCall, Send } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { useCompanyContact } from "@/services/phone-conversion";
 import { analytics } from "@/services/analytics";
 import { cn } from "@/lib/cn";
-import { directContact, directContactOptions, type DirectContactOption } from "@/content/contact";
+import { directContactOptions, type DirectContactOption } from "@/content/contact";
 
 const icons: Record<DirectContactOption["id"], typeof PhoneCall> = { call: PhoneCall, sms: MessageSquareText, email: Mail, whatsapp: MessageCircle, "whatsapp-business": Send };
 const tones: Record<DirectContactOption["id"], string> = { call: "bg-[var(--action)] text-white shadow-[0_14px_34px_rgba(36,87,255,.2)]", sms: "bg-white text-[color:var(--ink)]", email: "bg-white text-[color:var(--ink)]", whatsapp: "bg-white text-[color:var(--ink)]", "whatsapp-business": "bg-[var(--ink)] text-white" };
 
 export function DirectContactPanel() {
   const reduce = useReducedMotion();
+  const contact = useCompanyContact();
   const trackContact = (option: DirectContactOption) => {
     analytics.track("contact_option_selected", { channel: option.id, location: "home_contact" });
-    if (option.id === "call") analytics.track("phone_click", { location: "home_contact" });
+    if (option.id === "call") analytics.track("phone_click", { location: "home_contact", cta_location: "home_contact" });
     if (option.id === "whatsapp" || option.id === "whatsapp-business") analytics.track("whatsapp_click", { location: "home_contact", channel: option.id });
   };
 
@@ -31,9 +33,9 @@ export function DirectContactPanel() {
           <h2 className="mt-6 text-balance text-4xl font-semibold leading-[.98] tracking-[-.05em] sm:text-5xl">Choisissez le canal qui vous semble <span className="editorial-mark text-[color:var(--mint)]">le plus simple.</span></h2>
           <p className="mt-5 max-w-xl text-sm leading-7 text-white/72 sm:text-base">Un appel pour aller droit au but, un message pour répondre à votre rythme, ou un e-mail si votre demande mérite davantage de contexte.</p>
           <dl className="mt-8 grid gap-3 border-t border-white/10 pt-6 text-sm sm:grid-cols-2">
-            <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">Téléphone</dt><dd className="mt-1 font-semibold text-white">{directContact.displayPhone}</dd></div>
-            <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">E-mail</dt><dd className="mt-1 break-all font-semibold text-white">{directContact.email}</dd></div>
-            <div className="sm:col-span-2"><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">Disponibilités</dt><dd className="mt-1 font-semibold text-white">{directContact.availability}</dd></div>
+            <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">Téléphone</dt><dd className="mt-1 font-semibold text-white">{contact.displayPhone}</dd></div>
+            <div><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">E-mail</dt><dd className="mt-1 break-all font-semibold text-white">{contact.email}</dd></div>
+            <div className="sm:col-span-2"><dt className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/52">Disponibilités</dt><dd className="mt-1 font-semibold text-white">{contact.availability}</dd></div>
           </dl>
         </motion.div>
 
@@ -41,10 +43,13 @@ export function DirectContactPanel() {
           {directContactOptions.map((option, index) => {
             const Icon = icons[option.id];
             const isPrimary = option.id === "call";
+            const optionHref = isPrimary ? contact.phoneHref : option.href;
             return (
               <motion.a
                 key={option.id}
-                href={option.href}
+                href={optionHref}
+                data-phone-number={isPrimary ? contact.displayPhone : undefined}
+                aria-label={isPrimary ? `Appeler Orée au ${contact.displayPhone}` : undefined}
                 target={option.external ? "_blank" : undefined}
                 rel={option.external ? "noreferrer" : undefined}
                 onClick={() => trackContact(option)}

@@ -4,6 +4,7 @@ import { PhoneCall } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
 import { landingPages } from "@/content/landingPages";
 import { buildPhoneHref, commercialOffers } from "@/config/commercial-offers";
+import { useCompanyContact } from "@/services/phone-conversion";
 import { readConsent } from "@/features/consent/consent";
 import { analytics } from "@/services/analytics";
 
@@ -78,6 +79,7 @@ export function mobileConversionForPath(pathname: string): MobileConversionConfi
 
 export function MobileConversionBar() {
   const { pathname } = useLocation();
+  const contact = useCompanyContact();
   const [consentResolved, setConsentResolved] = useState(() => Boolean(readConsent()));
   const [assistantOpen, setAssistantOpen] = useState(false);
   const config = mobileConversionForPath(pathname);
@@ -95,32 +97,40 @@ export function MobileConversionBar() {
 
   if (!config || assistantOpen || (config.action !== "call" && !consentResolved)) return null;
 
+  const isCall = config.action === "call";
+  const activeLabel = isCall ? contact.displayPhone : config.label;
+  const activeHref = isCall ? contact.phoneHref : config.href;
+
   return (
     <div className="sticky-mobile-cta fixed inset-x-0 bottom-0 z-[58] border-t border-white/10 bg-[var(--ink)]/96 px-3 pt-3 shadow-[0_-14px_40px_rgba(11,18,32,.18)] backdrop-blur-2xl lg:hidden" aria-label="Prochaine étape">
       <div className="mx-auto grid max-w-xl grid-cols-[1fr_auto] items-center gap-3">
         <div className="min-w-0 pl-1">
           <p className="truncate text-[10px] font-semibold uppercase tracking-[.12em] text-white/72">{config.eyebrow}</p>
-          <p className="truncate text-sm font-semibold text-white">{config.label}</p>
+          <p className="truncate text-sm font-semibold text-white">{activeLabel}</p>
         </div>
-        {config.action === "call" ? <a
-          href={config.href}
-          data-phone-number={config.label}
-          aria-label={`Appeler Orée au ${config.label}`}
-          onClick={() => analytics.track("phone_click", { path: pathname, legal_form: "SASU", location: "mobile_sticky" })}
-          className="button-on-action inline-flex h-12 items-center justify-center gap-2 rounded-[13px] bg-[var(--blue)] px-5 text-sm font-semibold text-white shadow-[0_10px_26px_rgba(36,87,255,.24)]"
-        >
-          <PhoneCall className="size-4" />Appeler
-        </a> : <ButtonLink
-            to={config.href}
+        {isCall ? (
+          <a
+            href={activeHref}
+            data-phone-number={activeLabel}
+            aria-label={`Appeler Orée au ${activeLabel}`}
+            onClick={() => analytics.track("phone_click", { path: pathname, page_path: pathname, legal_form: "SASU", location: "mobile_sticky_call", cta_location: "mobile_sticky_call" })}
+            className="button-on-action inline-flex h-12 items-center justify-center gap-2 rounded-[13px] bg-[var(--blue)] px-5 text-sm font-semibold text-white shadow-[0_10px_26px_rgba(36,87,255,.24)]"
+          >
+            <PhoneCall className="size-4" />Appeler
+          </a>
+        ) : (
+          <ButtonLink
+            to={activeHref}
             variant="dark"
             size="sm"
             className="h-11"
             arrow
-            aria-label={`${config.label} — ouvrir le diagnostic`}
+            aria-label={`${activeLabel} — ouvrir le diagnostic`}
             onClick={() => analytics.track("primary_cta_clicked", { path: pathname, intent: config.intent, location: "mobile_sticky" })}
           >
             Démarrer
-          </ButtonLink>}
+          </ButtonLink>
+        )}
       </div>
     </div>
   );

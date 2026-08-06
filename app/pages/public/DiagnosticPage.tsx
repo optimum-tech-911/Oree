@@ -37,11 +37,8 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { cn } from "@/lib/cn";
 import type { DiagnosticAnswers } from "@/types";
 import { CompanyOfferCard } from "@/components/marketing/CommercialOfferCard";
-import {
-  buildPhoneHref,
-  commercialOffers,
-  isSupportedCompanyForm,
-} from "@/config/commercial-offers";
+import { isSupportedCompanyForm } from "@/config/commercial-offers";
+import { useCompanyContact } from "@/services/phone-conversion";
 
 const stepLabels: Record<DiagnosticStep, string> = {
   starting: "Point de départ",
@@ -109,6 +106,7 @@ function ChoiceGrid({
 }
 
 function ProjectSummary({ diagnostic }: { diagnostic: ReturnType<typeof useDiagnostic> }) {
+  const contact = useCompanyContact();
   const forms = diagnostic.recommendation.forms.slice(0, 2);
   const items = [
     { icon: Building2, label: "Structure à comparer", value: forms.length ? forms.map((code) => getLegalForm(code)?.label ?? code).join(" / ") : "À déterminer" },
@@ -136,14 +134,15 @@ function ProjectSummary({ diagnostic }: { diagnostic: ReturnType<typeof useDiagn
         <div className="mt-6">
           <p className="text-xs leading-5 text-[color:var(--muted)]">Cette première recommandation évolue lorsque vous précisez le projet.</p>
           <a
-            href={buildPhoneHref()}
-            data-phone-number={commercialOffers.contact.displayPhone}
-            onClick={() => analytics.track("phone_click", { location: "diagnostic_summary", step: diagnostic.step })}
+            href={contact.phoneHref}
+            data-phone-number={contact.displayPhone}
+            aria-label={`Appeler Orée au ${contact.displayPhone}`}
+            onClick={() => analytics.track("phone_click", { location: "diagnostic_summary", cta_location: "diagnostic_summary", step: diagnostic.step })}
             className="button-on-action mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[13px] bg-[var(--blue)] px-4 text-sm font-semibold text-white transition hover:-translate-y-0.5"
           >
             <PhoneCall className="size-4" />Besoin d’aide&nbsp;? Appeler
           </a>
-          <p className="mt-2 text-center text-xs font-semibold">{commercialOffers.contact.displayPhone}</p>
+          <p className="mt-2 text-center text-xs font-semibold">{contact.displayPhone}</p>
         </div>
       </div>
     </aside>
@@ -184,10 +183,11 @@ function TextInput({
 }
 
 export default function DiagnosticPage() {
-  const diagnostic = useDiagnostic();
   const [searchParams] = useSearchParams();
-  const beginFromSituation = diagnostic.beginFromSituation;
   const reduce = useReducedMotion();
+  const diagnostic = useDiagnostic();
+  const contact = useCompanyContact();
+  const beginFromSituation = diagnostic.beginFromSituation;
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submissionDemo, setSubmissionDemo] = useState(false);
@@ -336,7 +336,7 @@ export default function DiagnosticPage() {
             </div>
             <div className="p-7 sm:p-9">
               <div className="grid gap-3 sm:grid-cols-2">
-                <a href={buildPhoneHref()} data-phone-number={commercialOffers.contact.displayPhone} onClick={() => analytics.track("phone_click", { location: "diagnostic_success" })} className="button-on-action inline-flex min-h-14 items-center justify-center gap-2 rounded-[14px] bg-[var(--blue)] px-6 text-sm font-semibold text-white"><PhoneCall className="size-4" />Appeler l’équipe</a>
+                <a href={contact.phoneHref} data-phone-number={contact.displayPhone} aria-label={`Appeler Orée au ${contact.displayPhone}`} onClick={() => analytics.track("phone_click", { location: "diagnostic_success", cta_location: "diagnostic_success" })} className="button-on-action inline-flex min-h-14 items-center justify-center gap-2 rounded-[14px] bg-[var(--blue)] px-6 text-sm font-semibold text-white"><PhoneCall className="size-4" />Appeler l’équipe</a>
                 <ButtonLink to="/inscription" variant="secondary" size="lg">Créer mon espace</ButtonLink>
               </div>
               <button onClick={() => { setSubmitted(false); setSubmissionDemo(false); startedRef.current = false; completedRef.current = false; abandonedRef.current = false; diagnostic.reset(); }} className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--muted)] transition hover:text-[color:var(--ink)]"><RotateCcw className="size-4" />Recommencer le diagnostic</button>
@@ -355,7 +355,7 @@ export default function DiagnosticPage() {
             <p className="text-sm font-semibold text-[color:var(--blue)]">Diagnostic de création de société</p>
             <p className="mt-2 text-sm text-[color:var(--muted)]">Question {diagnostic.stepIndex + 1} sur {diagnostic.steps.length} · {stepLabels[diagnostic.step]}</p>
           </div>
-          <a href={buildPhoneHref()} data-phone-number={commercialOffers.contact.displayPhone} onClick={() => analytics.track("phone_click", { location: "diagnostic_mobile_help", step: diagnostic.step })} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[color:var(--blue)] lg:hidden"><PhoneCall className="size-4" />Besoin d’aide&nbsp;? Appeler</a>
+          <a href={contact.phoneHref} data-phone-number={contact.displayPhone} aria-label={`Appeler Orée au ${contact.displayPhone}`} onClick={() => analytics.track("phone_click", { location: "diagnostic_mobile_help", cta_location: "diagnostic_mobile_help", step: diagnostic.step })} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[color:var(--blue)] lg:hidden"><PhoneCall className="size-4" />Besoin d’aide&nbsp;? Appeler</a>
         </div>
 
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_270px] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-14">

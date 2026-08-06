@@ -10,7 +10,17 @@
 
       gtag('config', 'G-FL6QMMYVLM');
       gtag('config', 'AW-18362621917/mQHqCLOG6tscEN2__bNE', {
-        'phone_conversion_number': '07 87 82 32 08'
+        'phone_conversion_number': '07 87 82 32 08',
+        'phone_conversion_callback': function(formatted_number, mobile_number) {
+          if (typeof window.__oree_on_phone_conversion === 'function') {
+            window.__oree_on_phone_conversion(formatted_number, mobile_number);
+          } else {
+            window.__oree_pending_phone_conversion = {
+              formatted_number: formatted_number,
+              mobile_number: mobile_number
+            };
+          }
+        }
       });
     </script>
     <meta charset="UTF-8" />

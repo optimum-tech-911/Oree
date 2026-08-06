@@ -68,6 +68,16 @@ const piiKeys = new Set([
   "address",
 ]);
 
+export function getContextualPayload(): AnalyticsPayload {
+  if (typeof window === "undefined") return {};
+  const width = window.innerWidth;
+  const deviceCategory = width < 768 ? "mobile" : width < 1024 ? "tablet" : "desktop";
+  return {
+    page_path: window.location.pathname,
+    device_category: deviceCategory,
+  };
+}
+
 export function sanitizeAnalyticsPayload(payload: AnalyticsPayload): AnalyticsPayload {
   return Object.fromEntries(Object.entries(payload).filter(([key]) => !piiKeys.has(key.toLocaleLowerCase("fr-FR"))));
 }
@@ -112,7 +122,24 @@ export class AnalyticsService {
   }
 
   track(event: AnalyticsEvent, payload: AnalyticsPayload = {}) {
-    const record: AnalyticsRecord = { event, ga4_event: ga4EventByInternalEvent[event], ...sanitizeAnalyticsPayload(payload), timestamp: new Date().toISOString() };
+    const contextual = getContextualPayload();
+    const enrichedPayload: AnalyticsPayload = {
+      ...contextual,
+      ...payload,
+    };
+    if (event === "phone_click") {
+      const location = enrichedPayload.location ?? enrichedPayload.cta_location;
+      if (location) {
+        enrichedPayload.location = location;
+        enrichedPayload.cta_location = location;
+      }
+    }
+    const record: AnalyticsRecord = {
+      event,
+      ga4_event: ga4EventByInternalEvent[event],
+      ...sanitizeAnalyticsPayload(enrichedPayload),
+      timestamp: new Date().toISOString(),
+    };
     if (typeof window !== "undefined") {
       const consent = readConsent();
       if (consent?.analytics) {
