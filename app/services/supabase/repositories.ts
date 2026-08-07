@@ -110,6 +110,32 @@ export const projectRepository: ProjectRepository = {
 
 export const leadRepository: LeadRepository = {
   async submit(input, options) {
+    // 1. Direct Email Notification (Zero Backend Config)
+    try {
+      const emailContent = {
+        _subject: input.wantsCallback ? "🚨 DEMANDE DE RAPPEL ORÉE" : "✨ NOUVEAU LEAD ORÉE",
+        Nom: `${input.firstName ?? ""} ${input.lastName ?? ""}`.trim() || "Non renseigné",
+        Téléphone: input.phone || "Non renseigné",
+        Email: input.email || "Non renseigné",
+        Statut_envisagé: input.legalFormInterest ?? "À qualifier",
+        Activité: input.activityDetails ?? input.activity ?? "À préciser",
+        Délai: input.creationTimeline ?? input.timeline ?? "À préciser",
+        Rappel_demandé: input.wantsCallback ? "Oui" : "Non",
+      };
+
+      // Fire and forget, browser will auto-attach Origin and Referer headers
+      fetch("https://formsubmit.co/ajax/optimum.tech.911@gmail.com", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(emailContent)
+      }).catch(() => {});
+    } catch {
+      // Ignore background notification errors
+    }
+
     if (!isSupabaseConfigured || !supabase) {
       await new Promise((resolve) => setTimeout(resolve, 650));
       return { id: `demo_${createId()}`, demo: true };

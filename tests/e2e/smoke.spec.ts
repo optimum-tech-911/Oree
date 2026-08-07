@@ -144,10 +144,7 @@ test("le formulaire de rappel reste utilisable sur mobile", async ({ page }) => 
   await form.scrollIntoViewIfNeeded();
   await expect(form).toBeVisible();
   await form.getByLabel("Prénom").fill("Camille");
-  await form.getByLabel("Nom", { exact: true }).fill("Martin");
-  await form.getByLabel("E-mail").fill("camille@example.fr");
   await form.getByLabel("Téléphone").fill("06 12 34 56 78");
-  await form.getByLabel("Activité").fill("Conseil en stratégie");
   await form.getByLabel(/J’accepte le traitement/).check();
   await expect(form.getByRole("button", { name: "Être rappelé" })).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -248,7 +245,7 @@ test("le méga-menu de création reste lisible et contenu dans la fenêtre", asy
   await page.setViewportSize({ width: 1280, height: 1000 });
   await page.goto("/");
   await expect(page.locator("header").getByRole("link", { name: "Se connecter" })).toBeVisible();
-  await expect(page.locator("header").getByRole("link", { name: /Démarrer mon diagnostic/ })).toBeVisible();
+  await expect(page.locator("header").getByRole("link", { name: /Commencer mon dossier|Démarrer mon diagnostic/ })).toBeVisible();
   await page.getByRole("button", { name: "Créer ma société" }).click();
   const menu = page.locator("#creation-menu");
   await expect(menu).toBeVisible();
@@ -267,7 +264,7 @@ test("la page d'accueil applique les polices, la couleur d'action et les images 
   const heroCta = page.locator("main").getByRole("link", { name: /Commencer ma création/i }).first();
   await expect(heroCta).toHaveCSS("background-color", "rgb(36, 87, 255)");
   await expect(heroCta).toHaveCSS("color", "rgb(247, 245, 239)");
-  const desktopHeaderCta = page.locator("header").getByRole("link", { name: /Démarrer mon diagnostic/ });
+  const desktopHeaderCta = page.locator("header").getByRole("link", { name: /Commencer mon dossier|Démarrer mon diagnostic/ });
   if (await desktopHeaderCta.count()) {
     await expect(desktopHeaderCta).toHaveCSS("background-color", "rgb(36, 87, 255)");
   }

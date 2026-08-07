@@ -44,7 +44,7 @@ export function AcquisitionContactActions({
             className="button-on-action inline-flex min-h-14 flex-col items-center justify-center rounded-[14px] bg-[var(--blue)] px-5 py-2 text-sm font-semibold text-white shadow-[0_14px_36px_rgba(36,87,255,.25)] transition hover:-translate-y-0.5 hover:brightness-95"
           >
             <span className="inline-flex items-center gap-2"><PhoneCall className="size-4" />Appeler maintenant</span>
-            <span className="mt-0.5 text-[11px] text-white/78">{contact.displayPhone}</span>
+            <span className="mt-0.5 text-[11px] text-white/78">{contact.displayPhone} · 7j/7</span>
           </a>
           <a
             href="#rappel"
@@ -62,15 +62,20 @@ export function AcquisitionContactActions({
             Commencer mon dossier<ArrowRight className="size-4" />
           </ButtonLink>
         </div>
-        <a
-          href={buildWhatsAppHref(undefined, whatsappMessage)}
-          target="_blank"
-          rel="noreferrer"
-          onClick={() => analytics.track("whatsapp_click", { legal_form: legalForm, location })}
-          className={cn("mt-4 inline-flex items-center gap-2 text-xs font-semibold transition", dark ? "text-white/68 hover:text-white" : "text-[color:var(--muted)] hover:text-[color:var(--ink)]")}
-        >
-          <MessageCircle className="size-3.5" />Écrire sur WhatsApp
-        </a>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          <p className={cn("text-xs leading-relaxed", dark ? "text-white/80" : "text-[color:var(--muted)]")}>
+            7j/7 de 7h à 20h. C’est Sof qui décroche, pas un standard.
+          </p>
+          <a
+            href={buildWhatsAppHref(undefined, whatsappMessage)}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => analytics.track("whatsapp_click", { legal_form: legalForm, location })}
+            className={cn("inline-flex items-center gap-2 text-xs font-semibold transition", dark ? "text-white/72 hover:text-white" : "text-[color:var(--muted)] hover:text-[color:var(--ink)]")}
+          >
+            <MessageCircle className="size-3.5" />Écrire sur WhatsApp
+          </a>
+        </div>
       </div>
     );
   }

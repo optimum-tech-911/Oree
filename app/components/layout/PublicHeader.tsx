@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { ArrowRight, ChevronDown, Globe2, Menu, Search, UserRound, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { Logo } from "@/components/ui/Logo";
@@ -19,6 +19,7 @@ function openAssistant() {
 }
 
 export function PublicHeader({ transparent = false }: { transparent?: boolean }) {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -113,7 +114,7 @@ export function PublicHeader({ transparent = false }: { transparent?: boolean })
                       <span className="relative inline-flex rounded-full border border-white/20 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[.11em] text-white/72">Orientation</span>
                       <p className="relative mt-5 text-xl font-semibold leading-tight tracking-[-.03em] text-white">Vous hésitez encore&nbsp;?</p>
                       <p className="relative mt-2 text-xs leading-5 text-white">Le diagnostic part de votre situation avant d'aborder la forme juridique.</p>
-                      <span className="relative mt-5 inline-flex items-center gap-2 text-xs font-semibold text-[color:var(--mint)]">Démarrer le diagnostic <ArrowRight className="size-3.5 transition group-hover:translate-x-1" /></span>
+                      <span className="relative mt-5 inline-flex items-center gap-2 text-xs font-semibold text-[color:var(--mint)]">Commencer mon dossier <ArrowRight className="size-3.5 transition group-hover:translate-x-1" /></span>
                     </Link>
                   </div>
                 </motion.div>
@@ -139,7 +140,9 @@ export function PublicHeader({ transparent = false }: { transparent?: boolean })
           <span className={cn("mx-1 h-7 w-px", floating ? "bg-white/24" : "bg-[var(--line-strong)]")} />
           <span className={cn("inline-flex h-11 items-center gap-1.5 px-2 text-[12px] font-semibold", floating ? "text-white/78" : "text-[color:var(--muted)]")}><Globe2 className="size-4" />FR</span>
           <Link to="/connexion" className={cn("nav-hover-line inline-flex h-11 items-center gap-2 rounded-xl px-3 text-[13px] font-medium transition", floating ? "text-white/82 hover:bg-white/10 hover:text-white" : "text-[color:var(--muted)] hover:bg-[var(--ink)]/[.045] hover:text-[color:var(--ink)]")}><UserRound className="size-4" />Se connecter</Link>
-          <ButtonLink to="/diagnostic" variant="accent" size="md" className="px-5 text-[13px]" arrow>Démarrer mon diagnostic</ButtonLink>
+          <ButtonLink to={location.pathname.startsWith("/creation-sasu") ? "/diagnostic?intent=creation_sasu" : "/diagnostic"} variant="accent" size="md" className="px-5 text-[13px]" arrow>
+            {location.pathname.startsWith("/creation-sasu") ? "Créer ma SASU — 600 € TTC" : "Commencer mon dossier"}
+          </ButtonLink>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">

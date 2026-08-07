@@ -10,7 +10,7 @@ export const directContact = commercialOffers.contact;
 const message = "Bonjour, j’ai une question au sujet de la création de mon entreprise.";
 
 export const directContactOptions = [
-  { id: "call", label: "Appeler", description: "Parler directement à l’équipe.", href: buildPhoneHref(), external: false },
+  { id: "call", label: "Appeler", description: "Parler directement à l’équipe (7j/7).", href: buildPhoneHref(), external: false },
   { id: "sms", label: "Envoyer un SMS", description: "Poser une question en quelques mots.", href: `sms:${directContact.phone}?body=${encodeURIComponent(message)}`, external: false },
   { id: "email", label: "Écrire par e-mail", description: "Envoyer une demande plus détaillée.", href: buildEmailHref(directContact.email, "Demande depuis Orée Entreprises", message), external: false },
   { id: "whatsapp", label: "WhatsApp", description: "Continuer la conversation dans WhatsApp.", href: buildWhatsAppHref(directContact.whatsapp, message), external: true },

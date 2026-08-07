@@ -70,7 +70,7 @@ export const commercialOffers = {
     displayPhone: "07 87 82 32 08",
     whatsapp: "+33787823208",
     email: "sebaasofiene@gmail.com",
-    availability: "Disponibilités à confirmer lors de la prise de contact",
+    availability: "Disponible 7j/7 par téléphone et messagerie",
     assignedPartner: {
       id: null,
       label: "Partenaire Orée à affecter",

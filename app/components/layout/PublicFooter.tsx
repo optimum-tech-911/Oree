@@ -18,7 +18,7 @@ export function PublicFooter() {
           <div className="absolute -right-24 -top-28 size-80 rounded-full bg-[var(--accent)]/25 blur-3xl" /><div className="absolute -bottom-32 left-1/3 size-80 rounded-full bg-[var(--mint)]/12 blur-3xl" />
           <div className="relative grid items-center gap-8 lg:grid-cols-[1fr_auto]">
             <div><span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/7 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[.14em] text-white/72"><ListChecks className="size-3" />Votre prochaine étape</span><h2 className="mt-5 max-w-4xl text-balance text-3xl font-extrabold leading-[1] tracking-[-.058em] sm:text-5xl lg:text-6xl">Obtenez une orientation et une <span className="gradient-text">feuille de route structurée.</span></h2><p className="mt-5 max-w-2xl text-sm leading-7 text-white/72 sm:text-base">Le diagnostic analyse d'abord votre situation, sans exiger de document au début du parcours.</p></div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col"><ButtonLink to="/diagnostic" variant="dark" size="lg" arrow>Démarrer le diagnostic</ButtonLink><ButtonLink to="/rendez-vous" variant="ghost" size="lg" className="border border-white/10 text-white hover:bg-white/8">Parler à l'équipe</ButtonLink></div>
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col"><ButtonLink to="/diagnostic" variant="dark" size="lg" arrow>Commencer mon dossier</ButtonLink><ButtonLink to="/rendez-vous" variant="ghost" size="lg" className="border border-white/10 text-white hover:bg-white/8">Parler à l'équipe</ButtonLink></div>
           </div>
         </div>
 

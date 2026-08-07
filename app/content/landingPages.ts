@@ -32,7 +32,7 @@ export const landingPages: Record<string, LandingPageContent> = {
     secondaryHref: "/creation-eurl",
     searchIntent: "creation_sasu",
     legalForms: ["SASU", "EURL"],
-    proofPoints: ["Prix TTC annoncé dès le départ", "Échange direct avec l’équipe", "SASU comparée à l’EURL si nécessaire"],
+    proofPoints: ["Prix TTC annoncé dès le départ", "Joignable 7j/7, 7h–20h", "Greffe et annonce légale inclus"],
     painPoints: [
       { title: "Choix à confirmer", description: "La SASU est souple, mais elle n'est pas automatiquement la meilleure réponse pour tous les projets solo." },
       { title: "Statuts à cadrer", description: "Les règles de fonctionnement doivent correspondre à votre projet, à votre rémunération et à vos perspectives." },

@@ -120,7 +120,7 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
               {isSasu ? <>Créez votre SASU<br />pour <span className="editorial-mark text-[color:var(--mint)]">600 € TTC</span><br /><span className="text-[.72em] tracking-[-.035em]">tout compris</span></> : <>{content.title} <span className="editorial-mark text-[color:var(--mint)]">{content.highlight}</span></>}
             </motion.h1>
             <motion.p initial={false} animate={{ opacity: 1, y: 0 }} className="mt-6 max-w-2xl text-pretty text-base leading-8 text-white/72 sm:text-lg">{content.description}</motion.p>
-            {isSasu ? <p className="mt-4 max-w-xl text-sm leading-6 text-white/82">Une question avant de commencer&nbsp;? Notre équipe peut vous répondre directement.</p> : null}
+            {isSasu ? <p className="mt-4 max-w-xl text-sm leading-6 text-white/82">Prêt à lancer votre SASU&nbsp;? Appelez-nous, on démarre votre dossier aujourd’hui.</p> : null}
             <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="mt-7">
               <AcquisitionContactActions diagnosticHref={diagnosticHref} legalForm={legalForm} location="acquisition_hero" dark phoneFirst={isSasu} />
             </motion.div>

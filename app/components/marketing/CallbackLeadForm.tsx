@@ -12,10 +12,7 @@ import type { DiagnosticAnswers, DiagnosticRecommendation } from "@/types";
 
 const callbackSchema = z.object({
   firstName: z.string().trim().min(2, "Indiquez votre prénom.").max(80),
-  lastName: z.string().trim().min(2, "Indiquez votre nom.").max(100),
-  email: z.string().trim().email("Indiquez une adresse e-mail valide.").max(254),
   phone: z.string().trim().regex(/^(?:\+33|0)[1-9](?:[ .-]?\d{2}){4}$/, "Indiquez un numéro de téléphone français valide."),
-  activity: z.string().trim().min(3, "Décrivez brièvement votre activité.").max(100),
   creationTimeline: z.enum(["under-30", "30-90", "over-90", "unknown"]),
   privacyAccepted: z.boolean().refine((value) => value, "Votre accord est nécessaire pour traiter la demande."),
   website: z.string().max(200).optional(),
@@ -52,6 +49,8 @@ export function CallbackLeadForm({ legalForm, slug }: { legalForm?: SupportedCom
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<CallbackFormValues>({
     resolver: zodResolver(callbackSchema),
     defaultValues: {
+      firstName: "",
+      phone: "",
       creationTimeline: "30-90",
       privacyAccepted: false,
       website: "",
@@ -72,13 +71,11 @@ export function CallbackLeadForm({ legalForm, slug }: { legalForm?: SupportedCom
         startingSituation: multiple ? "multiple" : "solo",
         stage: multiple ? "multi-founder" : "ready-to-create",
         founderMode: multiple ? "multiple" : "solo",
-        activity: values.activity,
-        activityDetails: values.activity,
         timeline: values.creationTimeline,
         creationTimeline: values.creationTimeline,
         firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
+        lastName: "-",
+        email: `rappel-${values.phone.replace(/\D/g, "")}@oree.contact`,
         phone: values.phone,
         preferredContactChannel: "phone",
         legalFormInterest: legalForm,
@@ -128,16 +125,16 @@ export function CallbackLeadForm({ legalForm, slug }: { legalForm?: SupportedCom
         <div>
           <p className="text-sm font-semibold text-[color:var(--blue)]">{commercialOffers.companyCreation.callbackCtaLabel}</p>
           <h2 className="mt-2 text-2xl font-semibold tracking-[-.04em] sm:text-3xl">Demandez à l’équipe de vous rappeler.</h2>
-          <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">Indiquez les coordonnées et le contexte nécessaires pour reprendre votre projet. Vous préférez appeler&nbsp;? <a href={contact.phoneHref} data-phone-number={contact.displayPhone} aria-label={`Appeler Orée au ${contact.displayPhone}`} onClick={() => analytics.track("phone_click", { legal_form: legalForm, location: "callback_form", cta_location: "callback_form" })} className="font-semibold text-[color:var(--blue)]">{contact.displayPhone}</a>.</p>
+          <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">Indiquez vos coordonnées pour être rappelé par l’équipe. Vous préférez appeler&nbsp;? <a href={contact.phoneHref} data-phone-number={contact.displayPhone} aria-label={`Appeler Orée au ${contact.displayPhone}`} onClick={() => analytics.track("phone_click", { legal_form: legalForm, location: "callback_form", cta_location: "callback_form" })} className="font-semibold text-[color:var(--blue)]">{contact.displayPhone}</a>.</p>
         </div>
       </div>
-      <label aria-hidden="true" className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">Votre site internet<input type="url" tabIndex={-1} autoComplete="off" {...register("website")} /></label>
+      <div aria-hidden="true" className="sr-only pointer-events-none hidden select-none" tabIndex={-1}>
+        <label htmlFor="callback-website">Votre site internet</label>
+        <input id="callback-website" type="url" tabIndex={-1} autoComplete="off" {...register("website")} />
+      </div>
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <label className="text-sm font-semibold">Prénom<input autoComplete="given-name" className={fieldClass} {...register("firstName")} />{errors.firstName ? <span className="mt-1 block text-xs text-[color:var(--blue)]">{errors.firstName.message}</span> : null}</label>
-        <label className="text-sm font-semibold">Nom<input autoComplete="family-name" className={fieldClass} {...register("lastName")} />{errors.lastName ? <span className="mt-1 block text-xs text-[color:var(--blue)]">{errors.lastName.message}</span> : null}</label>
-        <label className="text-sm font-semibold">E-mail<input type="email" autoComplete="email" className={fieldClass} {...register("email")} />{errors.email ? <span className="mt-1 block text-xs text-[color:var(--blue)]">{errors.email.message}</span> : null}</label>
+        <label className="text-sm font-semibold">Prénom<input autoComplete="given-name" placeholder="Ex. Camille" className={fieldClass} {...register("firstName")} />{errors.firstName ? <span className="mt-1 block text-xs text-[color:var(--blue)]">{errors.firstName.message}</span> : null}</label>
         <label className="text-sm font-semibold">Téléphone<input type="tel" autoComplete="tel" placeholder="06 00 00 00 00" className={fieldClass} {...register("phone")} />{errors.phone ? <span className="mt-1 block text-xs text-[color:var(--blue)]">{errors.phone.message}</span> : null}</label>
-        <label className="text-sm font-semibold sm:col-span-2">Activité<input placeholder="Ex. conseil en stratégie" className={fieldClass} {...register("activity")} />{errors.activity ? <span className="mt-1 block text-xs text-[color:var(--blue)]">{errors.activity.message}</span> : null}</label>
         <label className="text-sm font-semibold sm:col-span-2">Date de création souhaitée<select className={fieldClass} {...register("creationTimeline")}>{Object.entries(timelineLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
       </div>
       <label className="mt-5 flex cursor-pointer items-start gap-3 border-t border-[var(--line)] pt-5 text-xs leading-5">

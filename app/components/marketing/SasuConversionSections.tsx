@@ -63,7 +63,7 @@ export function SasuHumanContact() {
     <section aria-labelledby="sasu-contact-title" className="border-l-4 border-[var(--blue)] py-2 pl-5 sm:pl-7">
       <p className="text-sm font-semibold text-[color:var(--blue)]">Un échange avec l’équipe Orée</p>
       <h2 id="sasu-contact-title" className="mt-3 max-w-xl text-balance text-3xl font-semibold leading-[1.05] tracking-[-.045em] sm:text-4xl">
-        Une question sur votre SASU&nbsp;? Parlons-en directement.
+        Appelez Sof directement, 7j/7 de 7h à 20h.
       </h2>
       <p className="mt-4 max-w-xl text-sm leading-7 text-[color:var(--muted)] sm:text-base">
         Appelez-nous pour vérifier un point avant de commencer, ou demandez un rappel en laissant le contexte utile à l’équipe.
@@ -77,7 +77,7 @@ export function SasuHumanContact() {
           className="button-on-action inline-flex min-h-14 items-center justify-center gap-3 rounded-[14px] bg-[var(--blue)] px-6 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(36,87,255,.2)] transition hover:-translate-y-0.5 hover:brightness-95"
         >
           <PhoneCall className="size-4" aria-hidden="true" />
-          <span>Appeler <span className="ml-1 whitespace-nowrap">{contact.displayPhone}</span></span>
+          <span>Appeler <span className="ml-1 whitespace-nowrap">{contact.displayPhone}</span> <span className="text-xs text-white/80 font-normal">· 7j/7</span></span>
         </a>
         <a
           href="#rappel"
@@ -87,12 +87,15 @@ export function SasuHumanContact() {
           <RotateCcw className="size-4" aria-hidden="true" />Être rappelé
         </a>
       </div>
+      <p className="mt-3 text-xs text-[color:var(--muted)]">
+        7j/7 de 7h à 20h. C’est Sof qui décroche, pas un standard.
+      </p>
       <a
         href={buildWhatsAppHref(undefined, whatsappMessage)}
         target="_blank"
         rel="noreferrer"
         onClick={() => analytics.track("whatsapp_click", { legal_form: "SASU", location: "sasu_human_contact" })}
-        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--muted)] transition hover:text-[color:var(--ink)]"
+        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--muted)] transition hover:text-[color:var(--ink)]"
       >
         <MessageCircle className="size-4" aria-hidden="true" />Écrire sur WhatsApp
       </a>

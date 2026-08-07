@@ -27,7 +27,7 @@ const heroSlides: HeroSlide[] = [
     description: "Clarifiez le projet, comparez les structures pertinentes et organisez un dossier qui indique chaque prochaine action.",
     asset: imagery.homeHero,
     href: "/diagnostic",
-    action: "Démarrer mon diagnostic",
+    action: "Commencer mon dossier",
     summary: "Diagnostic, orientation et dossier",
   },
   {

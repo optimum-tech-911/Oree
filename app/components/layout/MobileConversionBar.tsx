@@ -56,7 +56,7 @@ export function mobileConversionForPath(pathname: string): MobileConversionConfi
   if (normalizedPath === "/creation-sasu") {
     return {
       href: buildPhoneHref(),
-      eyebrow: "SASU · 600 € TTC",
+      eyebrow: "SASU · 600 € TTC · 7j/7",
       label: commercialOffers.contact.displayPhone,
       intent: "creation_sasu",
       action: "call",
@@ -116,7 +116,7 @@ export function MobileConversionBar() {
             onClick={() => analytics.track("phone_click", { path: pathname, page_path: pathname, legal_form: "SASU", location: "mobile_sticky_call", cta_location: "mobile_sticky_call" })}
             className="button-on-action inline-flex h-12 items-center justify-center gap-2 rounded-[13px] bg-[var(--blue)] px-5 text-sm font-semibold text-white shadow-[0_10px_26px_rgba(36,87,255,.24)]"
           >
-            <PhoneCall className="size-4" />Appeler
+            <PhoneCall className="size-4" />Appeler · 7j/7
           </a>
         ) : (
           <ButtonLink
