@@ -49,6 +49,9 @@ export function SasuOfferReceipt() {
             <dd className="text-2xl font-semibold tracking-[-.035em]">{offer.totalLabel}</dd>
           </div>
         </dl>
+        <p className="mt-2 text-[13px] text-[color:var(--muted)]">
+          Orée Entreprises · Optimum Tech · SIRET 98898880400015 · Montpellier
+        </p>
         <p className="mt-4 text-xs leading-6 text-[color:var(--muted)]">{offer.restriction}</p>
       </div>
     </section>
@@ -71,6 +74,7 @@ export function SasuHumanContact() {
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <a
           href={contact.phoneHref}
+          data-conv="call"
           data-phone-number={contact.displayPhone}
           aria-label={`Appeler Orée au ${contact.displayPhone}`}
           onClick={() => analytics.track("phone_click", { legal_form: "SASU", location: "sasu_human_contact", cta_location: "sasu_human_contact" })}

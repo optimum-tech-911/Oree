@@ -174,6 +174,7 @@ export function SmartAssistant() {
   }
 
   if (!consentResolved) return null;
+  if (location.pathname === "/creation-sasu" || location.pathname === "/creation-sasu/") return null;
 
   return (
     <>

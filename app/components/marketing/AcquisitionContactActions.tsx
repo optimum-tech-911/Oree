@@ -35,13 +35,13 @@ export function AcquisitionContactActions({
   if (phoneFirst) {
     return (
       <div aria-label="Options de contact">
-        <div className="grid gap-2.5 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
           <a
             href={contact.phoneHref}
+            data-conv="call"
             data-phone-number={contact.displayPhone}
-            aria-label={`Appeler Orée au ${contact.displayPhone}`}
             onClick={() => analytics.track("phone_click", { legal_form: legalForm, location: phoneLocation, cta_location: phoneLocation })}
-            className="button-on-action inline-flex min-h-14 flex-col items-center justify-center rounded-[14px] bg-[var(--blue)] px-5 py-2 text-sm font-semibold text-white shadow-[0_14px_36px_rgba(36,87,255,.25)] transition hover:-translate-y-0.5 hover:brightness-95"
+            className="col-span-2 button-on-action inline-flex min-h-14 flex-col items-center justify-center rounded-[14px] bg-[var(--blue)] px-5 py-2 text-sm font-semibold text-white shadow-[0_14px_36px_rgba(36,87,255,.25)] transition hover:-translate-y-0.5 hover:brightness-95 sm:col-span-1"
           >
             <span className="inline-flex items-center gap-2"><PhoneCall className="size-4" />Appeler maintenant</span>
             <span className="mt-0.5 text-[11px] text-white/78">{contact.displayPhone} · 7j/7</span>
@@ -49,17 +49,17 @@ export function AcquisitionContactActions({
           <a
             href="#rappel"
             onClick={() => analytics.track("primary_cta_clicked", { legal_form: legalForm, location, intent: "callback" })}
-            className={cn("inline-flex min-h-14 items-center justify-center gap-2 rounded-[14px] border px-5 text-sm font-semibold transition hover:-translate-y-0.5", dark ? "border-white/24 bg-white text-[color:var(--ink)] hover:bg-[var(--paper)]" : "border-[var(--line-strong)] bg-white text-[color:var(--ink)] hover:border-[var(--blue)]/45")}
+            className={cn("col-span-1 inline-flex min-h-12 sm:min-h-14 items-center justify-center gap-1.5 sm:gap-2 rounded-[14px] border px-2 sm:px-5 text-xs sm:text-sm font-semibold transition hover:-translate-y-0.5", dark ? "border-white/24 bg-white text-[color:var(--ink)] hover:bg-[var(--paper)]" : "border-[var(--line-strong)] bg-white text-[color:var(--ink)] hover:border-[var(--blue)]/45")}
           >
-            <RotateCcw className="size-4" />{offer.callbackCtaLabel}
+            <RotateCcw className="size-3.5 sm:size-4 shrink-0" /><span>{offer.callbackCtaLabel}</span>
           </a>
           <ButtonLink
             to={diagnosticHref}
             variant="ghost"
-            className={cn("min-h-14 w-full rounded-[14px]", dark && "border border-white/18 bg-transparent text-white hover:bg-white/[.08]")}
+            className={cn("col-span-1 min-h-12 sm:min-h-14 w-full rounded-[14px] px-2 sm:px-4 text-xs sm:text-sm", dark && "border border-white/18 bg-transparent text-white hover:bg-white/[.08]")}
             onClick={() => analytics.track("primary_cta_clicked", { legal_form: legalForm, location, intent: "company_creation" })}
           >
-            Commencer mon dossier<ArrowRight className="size-4" />
+            <span>Commencer mon dossier</span><ArrowRight className="size-3.5 sm:size-4 shrink-0" />
           </ButtonLink>
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
@@ -73,7 +73,7 @@ export function AcquisitionContactActions({
             onClick={() => analytics.track("whatsapp_click", { legal_form: legalForm, location })}
             className={cn("inline-flex items-center gap-2 text-xs font-semibold transition", dark ? "text-white/72 hover:text-white" : "text-[color:var(--muted)] hover:text-[color:var(--ink)]")}
           >
-            <MessageCircle className="size-3.5" />Écrire sur WhatsApp
+            <MessageCircle className="size-4" />Écrire sur WhatsApp
           </a>
         </div>
       </div>
@@ -81,11 +81,12 @@ export function AcquisitionContactActions({
   }
 
   return (
-    <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4" aria-label="Options de contact">
+    <div className="flex flex-wrap items-center gap-3" aria-label="Actions du parcours">
       <ButtonLink
         to={diagnosticHref}
-        variant="accent"
-        className="w-full"
+        variant={dark ? "accent" : "primary"}
+        size="lg"
+        className="button-on-action"
         onClick={() => analytics.track("primary_cta_clicked", { legal_form: legalForm, location, intent: "company_creation" })}
       >
         {offer.ctaLabel}<ArrowRight className="size-4" />
@@ -99,6 +100,7 @@ export function AcquisitionContactActions({
       </a>
       <a
         href={contact.phoneHref}
+        data-conv="call"
         data-phone-number={contact.displayPhone}
         aria-label={`Appeler Orée au ${contact.displayPhone}`}
         onClick={() => analytics.track("phone_click", { legal_form: legalForm, location: phoneLocation, cta_location: phoneLocation })}

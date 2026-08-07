@@ -111,6 +111,7 @@ export function MobileConversionBar() {
         {isCall ? (
           <a
             href={activeHref}
+            data-conv="call"
             data-phone-number={activeLabel}
             aria-label={`Appeler Orée au ${activeLabel}`}
             onClick={() => analytics.track("phone_click", { path: pathname, page_path: pathname, legal_form: "SASU", location: "mobile_sticky_call", cta_location: "mobile_sticky_call" })}

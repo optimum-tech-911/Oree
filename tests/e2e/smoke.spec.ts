@@ -174,7 +174,7 @@ for (const width of [375, 390, 430, 768, 1440]) {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
     if (width < 1024) {
-      await expect(page.getByLabel(/Appeler Orée au 07 87 82 32 08/)).toBeVisible();
+      await expect(page.getByLabel(/Appeler Orée au 07 87 82 32 08/).first()).toBeVisible();
     }
   });
 }
@@ -383,7 +383,7 @@ test("le Guide Orée peut basculer vers un contact direct", async ({ page }) => 
 
 test("le Guide Orée répond précisément sur l’offre confirmée", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/creation-sasu");
+  await page.goto("/");
   await page.getByRole("button", { name: "Tout refuser" }).click();
   await page.getByRole("button", { name: "Ouvrir le Guide Orée" }).click();
 

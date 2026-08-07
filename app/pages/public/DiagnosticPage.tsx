@@ -136,7 +136,7 @@ function ProjectSummary({ diagnostic }: { diagnostic: ReturnType<typeof useDiagn
           <a
             href={contact.phoneHref}
             data-phone-number={contact.displayPhone}
-            aria-label={`Appeler Orée au ${contact.displayPhone}`}
+            aria-label={`Besoin d’aide ? Appeler Orée au ${contact.displayPhone}`}
             onClick={() => analytics.track("phone_click", { location: "diagnostic_summary", cta_location: "diagnostic_summary", step: diagnostic.step })}
             className="button-on-action mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[13px] bg-[var(--blue)] px-4 text-sm font-semibold text-white transition hover:-translate-y-0.5"
           >
@@ -355,7 +355,7 @@ export default function DiagnosticPage() {
             <p className="text-sm font-semibold text-[color:var(--blue)]">Diagnostic de création de société</p>
             <p className="mt-2 text-sm text-[color:var(--muted)]">Question {diagnostic.stepIndex + 1} sur {diagnostic.steps.length} · {stepLabels[diagnostic.step]}</p>
           </div>
-          <a href={contact.phoneHref} data-phone-number={contact.displayPhone} aria-label={`Appeler Orée au ${contact.displayPhone}`} onClick={() => analytics.track("phone_click", { location: "diagnostic_mobile_help", cta_location: "diagnostic_mobile_help", step: diagnostic.step })} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[color:var(--blue)] lg:hidden"><PhoneCall className="size-4" />Besoin d’aide&nbsp;? Appeler</a>
+          <a href={contact.phoneHref} data-phone-number={contact.displayPhone} aria-label={`Besoin d’aide ? Appeler Orée au ${contact.displayPhone}`} onClick={() => analytics.track("phone_click", { location: "diagnostic_mobile_help", cta_location: "diagnostic_mobile_help", step: diagnostic.step })} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[color:var(--blue)] lg:hidden"><PhoneCall className="size-4" />Besoin d’aide&nbsp;? Appeler</a>
         </div>
 
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_270px] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-14">

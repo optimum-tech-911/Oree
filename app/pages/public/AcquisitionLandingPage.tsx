@@ -111,20 +111,30 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
 
   return (
     <>
-      <section className="hero-grid surface-noise relative overflow-hidden bg-[var(--ink)] pb-14 pt-30 text-white sm:pb-20 sm:pt-40 lg:min-h-[735px] lg:pb-24 lg:pt-40">
+      <section className={cn("hero-grid surface-noise relative overflow-hidden bg-[var(--ink)] text-white sm:pb-20 sm:pt-40 lg:min-h-[735px] lg:pb-24 lg:pt-40", isSasu ? "pb-10 pt-24" : "pb-14 pt-30")}>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(36,87,255,.18),transparent_32%)]" />
         <div className={cn("container-shell relative grid items-center gap-10 lg:gap-14", isSasu ? "lg:grid-cols-[1.12fr_.88fr]" : "lg:grid-cols-[1.04fr_.96fr]") }>
           <div>
             <motion.div initial={false} animate={{ opacity: 1, y: 0 }}><p className="text-sm font-semibold text-[color:var(--mint)]">{content.eyebrow}</p></motion.div>
-            <motion.h1 initial={false} animate={{ opacity: 1, y: 0 }} className={cn("mt-5 max-w-[850px] text-balance font-semibold tracking-[-.06em]", isSasu ? "text-[clamp(2.65rem,5.25vw,5.7rem)]" : "text-[clamp(2.65rem,5.55vw,5.9rem)]", "leading-[.94]") }>
+            <motion.h1 initial={false} animate={{ opacity: 1, y: 0 }} className={cn("mt-3 sm:mt-5 max-w-[850px] text-balance font-semibold tracking-[-.06em]", isSasu ? "text-[clamp(2.65rem,5.25vw,5.7rem)]" : "text-[clamp(2.65rem,5.55vw,5.9rem)]", "leading-[.94]") }>
               {isSasu ? <>Créez votre SASU<br />pour <span className="editorial-mark text-[color:var(--mint)]">600 € TTC</span><br /><span className="text-[.72em] tracking-[-.035em]">tout compris</span></> : <>{content.title} <span className="editorial-mark text-[color:var(--mint)]">{content.highlight}</span></>}
             </motion.h1>
-            <motion.p initial={false} animate={{ opacity: 1, y: 0 }} className="mt-6 max-w-2xl text-pretty text-base leading-8 text-white/72 sm:text-lg">{content.description}</motion.p>
-            {isSasu ? <p className="mt-4 max-w-xl text-sm leading-6 text-white/82">Prêt à lancer votre SASU&nbsp;? Appelez-nous, on démarre votre dossier aujourd’hui.</p> : null}
-            <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="mt-7">
+            <motion.p initial={false} animate={{ opacity: 1, y: 0 }} className={cn("mt-4 sm:mt-6 max-w-2xl text-pretty text-base leading-8 text-white/72 sm:text-lg", isSasu && "hidden md:block")}>{content.description}</motion.p>
+            {isSasu ? <p className="mt-3 max-w-xl text-xs leading-5 text-white/82 sm:text-sm sm:leading-6">Prêt à lancer votre SASU&nbsp;? Appelez-nous, on démarre votre dossier aujourd’hui.</p> : null}
+            <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="mt-5 sm:mt-7">
               <AcquisitionContactActions diagnosticHref={diagnosticHref} legalForm={legalForm} location="acquisition_hero" dark phoneFirst={isSasu} />
             </motion.div>
-            <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2.5 text-[11px] font-semibold text-white/72 sm:text-xs">{content.proofPoints.map((point) => <span key={point} className="flex items-center gap-2"><span className="grid size-4 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]"><Check className="size-2.5" /></span>{point}</span>)}</div>
+            <div className={cn("mt-5 sm:mt-7 text-[11px] font-semibold text-white/72 sm:text-xs", isSasu ? "flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:gap-x-5 sm:gap-y-2.5" : "flex flex-wrap gap-x-5 gap-y-2.5")}>
+              {content.proofPoints.map((point) => (
+                <span key={point} className="flex items-center gap-2">
+                  <span className="grid size-4 shrink-0 place-items-center rounded-full bg-[var(--mint)] text-[color:var(--ink)]">
+                    <Check className="size-2.5" />
+                  </span>
+                  {point}
+                </span>
+              ))}
+            </div>
+            {isSasu ? <p className="mt-2.5 text-[13px] text-white/60 sm:hidden">Orée Entreprises · Optimum Tech · SIRET 98898880400015 · Montpellier</p> : null}
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs"><Link to="/tarifs" className="inline-flex items-center gap-1.5 text-[color:var(--mint)]">Comprendre les coûts <ChevronRight className="size-3.5" /></Link><a href="#perimetre" className="inline-flex items-center gap-1.5 text-white/72">Voir qui fait quoi <ChevronRight className="size-3.5" /></a></div>
           </div>
 
