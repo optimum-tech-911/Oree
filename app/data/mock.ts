@@ -32,7 +32,7 @@ export const mockTimeline: TimelineEvent[] = [
   { id: "t3", title: "Documents en vérification", description: "Trois pièces sont en cours de contrôle.", date: "Aujourd'hui", state: "current" },
   { id: "t4", title: "Finalisation des statuts", description: "Prévue après validation des informations et justificatifs.", date: "Prochaine étape", state: "upcoming" },
   { id: "t5", title: "Dépôt de la formalité", description: "Transmission après signature et règlement des frais applicables.", date: "À venir", state: "upcoming" },
-  { id: "t6", title: "Immatriculation", description: "Réception des éléments officiels après traitement administratif.", date: "Objectif", state: "upcoming" },
+  { id: "t6", title: "Immatriculation", description: "Réception des documents finaux après traitement par les registres.", date: "Objectif", state: "upcoming" },
 ];
 
 export const mockMessages = [

@@ -17,6 +17,11 @@ export type CommercialOffer = {
     publicLabel: string | null;
     visible: boolean;
   };
+  breakdown?: {
+    honoraires: string;
+    greffe: string;
+    annonce: string;
+  };
 };
 
 const companyForms = ["SASU", "EURL", "SAS", "SARL"] as const satisfies readonly SupportedCompanyForm[];
@@ -29,6 +34,11 @@ export const commercialOffers = {
     price: 600,
     totalLabel: "600 € TTC",
     priceLabel: "600 € TTC tout compris",
+    breakdown: {
+      honoraires: "395,12 € TTC",
+      greffe: "66,88 € TTC",
+      annonce: "138,00 € TTC",
+    },
     description: "Un prix fixe pour préparer et déposer votre dossier de création.",
     enabledForms: companyForms,
     otherFormsWording: "Les autres formes de société peuvent être étudiées après vérification du projet.",

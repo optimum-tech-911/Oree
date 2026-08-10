@@ -8,8 +8,6 @@ import { analytics } from "@/services/analytics";
 
 const includedRows = [
   "Accompagnement à la création",
-  "Annonce légale",
-  "Frais de greffe",
   "Corrections du dossier",
 ] as const;
 
@@ -36,23 +34,35 @@ export function SasuOfferReceipt() {
       <div className="px-6 py-7 sm:px-9 sm:py-9 lg:px-12">
         <p className="text-sm font-semibold">Ce qui est compris</p>
         <dl className="mt-4 divide-y divide-[var(--line)] border-y border-[var(--line)]">
-          {includedRows.map((label) => (
-            <div key={label} className="flex items-center justify-between gap-5 py-3.5 text-sm sm:py-4">
-              <dt>{label}</dt>
-              <dd className="flex shrink-0 items-center gap-2 font-semibold text-[color:var(--ink)]">
-                <Check className="size-4 text-[color:var(--success)]" aria-hidden="true" />Compris
-              </dd>
-            </div>
-          ))}
+          <div className="flex items-center justify-between gap-5 py-3.5 text-sm sm:py-4">
+            <dt>Honoraires Orée Entreprises</dt>
+            <dd className="flex shrink-0 items-center gap-2 font-semibold text-[color:var(--ink)]">
+              {offer.breakdown?.honoraires}
+            </dd>
+          </div>
+          <div className="flex items-center justify-between gap-5 py-3.5 text-sm sm:py-4">
+            <dt>Frais de greffe</dt>
+            <dd className="flex shrink-0 items-center gap-2 font-semibold text-[color:var(--ink)]">
+              {offer.breakdown?.greffe}
+            </dd>
+          </div>
+          <div className="flex items-center justify-between gap-5 py-3.5 text-sm sm:py-4">
+            <dt>Frais d'annonce légale</dt>
+            <dd className="flex shrink-0 items-center gap-2 font-semibold text-[color:var(--ink)]">
+              {offer.breakdown?.annonce}
+            </dd>
+          </div>
           <div className="flex items-end justify-between gap-5 py-5">
             <dt className="font-semibold">Total</dt>
             <dd className="text-2xl font-semibold tracking-[-.035em]">{offer.totalLabel}</dd>
           </div>
         </dl>
-        <p className="mt-2 text-[13px] text-[color:var(--muted)]">
+        <p className="mt-4 text-xs leading-6 text-[color:var(--muted)]">
+          Les frais de greffe et d'annonce légale sont des frais obligatoires reversés à des tiers ; ils ne constituent pas notre rémunération. {offer.restriction}
+        </p>
+        <p className="mt-2 text-[11px] text-[color:var(--muted)]/60">
           Orée Entreprises · Optimum Tech · SIRET 98898880400015 · Montpellier
         </p>
-        <p className="mt-4 text-xs leading-6 text-[color:var(--muted)]">{offer.restriction}</p>
       </div>
     </section>
   );

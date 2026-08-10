@@ -138,7 +138,7 @@ export default function ChooseStatusPage() {
         <div className="container-shell grid gap-12 lg:grid-cols-[.68fr_1.32fr]">
           <div><Badge>Questions fréquentes</Badge><h2 className="mt-6 text-balance text-4xl font-semibold leading-[1] tracking-[-.055em] sm:text-5xl">Comparer les structures avec les nuances nécessaires.</h2><p className="mt-5 max-w-md text-sm leading-7 text-[color:var(--muted)]">L'orientation classe les options à approfondir et explicite les critères utilisés, sans se substituer à une validation professionnelle lorsque celle-ci est requise.</p></div>
           <Faq items={[
-            { question: "Le simulateur choisit-il le statut à ma place ?", answer: "Non. Il classe les options selon vos réponses et met en évidence les points à valider. Une décision personnalisée peut nécessiter l'intervention d'un professionnel habilité." },
+            { question: "Le simulateur choisit-il le statut à ma place ?", answer: "Non. Il classe les options selon vos réponses et met en évidence les points à valider. Une décision personnalisée peut nécessiter l'intervention d'un professionnel réglementé." },
             { question: "Pourquoi l'entreprise individuelle apparaît-elle parfois ?", answer: "Certains projets très simples, sans associé et avec un objectif de test peuvent justifier d'étudier une entreprise individuelle ou le régime micro au lieu de créer immédiatement une société." },
             { question: "Puis-je modifier mes réponses ?", answer: "Oui. Le parcours permet de revenir en arrière, et l'orientation est recalculée à partir des nouvelles réponses." },
           ]} />

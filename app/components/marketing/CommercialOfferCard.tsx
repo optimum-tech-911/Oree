@@ -56,8 +56,17 @@ export function CompanyOfferCard({
           <h2 className={cn("mt-5 text-balance font-semibold leading-[1] tracking-[-.05em]", compact ? "text-3xl" : "text-4xl sm:text-5xl")}>
             {form ? companyOfferHeadline(form) : offer.title}
           </h2>
-          {!form ? <p className={cn("mt-3 font-semibold text-[color:var(--blue)]", compact ? "text-3xl" : "text-4xl sm:text-5xl")}>{offer.priceLabel}</p> : null}
-          <p className="mt-4 max-w-xl text-sm leading-7 text-[color:var(--muted)]">{offer.description}</p>
+          {!form ? (
+            <div className="mt-5 border-y border-[var(--line)] py-4">
+              <div className="flex justify-between py-1 text-sm"><span className="text-[color:var(--muted)]">Honoraires Orée</span><span className="font-semibold">{offer.breakdown?.honoraires}</span></div>
+              <div className="flex justify-between py-1 text-sm"><span className="text-[color:var(--muted)]">Frais de greffe</span><span className="font-semibold">{offer.breakdown?.greffe}</span></div>
+              <div className="flex justify-between py-1 text-sm"><span className="text-[color:var(--muted)]">Frais d'annonce légale</span><span className="font-semibold">{offer.breakdown?.annonce}</span></div>
+              <div className="mt-3 flex justify-between pt-3 border-t border-[var(--line)]"><span className="font-semibold">Total</span><span className={cn("font-semibold text-[color:var(--blue)]", compact ? "text-xl" : "text-2xl")}>{offer.totalLabel}</span></div>
+            </div>
+          ) : null}
+          <p className="mt-4 max-w-xl text-sm leading-7 text-[color:var(--muted)]">
+            {offer.description} Les frais de greffe et d'annonce légale sont des frais obligatoires reversés à des tiers ; ils ne constituent pas notre rémunération.
+          </p>
           <p className="mt-4 rounded-[16px] bg-[var(--mint-soft)] px-4 py-3 text-xs font-semibold leading-5">{offer.paymentStage}</p>
           {showCta ? <ButtonLink
             to={ctaHref}

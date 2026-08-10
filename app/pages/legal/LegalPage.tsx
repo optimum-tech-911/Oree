@@ -14,12 +14,12 @@ const privacySections = [
 ] as const;
 
 const legalSections = [
-  ["Éditeur", "Nom, forme juridique, capital, siège social, numéro d'immatriculation, numéro de TVA, email et directeur de publication : à renseigner avec les informations réelles."],
-  ["Hébergement", "Frontend : Cloudflare Pages. Base de données, authentification, stockage et fonctions : Supabase, dans la région européenne choisie. Les informations contractuelles exactes devront être ajoutées."],
+  ["Éditeur", "Dénomination sociale : [DENOMINATION_SOCIALE]\nForme juridique : [FORME_JURIDIQUE]\nCapital social : [CAPITAL_SOCIAL]\nSiège social : [ADRESSE_SIEGE]\nNuméro d'immatriculation : [NUMERO_SIREN_SIRET]\nNuméro de TVA : [NUMERO_TVA]\nEmail : [EMAIL_CONTACT]\nDirecteur de publication : [NOM_DIRECTEUR_PUBLICATION]"],
+  ["Hébergement", "Hébergeur : [NOM_HEBERGEUR]\nAdresse : [ADRESSE_HEBERGEUR]\nTéléphone : [TELEPHONE_HEBERGEUR]\nInfrastructure technique : Frontend via Cloudflare Pages, base de données et authentification via Supabase (Région Europe)."],
   ["Objet du site", "La plateforme présente un service d'accompagnement à la création d'entreprise, fournit des informations générales, organise les demandes et permet le suivi d'un projet. Elle ne doit pas se présenter comme fournissant un conseil juridique personnalisé lorsqu'elle n'est pas habilitée à le faire."],
   ["Propriété intellectuelle", "Les textes, interfaces, marques, illustrations et éléments logiciels appartiennent à leurs titulaires respectifs. La marque Orée est utilisée comme marque de démonstration et doit être remplacée ou validée."],
-  ["Responsabilité", "Les informations générales ne remplacent pas une consultation auprès d'un professionnel habilité. Les délais administratifs externes ne sont pas contrôlés par la plateforme. Les engagements commerciaux finaux doivent préciser leur périmètre et leurs exclusions."],
-  ["Contact", "Les coordonnées réelles du service client, du responsable de publication et du contact données personnelles doivent être ajoutées avant le lancement."],
+  ["Responsabilité", "Les informations générales ne remplacent pas une consultation auprès d'un professionnel réglementé. Les délais externes des registres ne sont pas contrôlés par la plateforme. Les engagements commerciaux finaux doivent préciser leur périmètre et leurs exclusions."],
+  ["Contact", "Service client : [TELEPHONE_CONTACT] - [EMAIL_CONTACT]\nResponsable de publication : [NOM_DIRECTEUR_PUBLICATION]"],
 ] as const;
 
 export default function LegalPage({ type }: { type: "privacy" | "legal" }) {

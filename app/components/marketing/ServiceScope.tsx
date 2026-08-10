@@ -11,11 +11,11 @@ const responsibilities = [
   {
     icon: Building2,
     title: "Ce que traitent les organismes",
-    description: "Les formalités officielles, contrôles et décisions restent effectués par les administrations et interlocuteurs compétents.",
+    description: "Les formalités d'enregistrement, contrôles et décisions restent effectués par les organismes compétents.",
   },
   {
     icon: Scale,
-    title: "Ce qui exige un professionnel habilité",
+    title: "Ce qui exige un professionnel réglementé",
     description: "Le conseil juridique, fiscal ou comptable personnalisé et les actes réglementés sont confirmés par le professionnel compétent lorsque nécessaire.",
   },
 ];
@@ -26,7 +26,7 @@ export function ServiceScope({ compact = false }: { compact?: boolean }) {
       <div className="max-w-4xl">
         <Badge>Périmètre et responsabilités</Badge>
         <h2 className={`${compact ? "text-3xl sm:text-4xl" : "text-4xl sm:text-5xl lg:text-6xl"} mt-5 text-balance font-semibold leading-[1.02] tracking-[-.05em]`}>Savoir qui fait quoi, avant d’engager la démarche.</h2>
-        <p className="mt-5 max-w-2xl text-sm leading-7 text-[color:var(--muted)] sm:text-base">La plateforme facilite le parcours sans se substituer à l’administration ni présenter une orientation automatique comme un conseil définitif.</p>
+        <p className="mt-5 max-w-2xl text-sm leading-7 text-[color:var(--muted)] sm:text-base">La plateforme facilite le parcours sans se substituer aux registres publics ni présenter une orientation automatique comme un conseil définitif.</p>
       </div>
       <div className="mt-8 grid gap-4 lg:grid-cols-3">
         {responsibilities.map((item, index) => {

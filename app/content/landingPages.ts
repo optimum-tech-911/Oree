@@ -220,7 +220,7 @@ export const landingPages: Record<string, LandingPageContent> = {
     faq: [
       { question: "Pouvons-nous modifier la répartition du capital ?", answer: "Oui, tant que le projet n'est pas finalisé. Chaque modification importante doit être datée et conservée dans l'historique du dossier." },
       { question: "Chaque associé voit-il tous les documents ?", answer: "Non nécessairement. Les droits peuvent être limités selon le rôle de la personne et la nature du document concerné." },
-      { question: "La plateforme remplace-t-elle un pacte d'associés ?", answer: "Non. Elle aide à collecter les décisions et à signaler les sujets à traiter. La rédaction d'un pacte relève d'un professionnel habilité." },
+      { question: "La plateforme remplace-t-elle un pacte d'associés ?", answer: "Non. Elle aide à collecter les décisions et à signaler les sujets à traiter. La rédaction d'un pacte relève d'un professionnel réglementé." },
     ],
   },
   "creer-entreprise-seul": {
@@ -263,7 +263,7 @@ export const landingPages: Record<string, LandingPageContent> = {
     secondaryHref: "/rendez-vous",
     searchIntent: "job_seeker_creation",
     legalForms: ["SASU", "EURL"],
-    proofPoints: ["Aucune promesse automatique sur les aides", "Calendrier pris en compte", "Éligibilité à confirmer officiellement"],
+    proofPoints: ["Aucune promesse automatique sur les aides", "Calendrier pris en compte", "Éligibilité à confirmer auprès des organismes"],
     painPoints: [
       { title: "Préserver ses droits", description: "Les conséquences dépendent du dispositif, de la rémunération et des démarches effectuées." },
       { title: "Choisir le bon calendrier", description: "La date de création et les demandes d’aide doivent être organisées avec attention." },
@@ -273,11 +273,11 @@ export const landingPages: Record<string, LandingPageContent> = {
       { number: "01", title: "Situez votre projet", description: "Niveau d’avancement, date souhaitée et activité envisagée." },
       { number: "02", title: "Précisez votre situation", description: "Dispositifs envisagés, rémunération et accompagnement attendu." },
       { number: "03", title: "Recevez une synthèse prudente", description: "Points à vérifier et formes juridiques à comparer." },
-      { number: "04", title: "Validez la prochaine étape", description: "Information officielle, rendez-vous ou espace projet." },
+      { number: "04", title: "Validez la prochaine étape", description: "Information publique, rendez-vous ou espace projet." },
     ],
     faq: [
       { question: "Orée peut-elle garantir le maintien de mes allocations ?", answer: "Non. L’éligibilité et le montant dépendent de votre dossier et des règles applicables. La plateforme met en évidence les points à vérifier." },
-      { question: "ARE, ARCE et ACRE sont-elles la même aide ?", answer: "Non. Elles répondent à des logiques différentes. Le parcours doit vous orienter vers les informations officielles et une validation adaptée." },
+      { question: "ARE, ARCE et ACRE sont-elles la même aide ?", answer: "Non. Elles répondent à des logiques différentes. Le parcours doit vous orienter vers les informations publiques et une validation adaptée." },
       { question: "Quand faut-il prendre rendez-vous ?", answer: "Un échange devient utile lorsqu’une décision de calendrier, de rémunération ou de dispositif ne peut pas être clarifiée par le parcours indicatif." },
     ],
   },
@@ -305,7 +305,7 @@ export const landingPages: Record<string, LandingPageContent> = {
     ],
     faq: [
       { question: "Puis-je importer un dossier déjà commencé ailleurs ?", answer: "Le parcours de reprise permet de réunir les documents disponibles, les demandes déjà reçues et l'historique utile avant d'identifier la prochaine action." },
-      { question: "Le blocage sera-t-il résolu automatiquement ?", answer: "Non. La plateforme aide à qualifier la situation et à organiser la vérification. Certaines demandes exigent l'intervention d'un professionnel ou de l'administration." },
+      { question: "Le blocage sera-t-il résolu automatiquement ?", answer: "Non. La plateforme aide à qualifier la situation et à organiser la vérification. Certaines demandes exigent l'intervention d'un professionnel ou de l'organisme compétent." },
       { question: "Comment suivre les versions ?", answer: "Chaque nouveau fichier devient une version distincte, avec date, auteur, statut et commentaire." },
     ],
   },

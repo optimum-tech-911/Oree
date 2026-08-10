@@ -11,7 +11,7 @@ const process = [
   { icon: FileCheck2, title: "Dossier", description: "Les informations et justificatifs sont demandés au bon moment, avec un état visible pour chaque élément.", output: "Pièces centralisées" },
   { icon: Landmark, title: "Capital & signatures", description: "Les étapes spécifiques à votre structure s'activent uniquement lorsqu'elles sont nécessaires.", output: "Décisions tracées" },
   { icon: Send, title: "Formalité", description: "Le dossier préparé peut être transmis puis suivi sans perdre les échanges, versions ou corrections.", output: "Transmission suivie" },
-  { icon: Check, title: "Immatriculation", description: "Les éléments officiels sont rattachés au projet et restent accessibles dans le même espace.", output: "Projet finalisé" },
+  { icon: Check, title: "Immatriculation", description: "Les documents finaux sont rattachés au projet et restent accessibles dans le même espace.", output: "Projet finalisé" },
 ];
 
 export function ProcessRail() {

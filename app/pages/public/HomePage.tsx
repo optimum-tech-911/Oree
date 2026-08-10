@@ -57,7 +57,7 @@ const faqs = [
   { question: "Dois-je déjà savoir quelle société créer ?", answer: "Non. Le diagnostic commence par votre situation, votre activité, vos associés éventuels et vos priorités. Les structures apparaissent ensuite comme des pistes à comparer, jamais comme une réponse automatique définitive." },
   { question: "Puis-je commencer sans créer de compte ?", answer: "Oui. Vous pouvez avancer dans le diagnostic et obtenir une première orientation avant de créer un compte. L'inscription devient utile pour poursuivre le dossier dans l'espace connecté." },
   { question: "Que comprend le prix de création ?", answer: `${commercialOffers.companyCreation.priceLabel} comprend l’accompagnement, les frais de greffe, l’annonce légale et les corrections ou compléments du dossier. Les modifications de sociétés existantes ne sont pas prises en charge.` },
-  { question: "La plateforme remplace-t-elle un conseil juridique ?", answer: "Non. Elle organise les informations, explique le parcours et met en évidence les points à valider. Les recommandations personnalisées et actes réglementés nécessitent l'intervention d'un professionnel habilité." },
+  { question: "La plateforme remplace-t-elle un conseil juridique ?", answer: "Non. Elle organise les informations, explique le parcours et met en évidence les points à valider. Les recommandations personnalisées et actes réglementés nécessitent l'intervention d'un professionnel réglementé." },
   { question: "Que se passe-t-il si mon dossier est déjà bloqué ?", answer: "Un parcours distinct permet de situer l'étape et la demande reçue. Il organise la vérification sans promettre qu'une correction sera automatiquement acceptée par l'organisme compétent." },
 ];
 

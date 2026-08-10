@@ -20,6 +20,8 @@ const NotFoundPage = lazy(() => import("@/pages/public/NotFoundPage"));
 const AuthPage = lazy(() => import("@/pages/auth/AuthPage"));
 const AuthCallbackPage = lazy(() => import("@/pages/auth/AuthCallbackPage"));
 const LegalPage = lazy(() => import("@/pages/legal/LegalPage"));
+const CgvPage = lazy(() => import("@/pages/legal/CgvPage"));
+const ContactPage = lazy(() => import("@/pages/public/ContactPage"));
 const DashboardPage = lazy(() => import("@/pages/app/DashboardPage"));
 const ProjectPage = lazy(() => import("@/pages/app/ProjectPage"));
 const OrientationPage = lazy(() => import("@/pages/app/OrientationPage"));
@@ -72,8 +74,13 @@ export default function App() {
           <Route path="creer-entreprise-demandeur-emploi" element={<AcquisitionLandingPage slug="creer-entreprise-demandeur-emploi" />} />
           <Route path="passer-micro-entreprise-en-societe" element={<AcquisitionLandingPage slug="passer-micro-entreprise-en-societe" />} />
           <Route path="dossier-creation-entreprise-bloque" element={<AcquisitionLandingPage slug="dossier-creation-entreprise-bloque" />} />
+          {/* Legal routes */}
           <Route path="confidentialite" element={<LegalPage type="privacy" />} />
           <Route path="mentions-legales" element={<LegalPage type="legal" />} />
+          <Route path="cgv" element={<CgvPage />} />
+          <Route path="contact" element={<ContactPage />} />
+
+          {/* Catch-all */}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 

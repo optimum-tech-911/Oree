@@ -41,7 +41,7 @@ const operationalBySlug: Record<string, OperationalModule> = {
   "creation-eurl": {
     quickAnswer: "L'EURL propose un cadre plus balisé pour entreprendre seul. Le régime du gérant, la rémunération et l'arrivée possible d'associés doivent être examinés face à la SASU.",
     costContext: companyCreationCostContext,
-    timing: "La date utile est celle d'un dossier complet et cohérent, pas une promesse de traitement de l'administration.",
+    timing: "La date utile est celle d'un dossier complet et cohérent, pas une promesse de traitement par les greffes.",
     documents: ["Identité et situation du gérant", "Adresse et justificatif du siège", "Capital et nature des apports", "Description précise de l'activité"],
   },
   "creation-sas": {
@@ -77,7 +77,7 @@ const operationalBySlug: Record<string, OperationalModule> = {
   "creer-entreprise-demandeur-emploi": {
     quickAnswer: "ARE, ARCE et ACRE répondent à des règles différentes. L'éligibilité, le calendrier et les effets d'une rémunération doivent être confirmés auprès des organismes compétents.",
     costContext: "Aucune aide ne doit être présentée comme une remise garantie sur le prix du service ou comme automatiquement acquise.",
-    timing: "L'ordre des démarches peut compter ; la synthèse indique les dates et conditions qui restent à vérifier officiellement.",
+    timing: "L'ordre des démarches peut compter ; la synthèse indique les dates et conditions qui restent à vérifier auprès des registres.",
     documents: ["Situation et dispositif envisagé", "Date de création souhaitée", "Rémunération prévue au démarrage", "Activité et forme juridique à comparer"],
   },
   "passer-micro-entreprise-en-societe": {
@@ -111,7 +111,14 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
 
   return (
     <>
-      <section className={cn("hero-grid surface-noise relative overflow-hidden bg-[var(--ink)] text-white sm:pb-20 sm:pt-40 lg:min-h-[735px] lg:pb-24 lg:pt-40", isSasu ? "pb-10 pt-24" : "pb-14 pt-30")}>
+      <div className="bg-[var(--paper)] px-4 py-4 text-center text-sm leading-6 text-[color:var(--muted)] border-b border-[var(--line)]">
+        <div className="container-shell max-w-4xl">
+          <p>
+            <strong>Orée Entreprises est un prestataire privé.</strong> Nous ne sommes pas affiliés au gouvernement ni à un service public. Vous pouvez réaliser vos formalités d'entreprise par vous-même, gratuitement ou à moindre coût, sur le site public du <a href="https://formalites.entreprises.gouv.fr" target="_blank" rel="noreferrer" className="underline hover:text-[color:var(--ink)]">Guichet unique de l'INPI</a>.
+          </p>
+        </div>
+      </div>
+      <section className={cn("hero-grid surface-noise relative overflow-hidden bg-[var(--ink)] text-white sm:pb-20 sm:pt-20 lg:min-h-[735px] lg:pb-24 lg:pt-24", isSasu ? "pb-10 pt-16" : "pb-14 pt-20")}>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(36,87,255,.18),transparent_32%)]" />
         <div className={cn("container-shell relative grid items-center gap-10 lg:gap-14", isSasu ? "lg:grid-cols-[1.12fr_.88fr]" : "lg:grid-cols-[1.04fr_.96fr]") }>
           <div>
@@ -152,7 +159,7 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
                   <div className="flex items-start justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-[.13em] text-white/72">Votre projet</p><p className="mt-2 text-xl font-semibold tracking-[-.035em]">Première recommandation</p></div><span className="grid size-11 place-items-center rounded-[14px] border border-white/10 bg-white/[.05] text-white"><ListChecks className="size-4.5" /></span></div>
                   <div className="mt-6 space-y-2.5">{["Situation et niveau d'avancement", "Associés et organisation", "Activité, clients et calendrier", "Priorités et points à valider"].map((label, index) => <div key={label} className={`flex items-center gap-3 rounded-[15px] border p-3 ${index === 0 ? "border-[var(--blue)]/35 bg-[var(--blue)]/12" : "border-white/7 bg-white/[.035]"}`}><span className={`grid size-8 place-items-center rounded-full text-[10px] font-semibold ${index === 0 ? "bg-[var(--blue)] text-white" : "bg-white/7 text-white/72"}`}>0{index + 1}</span><span className="text-xs font-semibold text-white/72 sm:text-sm">{label}</span></div>)}</div>
                   <div className="mt-3 grid gap-2.5 sm:grid-cols-2"><div className="rounded-[15px] border border-white/7 bg-white/[.035] p-3.5"><ListChecks className="size-4 text-[color:var(--blue)]" /><p className="mt-3 text-xs font-semibold">Étapes courtes</p><p className="mt-1 text-[10px] leading-4 text-white/72">Retour possible sans perdre les choix non sensibles.</p></div><div className="rounded-[15px] border border-white/7 bg-white/[.035] p-3.5"><LockKeyhole className="size-4 text-[color:var(--mint)]" /><p className="mt-3 text-xs font-semibold">Sans document au départ</p><p className="mt-1 text-[10px] leading-4 text-white/72">Commencez par décrire le projet.</p></div></div>
-                  <div className="mt-3 rounded-[15px] bg-[var(--paper)] p-4 text-[color:var(--ink)]"><div className="flex items-start gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--mint-soft)]"><ShieldCheck className="size-4" /></span><div><p className="text-xs font-semibold">À confirmer avec vous</p><p className="mt-1 text-[11px] leading-5 text-[color:var(--muted)]">Les validations professionnelles ou officielles restent clairement indiquées.</p></div></div></div>
+                  <div className="mt-3 rounded-[15px] bg-[var(--paper)] p-4 text-[color:var(--ink)]"><div className="flex items-start gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--mint-soft)]"><ShieldCheck className="size-4" /></span><div><p className="text-xs font-semibold">À confirmer avec vous</p><p className="mt-1 text-[11px] leading-5 text-[color:var(--muted)]">Les validations juridiques ou réglementaires restent clairement indiquées.</p></div></div></div>
                 </div>
               </div>
             </div>}
@@ -174,7 +181,17 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
         <div className="container-shell">
           <SectionHeader eyebrow={isSasu ? undefined : "Réponse directe"} title={isSasu ? <>Les informations utiles <span className="editorial-mark text-[color:var(--blue)]">avant de créer votre SASU.</span></> : <>Ce qu’il faut savoir <span className="editorial-mark text-[color:var(--blue)]">pour cette situation.</span></>} description={operational.quickAnswer} />
           {isSasu ? <div className="grid border-y border-[var(--line-strong)] lg:grid-cols-3 lg:divide-x lg:divide-[var(--line)]">
-            <article className="border-b border-[var(--line)] py-7 lg:border-b-0 lg:px-7 lg:first:pl-0"><p className="text-sm font-semibold text-[color:var(--blue)]">Prix annoncé</p><h2 className="mt-3 text-2xl font-semibold">{commercialOffers.companyCreation.totalLabel}</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">Accompagnement, greffe, annonce légale et corrections du dossier inclus.</p><Link to="/tarifs" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--blue)]">Voir l’offre complète <ChevronRight className="size-4" /></Link></article>
+            <article className="border-b border-[var(--line)] py-7 lg:border-b-0 lg:px-7 lg:first:pl-0">
+              <p className="text-sm font-semibold text-[color:var(--blue)]">Prix détaillé</p>
+              <h2 className="mt-3 text-2xl font-semibold">{commercialOffers.companyCreation.totalLabel}</h2>
+              <div className="mt-3 space-y-1 text-sm text-[color:var(--muted)]">
+                <div className="flex justify-between"><span>Honoraires Orée :</span><span className="font-semibold text-[color:var(--ink)]">{commercialOffers.companyCreation.breakdown?.honoraires}</span></div>
+                <div className="flex justify-between"><span>Greffe :</span><span className="font-semibold text-[color:var(--ink)]">{commercialOffers.companyCreation.breakdown?.greffe}</span></div>
+                <div className="flex justify-between"><span>Annonce légale :</span><span className="font-semibold text-[color:var(--ink)]">{commercialOffers.companyCreation.breakdown?.annonce}</span></div>
+              </div>
+              <p className="mt-3 text-xs leading-5 text-[color:var(--muted)]">Les frais de greffe et d'annonce légale sont reversés à des tiers.</p>
+              <Link to="/tarifs" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--blue)]">Voir l’offre complète <ChevronRight className="size-4" /></Link>
+            </article>
             <article className="border-b border-[var(--line)] py-7 lg:border-b-0 lg:px-7"><p className="text-sm font-semibold text-[color:var(--blue)]">Calendrier</p><h2 className="mt-3 text-2xl font-semibold">Un dossier complet d’abord</h2><p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{operational.timing}</p></article>
             <article className="py-7 lg:px-7 lg:last:pr-0"><p className="text-sm font-semibold text-[color:var(--blue)]">À préparer</p><h2 className="mt-3 text-2xl font-semibold">Les premières informations</h2><ul className="mt-3 space-y-2">{operational.documents.map((item) => <li key={item} className="flex gap-2.5 text-sm leading-6 text-[color:var(--muted)]"><Check className="mt-1 size-3.5 shrink-0 text-[color:var(--success)]" />{item}</li>)}</ul></article>
           </div> : <div className="grid gap-4 lg:grid-cols-3">
@@ -203,7 +220,7 @@ export default function AcquisitionLandingPage({ slug }: { slug: string }) {
         </div>
       </Section>
 
-      {slug === "creer-entreprise-seul" || slug === "creation-sasu" || slug === "creation-eurl" ? <Section className="py-10"><div className="container-shell"><div className="rounded-[20px] border border-[var(--line)] bg-white p-5 sm:flex sm:items-center sm:justify-between sm:gap-6"><div><p className="text-sm font-semibold">Vous recherchez uniquement l’ouverture gratuite d’une micro-entreprise ?</p><p className="mt-2 text-xs leading-5 text-[color:var(--muted)]">Cette démarche ne nécessite pas toujours un accompagnement de création de société. Consultez d’abord les informations officielles adaptées.</p></div><a href="https://www.autoentrepreneur.urssaf.fr/" onClick={() => analytics.track("micro_intent_self_filtered", { slug })} target="_blank" rel="noreferrer" className="mt-4 inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-[color:var(--blue)] sm:mt-0">Voir l’information officielle <ChevronRight className="size-4" /></a></div></div></Section> : null}
+      {slug === "creer-entreprise-seul" || slug === "creation-sasu" || slug === "creation-eurl" ? <Section className="py-10"><div className="container-shell"><div className="rounded-[20px] border border-[var(--line)] bg-white p-5 sm:flex sm:items-center sm:justify-between sm:gap-6"><div><p className="text-sm font-semibold">Vous recherchez uniquement l’ouverture gratuite d’une micro-entreprise ?</p><p className="mt-2 text-xs leading-5 text-[color:var(--muted)]">Cette démarche ne nécessite pas toujours un accompagnement de création de société. Consultez d’abord les informations publiques adaptées.</p></div><a href="https://www.autoentrepreneur.urssaf.fr/" onClick={() => analytics.track("micro_intent_self_filtered", { slug })} target="_blank" rel="noreferrer" className="mt-4 inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-[color:var(--blue)] sm:mt-0">Voir l’information publique <ChevronRight className="size-4" /></a></div></div></Section> : null}
 
       <Section id="perimetre"><div className="container-shell"><ServiceScope compact /></div></Section>
 
